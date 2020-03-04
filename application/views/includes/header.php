@@ -176,13 +176,6 @@
                             <span>Task Uploads</span>
                         </a>
                     </li>
-
-                    <li>
-                        <a href="<?php echo base_url(); ?>studentListing">
-                            <i class="fa fa-upload"></i>
-                            <span>Student</span>
-                        </a>
-                    </li>
                     <?php
                 }
                 if ($role == ROLE_ADMIN) {
@@ -191,6 +184,12 @@
                         <a href="<?php echo base_url(); ?>userListing">
                             <i class="fa fa-users"></i>
                             <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>studentListing">
+                            <i class="fa fa-id-card"></i>
+                            <span>Student</span>
                         </a>
                     </li>
                     <li>
