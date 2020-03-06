@@ -2,6 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version2X;
+
 /**
  * Class : User (UserController)
  * User Class to control all user related operations.
@@ -360,7 +363,14 @@ class User extends BaseController
                 $this->session->set_flashdata('error', 'Profile updation failed');
             }
 
-            socket_io_message("subscribe", '');
+            require APPPATH . '../vendor/autoload.php';
+
+            $client = new Client(new Version2X(PUSH_NOTIFICATION_ROOT_URL));
+
+            $client->initialize();
+            // send message to connected clients
+            $client->emit('subscribe', '');
+            $client->close();
 
             redirect('profile/'.$active);
         }
