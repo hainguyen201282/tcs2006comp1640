@@ -222,9 +222,9 @@
 
               // socket.emit('subscribe', {abc: 111});
 
-              // socket.on('subscribe_callback', (data) => {
-              //   console.log(data)
-              // });
+              socket.on('subscribe_callback', (data) => {
+                console.log(data)
+              });
           })
       </script>
     </aside>
