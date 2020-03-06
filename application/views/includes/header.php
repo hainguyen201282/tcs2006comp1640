@@ -210,12 +210,11 @@
       <!-- page script -->
       <script>
           $(function () {
-              // let ipAddress = "<?= $_SERVER['HTTP_HOST']; ?>";
+              let ipAddress = "<?= $_SERVER['HTTP_HOST']; ?>";
 
-              // if (ipAddress == "::1") {
-              //     ipAddress = "localhost"
-              // }
-              const ipAddress = "localhost"
+              if (ipAddress == "::1") {
+                  ipAddress = "localhost"
+              }
 
               const port = "3000";
               const socketIoAddress = `http://` + ipAddress + `:` + port;
