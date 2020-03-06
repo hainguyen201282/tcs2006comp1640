@@ -217,7 +217,7 @@
               }
 
               const port = "3000";
-              const socketIoAddress = `http://${ipAddress}:${port}`;
+              const socketIoAddress = `http://` + ipAddress + `:` + port;
               const socket = io(socketIoAddress);
 
               socket.emit('subscribe', {abc: 111});
