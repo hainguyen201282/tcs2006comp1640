@@ -369,7 +369,7 @@ class User extends BaseController
 
             $client->initialize();
             // send message to connected clients
-            $client->emit('subscribe', '');
+            $client->emit('subscribe', ['data' => 'abc']);
             $client->close();
 
             redirect('profile/'.$active);
