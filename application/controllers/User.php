@@ -360,6 +360,8 @@ class User extends BaseController
                 $this->session->set_flashdata('error', 'Profile updation failed');
             }
 
+            socket_io_message("subscribe", '');
+
             redirect('profile/'.$active);
         }
     }

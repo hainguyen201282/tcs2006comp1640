@@ -78,6 +78,18 @@ if (!function_exists("do_post_request_json")) {
     }
 }
 
+if (!function_exists("socket_io_message")) {
+    function socket_io_message($message, $data) {
+        $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+        $result = socket_connect($socket, $_SERVER['HTTP_HOST'], 3000);
+        if(!$result) {
+            die('cannot connect '.socket_strerror(socket_last_error()).PHP_EOL);
+        }
+        $bytes = socket_write($socket, json_encode(Array("msg" => $message, "data" => $data)));
+        socket_close($socket);
+    }
+}
+
 if (!function_exists("decrypt")) {
     function decrypt($input, $key_seed)
     {
