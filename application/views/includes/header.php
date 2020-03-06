@@ -191,3 +191,26 @@
         </section>
         <!-- /.sidebar -->
       </aside>
+
+<!-- Socket.IO -->
+<script src="<?= base_url() ?>/assets/socket.io/dist/socket.io.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        let ipAddress = "<?= $_SERVER['HTTP_HOST']; ?>";
+
+        if (ipAddress == "::1") {
+            ipAddress = "localhost"
+        }
+
+        const port = "3000";
+        const socketIoAddress = `http://${ipAddress}:${port}`;
+        const socket = io(socketIoAddress);
+
+        socket.emit('subscribe', {abc: 111});
+
+        socket.on('subscribe_callback', (data) => {
+          console.log(data)
+        });
+    })
+</script>
