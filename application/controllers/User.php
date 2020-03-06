@@ -365,7 +365,7 @@ class User extends BaseController
 
             require APPPATH . '../vendor/autoload.php';
 
-            $client = new Client(new Version2X(PUSH_NOTIFICATION_ROOT_URL));
+            $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));
 
             $client->initialize();
             // send message to connected clients
