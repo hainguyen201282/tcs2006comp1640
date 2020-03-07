@@ -369,7 +369,7 @@ class User extends BaseController
 
             $client->initialize();
             // send message to connected clients
-            $client->emit('subscribe', ['data' => 'abc']);
+            $client->emit('subscribe', ['eventName' => 'A staff profile has just updated']);
             $client->close();
 
             redirect('profile/'.$active);
