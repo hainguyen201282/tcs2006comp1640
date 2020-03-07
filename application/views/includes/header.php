@@ -220,7 +220,7 @@
               const socketIoAddress = `http://` + ipAddress + `:` + port;
               const socket = io(socketIoAddress);
 
-              socket.emit('subscribe', {abc: 111});
+              // socket.emit('subscribe', {abc: 111});
 
               socket.on('subscribe_callback', (data) => {
                 console.log(data)
