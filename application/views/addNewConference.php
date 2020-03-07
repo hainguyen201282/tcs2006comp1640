@@ -2,8 +2,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Student Management
-            <small>Add / Edit Student</small>
+            <i class="fa fa-users"></i> Conference Management
+            <small>Add / Edit Conference</small>
         </h1>
     </section>
 
@@ -14,82 +14,65 @@
             <div class="col-md-8">
                 <!-- general form elements -->
 
-
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Enter Student Details</h3>
+                        <h3 class="box-title">Enter Conference Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addUser" action="<?php echo base_url() ?>submitAddStudent" method="post"
+                    <form role="form" id="addConference" action="<?php echo base_url() ?>submitAddConference" method="post"
                           role="form">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="fname">Full Name</label>
+                                        <label for="fname">Appointment Time</label>
                                         <input type="text" class="form-control required"
-                                               value="<?php echo set_value('fname'); ?>" id="fname" name="fname"
-                                               maxlength="128">
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Email address</label>
-                                        <input type="text" class="form-control required email" id="email"
-                                               value="<?php echo set_value('email'); ?>" name="email" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control required" id="password"
-                                               name="password" maxlength="20">
+                                               value="<?php echo set_value('appointmentTime'); ?>"
+                                               id="appointmentTime" name="appointmentTime" maxlength="128">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="cpassword">Confirm Password</label>
-                                        <input type="password" class="form-control required equalTo" id="cpassword"
-                                               name="cpassword" maxlength="20">
+                                        <label for="email">Location</label>
+                                        <input type="text" class="form-control required"
+                                               value="<?php echo set_value('location'); ?>"
+                                               id="email" name="location" maxlength="200">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mobile">Mobile Number</label>
-                                        <input type="text" class="form-control required digits" id="mobile"
-                                               value="<?php echo set_value('mobile'); ?>" name="mobile" maxlength="10">
+                                        <label for="password">Topic</label>
+                                        <input type="text" class="form-control required"
+                                               value="<?php echo set_value('topic'); ?>"
+                                               id="topic" name="topic" maxlength="50">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mobile">Gender</label>
-                                        <input type="text" class="form-control required" id="gender"
-                                               value="<?php echo set_value('gender'); ?>" name="gender" maxlength="10">
+                                        <label for="cpassword">Type</label>
+                                        <input type="text" class="form-control required"
+                                               value="<?php echo set_value('type'); ?>"
+                                               id="type" name="type" maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mobile">Status</label>
+                                        <input type="text" class="form-control required"
+                                               value="<?php echo set_value('cstatus'); ?>"
+                                               id="cstatus" name="cstatus"  maxlength="200">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="role">Role</label>
-                                        <select class="form-control required" id="role" name="role">
-                                            <option value="0">Select Role</option>
-                                            <?php
-                                            if (!empty($roles)) {
-                                                foreach ($roles as $rl) {
-                                                    ?>
-                                                    <option value="<?php echo $rl->roleId ?>" <?php if ($rl->roleId == set_value('role')) {
-                                                        echo "selected=selected";
-                                                    } ?>><?php echo $rl->role ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
+                                        <label for="mobile">Description</label>
+                                        <textarea class="form-control"  aria-label="With textarea"
+                                                  id="description" name="description" maxlength="200"><?php echo set_value('description'); ?></textarea>
                                     </div>
                                 </div>
                             </div>

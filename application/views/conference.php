@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Student Management
+            <i class="fa fa-users"></i> Conference Management
             <small>Add, Edit, Delete</small>
         </h1>
     </section>
@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"><i class="fa fa-plus"></i> Add New</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewConference"><i class="fa fa-plus"></i> Add New</a>
                 </div>
             </div>
         </div>
@@ -18,9 +18,9 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Students List</h3>
+                        <h3 class="box-title">Conference List</h3>
                         <div class="box-tools">
-                            <form action="<?php echo base_url() ?>studentListing" method="POST" id="searchList">
+                            <form action="<?php echo base_url() ?>conferenceListing" method="POST" id="searchList">
                                 <div class="input-group">
                                     <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
                                     <div class="input-group-btn">
@@ -33,31 +33,33 @@
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Gender</th>
-                                <th>Role</th>
+                                <th>ApointmentTime</th>
+                                <th>Location</th>
+                                <th>Topic</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Description</th>
                                 <th>Created On</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             <?php
-                            if(!empty($studentRecords))
+                            if(!empty($conferenceRecords))
                             {
-                                foreach($studentRecords as $record)
+                                foreach($conferenceRecords as $record)
                                 {
                                     ?>
                                     <tr>
-                                        <td><?php echo $record->name ?></td>
-                                        <td><?php echo $record->email ?></td>
-                                        <td><?php echo $record->mobile ?></td>
-                                        <td><?php echo $record->gender ?></td>
-                                        <td><?php echo $record->role ?></td>
+                                        <td><?php echo $record->appointmentTime ?></td>
+                                        <td><?php echo $record->location ?></td>
+                                        <td><?php echo $record->topic ?></td>
+                                        <td><?php echo $record->type ?></td>
+                                        <td><?php echo $record->cstatus ?></td>
+                                        <td><?php echo $record->description ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-sm btn-primary" href="<?= base_url().'login-history/'.$record->studentId; ?>" title="Login history"><i class="fa fa-history"></i></a> |
-                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldStudent/'.$record->studentId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="<?php echo $record->studentId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-sm btn-primary" href="<?= base_url().'login-history/'.$record->id; ?>" title="Login history"><i class="fa fa-history"></i></a> |
+                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldConference/'.$record->id; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="<?php echo $record->id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php
@@ -82,7 +84,7 @@
             e.preventDefault();
             var link = jQuery(this).get(0).href;
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "studentListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "referenceListing/" + value);
             jQuery("#searchList").submit();
         });
     });

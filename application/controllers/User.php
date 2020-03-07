@@ -220,9 +220,15 @@ class User extends BaseController
                 }
                 else
                 {
-                    $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId,
-                        'name'=>ucwords($name), 'mobile'=>$mobile, 'updatedBy'=>$this->vendorId, 
-                        'updatedDtm'=>date('Y-m-d H:i:s'));
+                    $userInfo = array(
+                        'email'=>$email,
+                        'password'=>getHashedPassword($password),
+                        'roleId'=>$roleId,
+                        'name'=>ucwords($name),
+                        'mobile'=>$mobile,
+                        'updatedBy'=>$this->vendorId,
+                        'updatedDtm'=>date('Y-m-d H:i:s')
+                    );
                 }
                 
                 $result = $this->user_model->editUser($userInfo, $userId);

@@ -62,29 +62,41 @@ $route['dashboard'] = 'user';
 $route['logout'] = 'user/logout';
 $route['userListing'] = 'user/userListing';
 $route['userListing/(:num)'] = "user/userListing/$1";
-//$route['addNew'] = "user/addNew";
+$route['addNew'] = "user/addNew";
 $route['addNewUser'] = "user/addNewUser";
-//$route['editOld'] = "user/editOld";
-//$route['editOld/(:num)'] = "user/editOld/$1";
-//$route['editUser'] = "user/editUser";
-//$route['deleteUser'] = "user/deleteUser";
+$route['editOld'] = "user/editOld";
+$route['editOld/(:num)'] = "user/editOld/$1";
+$route['editUser'] = "user/editUser";
+$route['deleteUser'] = "user/deleteUser";
 $route['profile'] = "user/profile";
 $route['profile/(:any)'] = "user/profile/$1";
 $route['profileUpdate'] = "user/profileUpdate";
 $route['profileUpdate/(:any)'] = "user/profileUpdate/$1";
 
+//Dat-doing
 $route['studentListing'] = 'student/studentListing';
 $route['studentListing/(:num)'] = "student/studentListing/$1";
-//$route['addNew'] = "student/addNew";
 $route['addNewStudent'] = "student/addNewStudent";
-$route['editOld'] = "student/editOld";
-$route['editOld/(:num)'] = "student/editOld/$1";
-$route['editUser'] = "student/editUser";
-$route['deleteUser'] = "student/deleteUser";
+$route['submitAddStudent'] = "student/submitAddStudent";
+$route['editOldStudent'] = "student/editOldStudent";
+$route['editOldStudent/(:num)'] = "student/editOldStudent/$1";
+$route['editStudent'] = "student/editStudent";
+//$route['deleteUser'] = "student/deleteUser";
 //$route['profile'] = "student/profile";
 //$route['profile/(:any)'] = "student/profile/$1";
 //$route['profileUpdate'] = "student/profileUpdate";
 //$route['profileUpdate/(:any)'] = "student/profileUpdate/$1";
+
+//$route['conference'] = 'conference';
+$route['conferenceListing'] = 'conference/conferenceListing';
+$route['conferenceListing/(:num)'] = "conference/conferenceListing/$1";
+$route['addNewConference'] = "conference/addNewConference";
+$route['submitAddConference'] = "conference/submitAddConference";
+$route['deleteConference'] = "conference/deleteConference";
+$route['editConference'] = "conference/editConference";
+$route['editOldConference'] = "conference/editOldConference";
+$route['editOldConference/(:num)'] = "conference/editOldConference/$1";
+//End of Dat-doing
 
 $route['loadChangePass'] = "user/loadChangePass";
 $route['changePassword'] = "user/changePassword";
