@@ -209,7 +209,7 @@
       <script src="<?= base_url() ?>/assets/socket.io/dist/socket.io.js"></script>
       <!-- page script -->
       <script>
-          $(function () {
+          // $(function () {
               let ipAddress = "<?= $_SERVER['HTTP_HOST']; ?>";
 
               if (ipAddress == "::1") {
@@ -225,6 +225,6 @@
               socket.on('subscribe_callback', (data) => {
                 console.log(data)
               });
-          })
+          // })
       </script>
     </aside>
