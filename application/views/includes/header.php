@@ -198,6 +198,12 @@
                             <span>Reports</span>
                         </a>
                     </li>
+                    <li>
+                    <a href="<?php echo base_url(); ?>blog">
+                            <i class="fa fa-files-o"></i>
+                            <span>Blogs</span>
+                        </a>
+                    </li>
                     <?php
                 }
                 ?>
