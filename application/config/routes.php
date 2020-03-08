@@ -75,7 +75,7 @@ $route['profileUpdate/(:any)'] = "user/profileUpdate/$1";
 
 $route['studentListing'] = 'student/studentListing';
 $route['studentListing/(:num)'] = "student/studentListing/$1";
-//$route['addNew'] = "student/addNew";
+$route['addNew'] = "student/addNew";
 $route['addNewStudent'] = "student/addNewStudent";
 $route['editOld'] = "student/editOld";
 $route['editOld/(:num)'] = "student/editOld/$1";
@@ -101,6 +101,10 @@ $route['resetPasswordConfirmUser'] = "login/resetPasswordConfirmUser";
 $route['resetPasswordConfirmUser/(:any)'] = "login/resetPasswordConfirmUser/$1";
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = "login/resetPasswordConfirmUser/$1/$2";
 $route['createPasswordUser'] = "login/createPasswordUser";
+
+$route['blog'] = "blog";
+$route['addNewBlog'] = "blog/addNewBlog";
+$route['submitNewBlog'] = "blog/submitNewBlog";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
