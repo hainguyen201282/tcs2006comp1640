@@ -194,8 +194,14 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>conferenceListing">
-                            <i class="fa fa-comments"></i>
+                            <i class="fa fa-handshake-o"></i>
                             <span>Conference</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>messageListing">
+                            <i class="fa fa-comments"></i>
+                            <span>Message</span>
                         </a>
                     </li>
                     <li>

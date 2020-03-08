@@ -14,7 +14,7 @@ class Conference extends BaseController
         $this->isLoggedIn();
     }
 
-    public function index()
+      public function index()
     {
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
 

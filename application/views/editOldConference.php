@@ -12,7 +12,7 @@ $description = $conferenceInfo->description;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Conference Management
+            <i class="fa fa-handshake-o"></i> Conference Management
             <small>Add / Edit Conference</small>
         </h1>
     </section>

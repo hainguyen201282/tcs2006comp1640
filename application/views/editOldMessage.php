@@ -1,9 +1,17 @@
+<?php
+$id = $messageInfo->id;
+$receiverId = $messageInfo->receiverId;
+$subject = $messageInfo->subject;
+$messageStatus = $messageInfo->messageStatus;
+$messageContent = $messageInfo->messageContent;
+?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-handshake-o"></i> Conference Management
-            <small>Add / Edit Conference</small>
+            <i class="fa fa-users"></i> Message Management
+            <small>Add / Edit Message</small>
         </h1>
     </section>
 
@@ -16,27 +24,28 @@
 
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Enter Conference Details</h3>
+                        <h3 class="box-title">Enter Message Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
+
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addConference" action="<?php echo base_url() ?>submitAddConference" method="post"
-                          role="form">
+                    <form role="form" id="editMessage" action="<?php echo base_url() ?>editMessage" method="post" role="form">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="fname">Appointment Time</label>
+                                        <label for="fname">ReceiverId</label>
                                         <input type="text" class="form-control required"
-                                               value="<?php echo set_value('appointmentTime'); ?>"
-                                               id="appointmentTime" name="appointmentTime" maxlength="128">
+                                               value="<?php echo $receiverId; ?>"
+                                               id="appointmentTime" name="appointmentTime" placeholder="Appointment Time" maxlength="128">
+                                        <input type="hidden" value="<?php echo $id; ?>" name="id" id="id" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Location</label>
+                                        <label for="email">Subject</label>
                                         <input type="text" class="form-control required"
-                                               value="<?php echo set_value('location'); ?>"
+                                               value="<?php echo $subject; ?>"
                                                id="email" name="location" maxlength="200">
                                     </div>
                                 </div>
@@ -44,43 +53,28 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="password">Topic</label>
+                                        <label for="password">Message Status</label>
                                         <input type="text" class="form-control required"
-                                               value="<?php echo set_value('topic'); ?>"
+                                               value="<?php echo $messageStatus; ?>"
                                                id="topic" name="topic" maxlength="50">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="cpassword">Type</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('type'); ?>"
-                                               id="type" name="type" maxlength="50">
-                                    </div>
-                                </div>
                             </div>
+                            </br>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="mobile">Status</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('cstatus'); ?>"
-                                               id="cstatus" name="cstatus"  maxlength="200">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="mobile">Description</label>
-                                        <textarea class="form-control"  aria-label="With textarea"
-                                                  id="description" name="description" maxlength="200"><?php echo set_value('description'); ?></textarea>
+                                        <label for="mobile">Message Content</label>
+                                        <textarea rows="15" class="form-control"  aria-label="With textarea"
+                                                  id="messageContent" name="messageContent" maxlength="200"><?php echo set_value('messageContent'); ?></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" value="Submit"/>
-                            <input type="reset" class="btn btn-default" value="Reset"/>
+<!--                            <input type="submit" class="btn btn-primary" value="Send"/>-->
+<!--                            <input type="reset" class="btn btn-default" value="Reset"/>-->
                         </div>
                     </form>
                 </div>
@@ -89,7 +83,8 @@
                 <?php
                 $this->load->helper('form');
                 $error = $this->session->flashdata('error');
-                if ($error) {
+                if($error)
+                {
                     ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -98,7 +93,8 @@
                 <?php } ?>
                 <?php
                 $success = $this->session->flashdata('success');
-                if ($success) {
+                if($success)
+                {
                     ?>
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -114,7 +110,8 @@
             </div>
         </div>
     </section>
-
 </div>
-<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
+
+<script src="<?php echo base_url(); ?>assets/js/editMessage.js" type="text/javascript"></script>
+
 

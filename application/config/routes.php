@@ -73,7 +73,7 @@ $route['profile/(:any)'] = "user/profile/$1";
 $route['profileUpdate'] = "user/profileUpdate";
 $route['profileUpdate/(:any)'] = "user/profileUpdate/$1";
 
-//Dat-doing
+//start Dat-doing
 $route['studentListing'] = 'student/studentListing';
 $route['studentListing/(:num)'] = "student/studentListing/$1";
 $route['addNewStudent'] = "student/addNewStudent";
@@ -92,10 +92,20 @@ $route['conferenceListing'] = 'conference/conferenceListing';
 $route['conferenceListing/(:num)'] = "conference/conferenceListing/$1";
 $route['addNewConference'] = "conference/addNewConference";
 $route['submitAddConference'] = "conference/submitAddConference";
-$route['deleteConference'] = "conference/deleteConference";
 $route['editConference'] = "conference/editConference";
 $route['editOldConference'] = "conference/editOldConference";
 $route['editOldConference/(:num)'] = "conference/editOldConference/$1";
+$route['deleteConference'] = "conference/deleteConference";
+
+$route['messageListing'] = 'message/messageListing';
+$route['messageListing/(:num)'] = "message/messageListing/$1";
+$route['addNewMessage'] = "message/addNewMessage";
+$route['submitAddMessage'] = "message/submitAddMessage";
+$route['editMessage'] = "message/editMessage";
+$route['editOldMessage'] = "message/editOldMessage";
+$route['editOldMessage/(:num)'] = "message/editOldMessage/$1";
+$route['deleteMessage'] = "message/deleteMessage";
+
 //End of Dat-doing
 
 $route['loadChangePass'] = "user/loadChangePass";

@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Conference Management
+            <i class="fa fa-handshake-o"></i> Conference Management
             <small>Add, Edit, Delete</small>
         </h1>
     </section>
@@ -59,7 +59,7 @@
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-primary" href="<?= base_url().'login-history/'.$record->id; ?>" title="Login history"><i class="fa fa-history"></i></a> |
                                             <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldConference/'.$record->id; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="<?php echo $record->id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-sm btn-danger deleteConference" href="#" data-conferenceId="<?php echo $record->id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php
@@ -77,7 +77,40 @@
         </div>
     </section>
 </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
+
+<!--<script type="text/javascript">-->
+<!--    jQuery(document).ready(function(){-->
+<!--        jQuery(document).on("click", ".deleteConference", function(){-->
+<!--            var userId = $(this).data("conferenceId"),-->
+<!--                hitURL = baseURL + "deleteConference",-->
+<!--                currentRow = $(this);-->
+<!---->
+<!--            var confirmation = confirm("Are you sure to delete this conference ?");-->
+<!---->
+<!--            if(confirmation)-->
+<!--            {-->
+<!--                jQuery.ajax({-->
+<!--                    type : "POST",-->
+<!--                    dataType : "json",-->
+<!--                    url : hitURL,-->
+<!--                    data : { conferenceId : conferenceId }-->
+<!--                }).done(function(data){-->
+<!--                    console.log(data);-->
+<!--                    currentRow.parents('tr').remove();-->
+<!--                    if(data.status = true) { alert("User successfully deleted"); }-->
+<!--                    else if(data.status = false) { alert("User deletion failed"); }-->
+<!--                    else { alert("Access denied..!"); }-->
+<!--                });-->
+<!--            }-->
+<!--        });-->
+<!---->
+<!--        jQuery(document).on("click", ".searchList", function(){-->
+<!---->
+<!--        });-->
+<!---->
+<!--    });-->
+<!--</script>-->
+
 <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery('ul.pagination li a').click(function (e) {
