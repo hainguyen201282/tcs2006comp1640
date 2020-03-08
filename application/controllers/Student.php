@@ -24,13 +24,13 @@ class Student extends BaseController
     /**
      * This function used to load the first screen of the student
      */
+
     public function index()
     {
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
 
         $this->loadViews("dashboard", $this->global, NULL , NULL);
     }
-
     /**
      * This function is used to load the student list
      */
@@ -62,7 +62,7 @@ class Student extends BaseController
     /**
      * This function is used to load the add new form
      */
-    function addNew()
+    function addNewStudent()
     {
         if($this->isAdmin() == TRUE)
         {
@@ -75,7 +75,7 @@ class Student extends BaseController
 
             $this->global['pageTitle'] = 'CodeInsect : Add New Student';
 
-            $this->loadViews("addNew", $this->global, $data, NULL);
+            $this->loadViews("addNewStudent", $this->global, $data, NULL);
         }
     }
 
@@ -100,7 +100,7 @@ class Student extends BaseController
     /**
      * This function is used to add new student to the system
      */
-    function addNewStudent()
+    function submitAddStudent()
     {
         if($this->isAdmin() == TRUE)
         {
@@ -115,11 +115,12 @@ class Student extends BaseController
             $this->form_validation->set_rules('password','Password','required|max_length[20]');
             $this->form_validation->set_rules('cpassword','Confirm Password','trim|required|matches[password]|max_length[20]');
             $this->form_validation->set_rules('role','Role','trim|required|numeric');
+            $this->form_validation->set_rules('gender', 'Gender', 'trim|required|max_length[11]');
             $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
 
             if($this->form_validation->run() == FALSE)
             {
-                $this->addNew();
+                $this->addNewStudent();
             }
             else
             {
@@ -127,13 +128,14 @@ class Student extends BaseController
                 $email = strtolower($this->security->xss_clean($this->input->post('email')));
                 $password = $this->input->post('password');
                 $roleId = $this->input->post('role');
+                $gender = $this->input->post('gender');
                 $mobile = $this->security->xss_clean($this->input->post('mobile'));
 
-                $studentInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId, 'name'=> $name,
+                $studentInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId, 'gender'=>$gender, 'name'=> $name,
                     'mobile'=>$mobile, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
 
                 $this->load->model('student_model');
-                $result = $this->student_model->addNewStudent($studentInfo);
+                $result = $this->student_model->submitAddStudent($studentInfo);
 
                 if($result > 0)
                 {
@@ -144,7 +146,7 @@ class Student extends BaseController
                     $this->session->set_flashdata('error', 'Student creation failed');
                 }
 
-                redirect('addNew');
+                redirect('addNewStudent');
             }
         }
     }
@@ -154,7 +156,7 @@ class Student extends BaseController
      * This function is used load student edit information
      * @param number $studentId : Optional : This is student id
      */
-    function editOld($studentId = NULL)
+    function editOldStudent($studentId = NULL)
     {
         if($this->isAdmin() == TRUE || $studentId == 1)
         {
@@ -168,11 +170,12 @@ class Student extends BaseController
             }
 
             $data['roles'] = $this->student_model->getStudentRoles();
+
             $data['studentInfo'] = $this->student_model->getStudentInfo($studentId);
 
             $this->global['pageTitle'] = 'CodeInsect : Edit Student';
 
-            $this->loadViews("editOld", $this->global, $data, NULL);
+            $this->loadViews("editOldStudent", $this->global, $data, NULL);
         }
     }
 
@@ -197,11 +200,12 @@ class Student extends BaseController
             $this->form_validation->set_rules('password','Password','matches[cpassword]|max_length[20]');
             $this->form_validation->set_rules('cpassword','Confirm Password','matches[password]|max_length[20]');
             $this->form_validation->set_rules('role','Role','trim|required|numeric');
+            $this->form_validation->set_rules('gender','Gender','trim|required|max_length[11]');
             $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
 
             if($this->form_validation->run() == FALSE)
             {
-                $this->editOld($studentId);
+                $this->editOldStudent($studentId);
             }
             else
             {
@@ -209,19 +213,25 @@ class Student extends BaseController
                 $email = strtolower($this->security->xss_clean($this->input->post('email')));
                 $password = $this->input->post('password');
                 $roleId = $this->input->post('role');
+                $gender = $this->input->post('gender');
                 $mobile = $this->security->xss_clean($this->input->post('mobile'));
 
                 $studentInfo = array();
 
                 if(empty($password))
                 {
-                    $studentInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name,
+                    $studentInfo = array('email'=>$email, 'roleId'=>$roleId, 'gender'=>$gender, 'name'=>$name,
                         'mobile'=>$mobile, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
                 }
                 else
                 {
-                    $studentInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId,
-                        'name'=>ucwords($name), 'mobile'=>$mobile, 'updatedBy'=>$this->vendorId,
+                    $studentInfo = array(
+                        'email'=>$email,
+                        'password'=>getHashedPassword($password),
+                        'roleId'=>$roleId, 'gender'=>$gender,
+                        'name'=>ucwords($name),
+                        'mobile'=>$mobile,
+                        'updatedBy'=>$this->vendorId,
                         'updatedDtm'=>date('Y-m-d H:i:s'));
                 }
 

@@ -1,9 +1,19 @@
+<?php
+$id = $conferenceInfo->id;
+$appointmentTime = $conferenceInfo->appointmentTime;
+$location = $conferenceInfo->location;
+$topic = $conferenceInfo->topic;
+$type = $conferenceInfo->type;
+$cstatus = $conferenceInfo->cstatus;
+$description = $conferenceInfo->description;
+?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Student Management
-            <small>Add / Edit Student</small>
+            <i class="fa fa-users"></i> Conference Management
+            <small>Add / Edit Conference</small>
         </h1>
     </section>
 
@@ -14,82 +24,73 @@
             <div class="col-md-8">
                 <!-- general form elements -->
 
-
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Enter Student Details</h3>
+                        <h3 class="box-title">Enter Conference Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
+
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addUser" action="<?php echo base_url() ?>submitAddStudent" method="post"
-                          role="form">
+                    <form role="form" id="editConference" action="<?php echo base_url() ?>editConference" method="post" role="form">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="fname">Full Name</label>
+                                        <label for="fname">Appointment Time</label>
                                         <input type="text" class="form-control required"
-                                               value="<?php echo set_value('fname'); ?>" id="fname" name="fname"
-                                               maxlength="128">
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Email address</label>
-                                        <input type="text" class="form-control required email" id="email"
-                                               value="<?php echo set_value('email'); ?>" name="email" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control required" id="password"
-                                               name="password" maxlength="20">
+                                               value="<?php echo $appointmentTime; ?>"
+                                               id="appointmentTime" name="appointmentTime" placeholder="Appointment Time" maxlength="128">
+                                        <input type="hidden" value="<?php echo $id; ?>" name="id" id="id" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="cpassword">Confirm Password</label>
-                                        <input type="password" class="form-control required equalTo" id="cpassword"
-                                               name="cpassword" maxlength="20">
+                                        <label for="email">Location</label>
+                                        <input type="text" class="form-control required"
+                                               value="<?php echo $location; ?>"
+                                               id="email" name="location" maxlength="200">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mobile">Mobile Number</label>
-                                        <input type="text" class="form-control required digits" id="mobile"
-                                               value="<?php echo set_value('mobile'); ?>" name="mobile" maxlength="10">
+                                        <label for="password">Topic</label>
+                                        <input type="text" class="form-control required"
+                                               value="<?php echo $topic; ?>"
+                                               id="topic" name="topic" maxlength="50">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mobile">Gender</label>
-                                        <input type="text" class="form-control required" id="gender"
-                                               value="<?php echo set_value('gender'); ?>" name="gender" maxlength="10">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="role">Role</label>
-                                        <select class="form-control required" id="role" name="role">
-                                            <option value="0">Select Role</option>
-                                            <?php
-                                            if (!empty($roles)) {
-                                                foreach ($roles as $rl) {
-                                                    ?>
-                                                    <option value="<?php echo $rl->roleId ?>" <?php if ($rl->roleId == set_value('role')) {
-                                                        echo "selected=selected";
-                                                    } ?>><?php echo $rl->role ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
+                                        <label for="cpassword">Type</label>
+                                        <select class="form-control" id="type" name="type">
+                                            <option value="0">Select Type</option>
+                                            <option value="Real">Real</option>
+                                            <option value="Virtual">Virtual</option>
+                                            <?php if(isset($_POST["type"])) { echo $_POST["type"]; } ?>
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mobile">Status</label>
+                                        <select class="form-control" id="cstatus" name="cstatus">
+                                            <option value="0">Select Status</option>
+                                            <option value="Activated">Activated</option>
+                                            <option value="Deactivated">Deactivated</option>
+                                            <?php if(isset($_POST["status"])) { echo $_POST["status"]; } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mobile">Description</label>
+                                        <textarea class="form-control"  aria-label="With textarea"
+                                                  id="description" name="description" maxlength="200"><?php echo $description; ?>
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +107,8 @@
                 <?php
                 $this->load->helper('form');
                 $error = $this->session->flashdata('error');
-                if ($error) {
+                if($error)
+                {
                     ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -115,7 +117,8 @@
                 <?php } ?>
                 <?php
                 $success = $this->session->flashdata('success');
-                if ($success) {
+                if($success)
+                {
                     ?>
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -131,7 +134,8 @@
             </div>
         </div>
     </section>
-
 </div>
-<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
+
+<script src="<?php echo base_url(); ?>assets/js/editConference.js" type="text/javascript"></script>
+
 

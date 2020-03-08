@@ -99,7 +99,7 @@ class Student_model extends CI_Model
      * This function is used to add new student to system
      * @return number $insert_id : This is last inserted id
      */
-    function addNewStudent($studentInfo)
+    function submitAddStudent($studentInfo)
     {
         $this->db->trans_start();
         $this->db->insert('tbl_students', $studentInfo);
@@ -118,7 +118,7 @@ class Student_model extends CI_Model
      */
     function getStudentInfo($studentId)
     {
-        $this->db->select('studentId, name, email, mobile, roleId');
+        $this->db->select('studentId, name, email, mobile, roleId, gender');
         $this->db->from('tbl_students');
         $this->db->where('isDeleted', 0);
         $this->db->where('roleId !=', 1);

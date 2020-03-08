@@ -189,7 +189,13 @@
                     <li>
                         <a href="<?php echo base_url(); ?>studentListing">
                             <i class="fa fa-id-card"></i>
-                            <span>Student</span>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>conferenceListing">
+                            <i class="fa fa-comments"></i>
+                            <span>Conference</span>
                         </a>
                     </li>
                     <li>
