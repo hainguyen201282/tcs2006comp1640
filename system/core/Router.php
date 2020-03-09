@@ -65,6 +65,13 @@ class CI_Router {
 	public $routes =	array();
 
 	/**
+	 * List of permissionRoleArr
+	 *
+	 * @var	array
+	 */
+	public $permissionRoleArr =	array();
+
+	/**
 	 * Current class name
 	 *
 	 * @var	string
@@ -170,10 +177,18 @@ class CI_Router {
 		// Validate & get reserved routes
 		if (isset($route) && is_array($route))
 		{
-			isset($route['default_controller']) && $this->default_controller = $route['default_controller'];
-			isset($route['translate_uri_dashes']) && $this->translate_uri_dashes = $route['translate_uri_dashes'];
+			isset($route['default_controller'][0]) && $this->default_controller = $route['default_controller'][0];
+			isset($route['translate_uri_dashes'][0]) && $this->translate_uri_dashes = $route['translate_uri_dashes'][0];
 			unset($route['default_controller'], $route['translate_uri_dashes']);
-			$this->routes = $route;
+
+			$routeArr = [];
+			$permissionRoleArr = [];
+			foreach (array_keys($route) as $k => $key) {
+			 	$routeArr[$key] = $route[$key][0];
+			 	$permissionRoleArr[$key] = $route[$key][1];
+			 };
+			$this->routes = $routeArr;
+			$this->permissionRoleArr = $permissionRoleArr;
 		}
 
 		// Are query strings enabled in the config file? Normally CI doesn't utilize query strings
@@ -398,6 +413,8 @@ class CI_Router {
 			// Does the RegEx match?
 			if (preg_match('#^'.$key.'$#', $uri, $matches))
 			{
+				$this->uri->roles = $this->permissionRoleArr[$key];
+
 				// Are we using callbacks to process back-references?
 				if ( ! is_string($val) && is_callable($val))
 				{

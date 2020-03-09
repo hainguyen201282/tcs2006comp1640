@@ -111,24 +111,8 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
-                <li>
-                    <a href="<?php echo base_url(); ?>dashboard">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-plane"></i>
-                        <span>New Task</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-ticket"></i>
-                        <span>My Tasks</span>
-                    </a>
-                </li>
-                <li class="treeview">
+
+                <!-- <li class="treeview">
                     <a href="#">
                         <i class="fa fa-share"></i> <span>Multilevel</span>
                         <span class="pull-right-container">
@@ -160,26 +144,16 @@
                         </li>
                         <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
                     </ul>
-                </li>
+                </li> -->
+               
                 <?php
-                if ($role == ROLE_ADMIN || $role == ROLE_MANAGER) {
+                if ($role == AUTHORISED_STAFF) {
                     ?>
                     <li>
-                        <a href="#">
-                            <i class="fa fa-thumb-tack"></i>
-                            <span>Task Status</span>
+                        <a href="<?php echo base_url(); ?>dashboard">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-upload"></i>
-                            <span>Task Uploads</span>
-                        </a>
-                    </li>
-                    <?php
-                }
-                if ($role == ROLE_ADMIN) {
-                    ?>
                     <li>
                         <a href="<?php echo base_url(); ?>userListing">
                             <i class="fa fa-users"></i>
@@ -199,9 +173,105 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                    <a href="<?php echo base_url(); ?>blog">
                             <i class="fa fa-files-o"></i>
-                            <span>Reports</span>
+                            <span>Blogs</span>
+                        </a>
+                    </li>
+                    <?php
+                }
+
+                if ($role == STAFF) {
+                    ?>
+                    <li>
+                        <a href="<?php echo base_url(); ?>dashboard">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>userListing">
+                            <i class="fa fa-users"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>studentListing">
+                            <i class="fa fa-id-card"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>conferenceListing">
+                            <i class="fa fa-comments"></i>
+                            <span>Conference</span>
+                        </a>
+                    </li>
+                    <li>
+                    <a href="<?php echo base_url(); ?>blog">
+                            <i class="fa fa-files-o"></i>
+                            <span>Blogs</span>
+                        </a>
+                    </li>
+                    <?php
+                }
+
+                if ($role == TUTOR) {
+                    ?>
+                    <li>
+                        <a href="<?php echo base_url(); ?>dashboard">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>userListing">
+                            <i class="fa fa-users"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>studentListing">
+                            <i class="fa fa-id-card"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>conferenceListing">
+                            <i class="fa fa-comments"></i>
+                            <span>Conference</span>
+                        </a>
+                    </li>
+                    <li>
+                    <a href="<?php echo base_url(); ?>blog">
+                            <i class="fa fa-files-o"></i>
+                            <span>Blogs</span>
+                        </a>
+                    </li>
+                    <?php
+                }
+
+                if ($role == STUDENT) {
+                    ?>
+                    <li>
+                        <a href="<?php echo base_url(); ?>dashboard">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>userListing">
+                            <i class="fa fa-users"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>studentListing">
+                            <i class="fa fa-id-card"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>conferenceListing">
+                            <i class="fa fa-comments"></i>
+                            <span>Conference</span>
                         </a>
                     </li>
                     <li>

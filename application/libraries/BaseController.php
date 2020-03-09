@@ -48,13 +48,17 @@ class BaseController extends CI_Controller {
 			$this->global ['role_text'] = $this->roleText;
 			$this->global ['last_login'] = $this->lastLogin;
 		}
+
+		if (!in_array($this->role, $this->uri->roles)) {
+			$this->loadThis();
+		}
 	}
 	
 	/**
 	 * This function is used to check the access
 	 */
 	function isAdmin() {
-		if ($this->role != ROLE_ADMIN) {
+		if ($this->role != AUTHORISED_STAFF) {
 			return true;
 		} else {
 			return false;
@@ -65,7 +69,7 @@ class BaseController extends CI_Controller {
 	 * This function is used to check the access
 	 */
 	function isTicketter() {
-		if ($this->role != ROLE_ADMIN || $this->role != ROLE_MANAGER) {
+		if ($this->role != AUTHORISED_STAFF || $this->role != STAFF) {
 			return true;
 		} else {
 			return false;
