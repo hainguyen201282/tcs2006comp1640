@@ -12,7 +12,6 @@ class Conference extends BaseController
         parent::__construct();
         $this->load->model('conference_model');
         $this->isLoggedIn();
-        $this->loadThis();
     }
 
     public function index()
