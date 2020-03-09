@@ -407,13 +407,14 @@ class CI_Router {
 				}
 			}
 
+			$originKey = $key;
 			// Convert wildcards to RegEx
 			$key = str_replace(array(':any', ':num'), array('[^/]+', '[0-9]+'), $key);
 
 			// Does the RegEx match?
 			if (preg_match('#^'.$key.'$#', $uri, $matches))
 			{
-				$this->uri->roles = $this->permissionRoleArr[$key];
+				$this->uri->roles = $this->permissionRoleArr[$originKey];
 
 				// Are we using callbacks to process back-references?
 				if ( ! is_string($val) && is_callable($val))
