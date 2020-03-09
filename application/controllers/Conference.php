@@ -23,395 +23,93 @@ class Conference extends BaseController
 
     function addNewConference()
     {
-        
-        $this->load->model('conference_model');
-
-        $this->global['pageTitle'] = 'CodeInsect : Add New Conference';
-
-        $this->loadViews("addNewConference", $this->global,NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
+        if($this->isAdmin() == TRUE)
         {
-            $this->addNewConference();
+            $this->loadThis();
         }
         else
         {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
-
-            $conferenceInfo = array('appointmentTime'=>$appointmentTime, 'location'=>$location, 'topic'=> $topic, 'type'=>$type, 'cstatus'=>$cstatus,
-                'description'=>$description, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
-
             $this->load->model('conference_model');
-            $result = $this->conference_model->submitAddConference($conferenceInfo);
 
-            if($result > 0)
-            {
-                $this->session->set_flashdata('success', 'New Conference created successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference creation failed');
-            }
+            $this->global['pageTitle'] = 'CodeInsect : Add New Conference';
 
-            redirect('addNewConference');
+            $this->loadViews("addNewConference", $this->global,NULL);
         }
-    
-
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
-        $data['searchText'] = $searchText;
-
-        $this->load->library('pagination');
-
-        $count = $this->conference_model->conferenceListingCount($searchText);
-
-        $returns = $this->paginationCompress ( "conferenceListing/", $count, 10 );
-
-        $data['conferenceRecords'] = $this->conference_model->conferenceListing($searchText, $returns["page"], $returns["segment"]);
-
-        $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
-
-        $this->loadViews("conference", $this->global, $data, NULL);
-    
-
-        if($id == null)
-        {
-            redirect('conferenceListing');
-        }
-
-        $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
-
-        $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
-
-        $this->loadViews("editOldConference", $this->global, $data, NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $id = $this->input->post('id');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->editOldConference($id);
-        }
-        else
-        {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
-
-            $ConferenceInfo = array();
-
-            $conferenceInfo = array(
-                'appointmentTime'=>$appointmentTime,
-                'location'=>$location,
-                'topic'=> $topic,
-                'type'=>$type,
-                'cstatus'=>$cstatus,
-                'description'=>$description,
-                'updatedBy'=>$this->vendorId,
-                'updatedDtm'=>date('Y-m-d H:i:s'));
-
-            $result = $this->conference_model->editConference($conferenceInfo, $id);
-
-            if($result == true)
-            {
-                $this->session->set_flashdata('success', 'Conference updated successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference updated failed');
-            }
-
-            redirect('conferenceListing');
-        }
-        
     }
 
     function submitAddConference()
     {
-        
-        $this->load->model('conference_model');
-
-        $this->global['pageTitle'] = 'CodeInsect : Add New Conference';
-
-        $this->loadViews("addNewConference", $this->global,NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
+        if($this->isAdmin() == TRUE)
         {
-            $this->addNewConference();
+            $this->loadThis();
         }
         else
         {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
+            $this->load->library('form_validation');
 
-            $conferenceInfo = array('appointmentTime'=>$appointmentTime, 'location'=>$location, 'topic'=> $topic, 'type'=>$type, 'cstatus'=>$cstatus,
-                'description'=>$description, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
+            $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
+            $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
+            $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
+            $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
+            $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
+            $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
 
-            $this->load->model('conference_model');
-            $result = $this->conference_model->submitAddConference($conferenceInfo);
-
-            if($result > 0)
+            if($this->form_validation->run() == FALSE)
             {
-                $this->session->set_flashdata('success', 'New Conference created successfully');
+                $this->addNewConference();
             }
             else
             {
-                $this->session->set_flashdata('error', 'Conference creation failed');
+                $appointmentTime = $this->input->post('appointmentTime');
+                $location = $this->input->post('location');
+                $topic = $this->input->post('topic');
+                $type = $this->input->post('type');
+                $cstatus = $this->input->post('cstatus');
+                $description = $this->input->post('description');
+
+                $conferenceInfo = array('appointmentTime'=>$appointmentTime, 'location'=>$location, 'topic'=> $topic, 'type'=>$type, 'cstatus'=>$cstatus,
+                    'description'=>$description, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
+
+                $this->load->model('conference_model');
+                $result = $this->conference_model->submitAddConference($conferenceInfo);
+
+                if($result > 0)
+                {
+                    $this->session->set_flashdata('success', 'New Conference created successfully');
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'Conference creation failed');
+                }
+
+                redirect('addNewConference');
             }
-
-            redirect('addNewConference');
         }
-    
-
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
-        $data['searchText'] = $searchText;
-
-        $this->load->library('pagination');
-
-        $count = $this->conference_model->conferenceListingCount($searchText);
-
-        $returns = $this->paginationCompress ( "conferenceListing/", $count, 10 );
-
-        $data['conferenceRecords'] = $this->conference_model->conferenceListing($searchText, $returns["page"], $returns["segment"]);
-
-        $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
-
-        $this->loadViews("conference", $this->global, $data, NULL);
-    
-
-        if($id == null)
-        {
-            redirect('conferenceListing');
-        }
-
-        $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
-
-        $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
-
-        $this->loadViews("editOldConference", $this->global, $data, NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $id = $this->input->post('id');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->editOldConference($id);
-        }
-        else
-        {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
-
-            $ConferenceInfo = array();
-
-            $conferenceInfo = array(
-                'appointmentTime'=>$appointmentTime,
-                'location'=>$location,
-                'topic'=> $topic,
-                'type'=>$type,
-                'cstatus'=>$cstatus,
-                'description'=>$description,
-                'updatedBy'=>$this->vendorId,
-                'updatedDtm'=>date('Y-m-d H:i:s'));
-
-            $result = $this->conference_model->editConference($conferenceInfo, $id);
-
-            if($result == true)
-            {
-                $this->session->set_flashdata('success', 'Conference updated successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference updated failed');
-            }
-
-            redirect('conferenceListing');
-        }
-        
     }
 
     function conferenceListing()
     {
-        
-        $this->load->model('conference_model');
-
-        $this->global['pageTitle'] = 'CodeInsect : Add New Conference';
-
-        $this->loadViews("addNewConference", $this->global,NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
+        if($this->isAdmin() == TRUE)
         {
-            $this->addNewConference();
+            $this->loadThis();
         }
         else
         {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
+            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+            $data['searchText'] = $searchText;
 
-            $conferenceInfo = array('appointmentTime'=>$appointmentTime, 'location'=>$location, 'topic'=> $topic, 'type'=>$type, 'cstatus'=>$cstatus,
-                'description'=>$description, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
+            $this->load->library('pagination');
 
-            $this->load->model('conference_model');
-            $result = $this->conference_model->submitAddConference($conferenceInfo);
+            $count = $this->conference_model->conferenceListingCount($searchText);
 
-            if($result > 0)
-            {
-                $this->session->set_flashdata('success', 'New Conference created successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference creation failed');
-            }
+            $returns = $this->paginationCompress ( "conferenceListing/", $count, 10 );
 
-            redirect('addNewConference');
+            $data['conferenceRecords'] = $this->conference_model->conferenceListing($searchText, $returns["page"], $returns["segment"]);
+
+            $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
+
+            $this->loadViews("conference", $this->global, $data, NULL);
         }
-    
-
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
-        $data['searchText'] = $searchText;
-
-        $this->load->library('pagination');
-
-        $count = $this->conference_model->conferenceListingCount($searchText);
-
-        $returns = $this->paginationCompress ( "conferenceListing/", $count, 10 );
-
-        $data['conferenceRecords'] = $this->conference_model->conferenceListing($searchText, $returns["page"], $returns["segment"]);
-
-        $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
-
-        $this->loadViews("conference", $this->global, $data, NULL);
-    
-
-        if($id == null)
-        {
-            redirect('conferenceListing');
-        }
-
-        $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
-
-        $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
-
-        $this->loadViews("editOldConference", $this->global, $data, NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $id = $this->input->post('id');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->editOldConference($id);
-        }
-        else
-        {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
-
-            $ConferenceInfo = array();
-
-            $conferenceInfo = array(
-                'appointmentTime'=>$appointmentTime,
-                'location'=>$location,
-                'topic'=> $topic,
-                'type'=>$type,
-                'cstatus'=>$cstatus,
-                'description'=>$description,
-                'updatedBy'=>$this->vendorId,
-                'updatedDtm'=>date('Y-m-d H:i:s'));
-
-            $result = $this->conference_model->editConference($conferenceInfo, $id);
-
-            if($result == true)
-            {
-                $this->session->set_flashdata('success', 'Conference updated successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference updated failed');
-            }
-
-            redirect('conferenceListing');
-        }
-        
     }
 
     function pageNotFound()
@@ -423,133 +121,23 @@ class Conference extends BaseController
 
     function editOldConference($id = NULL)
     {
-        
-        $this->load->model('conference_model');
-
-        $this->global['pageTitle'] = 'CodeInsect : Add New Conference';
-
-        $this->loadViews("addNewConference", $this->global,NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
+        if($this->isAdmin() == TRUE)
         {
-            $this->addNewConference();
+            $this->loadThis();
         }
         else
         {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
-
-            $conferenceInfo = array('appointmentTime'=>$appointmentTime, 'location'=>$location, 'topic'=> $topic, 'type'=>$type, 'cstatus'=>$cstatus,
-                'description'=>$description, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
-
-            $this->load->model('conference_model');
-            $result = $this->conference_model->submitAddConference($conferenceInfo);
-
-            if($result > 0)
+            if($id == null)
             {
-                $this->session->set_flashdata('success', 'New Conference created successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference creation failed');
+                redirect('conferenceListing');
             }
 
-            redirect('addNewConference');
+            $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
+
+            $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
+
+            $this->loadViews("editOldConference", $this->global, $data, NULL);
         }
-    
-
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
-        $data['searchText'] = $searchText;
-
-        $this->load->library('pagination');
-
-        $count = $this->conference_model->conferenceListingCount($searchText);
-
-        $returns = $this->paginationCompress ( "conferenceListing/", $count, 10 );
-
-        $data['conferenceRecords'] = $this->conference_model->conferenceListing($searchText, $returns["page"], $returns["segment"]);
-
-        $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
-
-        $this->loadViews("conference", $this->global, $data, NULL);
-    
-
-        if($id == null)
-        {
-            redirect('conferenceListing');
-        }
-
-        $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
-
-        $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
-
-        $this->loadViews("editOldConference", $this->global, $data, NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $id = $this->input->post('id');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->editOldConference($id);
-        }
-        else
-        {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
-
-            $ConferenceInfo = array();
-
-            $conferenceInfo = array(
-                'appointmentTime'=>$appointmentTime,
-                'location'=>$location,
-                'topic'=> $topic,
-                'type'=>$type,
-                'cstatus'=>$cstatus,
-                'description'=>$description,
-                'updatedBy'=>$this->vendorId,
-                'updatedDtm'=>date('Y-m-d H:i:s'));
-
-            $result = $this->conference_model->editConference($conferenceInfo, $id);
-
-            if($result == true)
-            {
-                $this->session->set_flashdata('success', 'Conference updated successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference updated failed');
-            }
-
-            redirect('conferenceListing');
-        }
-        
     }
 
 
@@ -558,144 +146,80 @@ class Conference extends BaseController
      */
     function editConference()
     {
-        
-        $this->load->model('conference_model');
-
-        $this->global['pageTitle'] = 'CodeInsect : Add New Conference';
-
-        $this->loadViews("addNewConference", $this->global,NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
+        if($this->isAdmin() == TRUE)
         {
-            $this->addNewConference();
+            $this->loadThis();
         }
         else
         {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
+            $this->load->library('form_validation');
 
-            $conferenceInfo = array('appointmentTime'=>$appointmentTime, 'location'=>$location, 'topic'=> $topic, 'type'=>$type, 'cstatus'=>$cstatus,
-                'description'=>$description, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
+            $id = $this->input->post('id');
 
-            $this->load->model('conference_model');
-            $result = $this->conference_model->submitAddConference($conferenceInfo);
+            $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
+            $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
+            $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
+            $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
+            $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
+            $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
 
-            if($result > 0)
+            if($this->form_validation->run() == FALSE)
             {
-                $this->session->set_flashdata('success', 'New Conference created successfully');
+                $this->editOldConference($id);
             }
             else
             {
-                $this->session->set_flashdata('error', 'Conference creation failed');
+                $appointmentTime = $this->input->post('appointmentTime');
+                $location = $this->input->post('location');
+                $topic = $this->input->post('topic');
+                $type = $this->input->post('type');
+                $cstatus = $this->input->post('cstatus');
+                $description = $this->input->post('description');
+
+                $ConferenceInfo = array();
+
+                $conferenceInfo = array(
+                    'appointmentTime'=>$appointmentTime,
+                    'location'=>$location,
+                    'topic'=> $topic,
+                    'type'=>$type,
+                    'cstatus'=>$cstatus,
+                    'description'=>$description,
+                    'updatedBy'=>$this->vendorId,
+                    'updatedDtm'=>date('Y-m-d H:i:s'));
+
+                $result = $this->conference_model->editConference($conferenceInfo, $id);
+
+                if($result == true)
+                {
+                    $this->session->set_flashdata('success', 'Conference updated successfully');
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'Conference updated failed');
+                }
+
+                redirect('conferenceListing');
             }
-
-            redirect('addNewConference');
         }
-    
-
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
-        $data['searchText'] = $searchText;
-
-        $this->load->library('pagination');
-
-        $count = $this->conference_model->conferenceListingCount($searchText);
-
-        $returns = $this->paginationCompress ( "conferenceListing/", $count, 10 );
-
-        $data['conferenceRecords'] = $this->conference_model->conferenceListing($searchText, $returns["page"], $returns["segment"]);
-
-        $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
-
-        $this->loadViews("conference", $this->global, $data, NULL);
-    
-
-        if($id == null)
-        {
-            redirect('conferenceListing');
-        }
-
-        $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
-
-        $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
-
-        $this->loadViews("editOldConference", $this->global, $data, NULL);
-    
-
-        $this->load->library('form_validation');
-
-        $id = $this->input->post('id');
-
-        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
-        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
-        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
-        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
-        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
-        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
-
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->editOldConference($id);
-        }
-        else
-        {
-            $appointmentTime = $this->input->post('appointmentTime');
-            $location = $this->input->post('location');
-            $topic = $this->input->post('topic');
-            $type = $this->input->post('type');
-            $cstatus = $this->input->post('cstatus');
-            $description = $this->input->post('description');
-
-            $ConferenceInfo = array();
-
-            $conferenceInfo = array(
-                'appointmentTime'=>$appointmentTime,
-                'location'=>$location,
-                'topic'=> $topic,
-                'type'=>$type,
-                'cstatus'=>$cstatus,
-                'description'=>$description,
-                'updatedBy'=>$this->vendorId,
-                'updatedDtm'=>date('Y-m-d H:i:s'));
-
-            $result = $this->conference_model->editConference($conferenceInfo, $id);
-
-            if($result == true)
-            {
-                $this->session->set_flashdata('success', 'Conference updated successfully');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Conference updated failed');
-            }
-
-            redirect('conferenceListing');
-        }
-        
     }
 
     function deleteConference()
     {
-        $id = $this->input->post('id');
-        $conferenceInfo = array('cstatus'=>"Deactivated",'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+        if($this->isAdmin() == TRUE)
+        {
+            echo(json_encode(array('status'=>'access')));
+        }
+        else
+        {
+            $id = $this->input->post('id');
+            $conferenceInfo = array('cstatus'=>"Deactivated",'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
 
-        $result = $this->conference_model->deleteConference($id, $conferenceInfo);
+            $result = $this->conference_model->deleteConference($id, $conferenceInfo);
 
-        if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
-        else { echo(json_encode(array('status'=>FALSE))); }
+            if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
+            else { echo(json_encode(array('status'=>FALSE))); }
+        }
     }
 
 }
