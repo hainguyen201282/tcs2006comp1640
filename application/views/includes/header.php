@@ -188,7 +188,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>studentListing">
-                            <i class="fa fa-id-card"></i>
+                            <i class="fa fa-graduation-cap"></i>
                             <span>Students</span>
                         </a>
                     </li>

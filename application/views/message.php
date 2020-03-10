@@ -2,8 +2,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Message Management
-            <small>Add, Edit, Delete</small>
+            <i class="fa fa-comments"></i> Message Management
+            <small>Send, View Message</small>
         </h1>
     </section>
     <section class="content">

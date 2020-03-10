@@ -63,11 +63,10 @@ $description = $conferenceInfo->description;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="cpassword">Type</label>
+                                        <label for="type">Type</label>
                                         <select class="form-control" id="type" name="type">
-                                            <option value="0">Select Type</option>
-                                            <option value="Real">Real</option>
-                                            <option value="Virtual">Virtual</option>
+                                            <option value="Real"  <?php if($type == "Real") echo "SELECTED";?>>Real</option>
+                                            <option value="Virtual" <?php if($type == "Virtual") echo "SELECTED";?>>Virtual</option>
                                             <?php if(isset($_POST["type"])) { echo $_POST["type"]; } ?>
                                         </select>
                                     </div>
@@ -78,9 +77,8 @@ $description = $conferenceInfo->description;
                                     <div class="form-group">
                                         <label for="mobile">Status</label>
                                         <select class="form-control" id="cstatus" name="cstatus">
-                                            <option value="0">Select Status</option>
-                                            <option value="Activated">Activated</option>
-                                            <option value="Deactivated">Deactivated</option>
+                                            <option value="Activated"  <?php if($cstatus == "Activated") echo "SELECTED";?>>Activated</option>
+                                            <option value="Deactivated"  <?php if($cstatus == "Deactivated") echo "SELECTED";?>>Deactivated</option>
                                             <?php if(isset($_POST["status"])) { echo $_POST["status"]; } ?>
                                         </select>
                                     </div>

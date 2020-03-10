@@ -52,10 +52,13 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="cpassword">Type</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('type'); ?>"
-                                               id="type" name="type" maxlength="50">
+                                        <label for="type">Type</label>
+                                        <select class="form-control" id="type" name="type">
+                                            <option value="0">Select Type</option>
+                                            <option value="Real">Real</option>
+                                            <option value="Virtual">Virtual</option>
+                                            <?php if(isset($_POST["type"])) { echo $_POST["type"]; } ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -63,9 +66,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mobile">Status</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('cstatus'); ?>"
-                                               id="cstatus" name="cstatus"  maxlength="200">
+                                        <select class="form-control" id="cstatus" name="cstatus">
+                                            <option value="0">Select Status</option>
+                                            <option value="Activated">Activated</option>
+                                            <option value="Deactivated">Deactivated</option>
+                                            <?php if(isset($_POST["status"])) { echo $_POST["status"]; } ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

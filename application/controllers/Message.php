@@ -133,7 +133,7 @@ class Message extends BaseController
                 redirect('messageListing');
             }
 
-            $this->global['pageTitle'] = 'CodeInsect : Edit Message';
+            $this->global['pageTitle'] = 'CodeInsect : View Message';
 
             $data['messageInfo'] = $this->message_model->getMessageInfo($id);
 
@@ -143,8 +143,9 @@ class Message extends BaseController
 
 
     /**
-     * This function is used to edit the student information
+     * This function is used to view message information
      */
+
     function editmessage()
     {
         if($this->isAdmin() == TRUE)
@@ -153,49 +154,51 @@ class Message extends BaseController
         }
         else
         {
-            $this->load->library('form_validation');
+//            $this->load->library('form_validation');
 
-            $id = $this->input->post('id');
-
-            $this->form_validation->set_rules('receiverId','receiverId','trim|required|max_length[11]');
-            $this->form_validation->set_rules('subject','subject','trim|required|max_length[200]');
-            $this->form_validation->set_rules('messageStatus','messageStatus','trim|required|max_length[50]');
-            $this->form_validation->set_rules('messageContent','messageContent','trim|required|max_length[200]');
-
-            if($this->form_validation->run() == FALSE)
-            {
-                $this->editOldmessage($id);
-            }
-            else
-            {
-                $receiverId = $this->input->post('receiverId');
-                $subject = $this->input->post('subject');
-                $messageStatus = $this->input->post('messageStatus');
-                $messageContent = $this->input->post('messageContent');
-
-                $messageInfo = array();
-
-                $messageInfo = array(
-                    'receiverId'=>$receiverId,
-                    'subject'=>$subject,
-                    'messageStatus'=> $messageStatus,
-                    'messageContent'=>$messageContent);
-
-                $result = $this->message_model->editmessage($messageInfo, $id);
-
-                if($result == true)
-                {
-                    $this->session->set_flashdata('success', 'message updated successfully');
-                }
-                else
-                {
-                    $this->session->set_flashdata('error', 'message updated failed');
-                }
+            $id = $this->input->get('id');
+//
+//            $this->form_validation->set_rules('receiverId','receiverId','trim|required|max_length[11]');
+//            $this->form_validation->set_rules('subject','subject','trim|required|max_length[200]');
+//            $this->form_validation->set_rules('messageStatus','messageStatus','trim|required|max_length[50]');
+//            $this->form_validation->set_rules('messageContent','messageContent','trim|required|max_length[200]');
+//
+//            if($this->form_validation->run() == FALSE)
+//            {
+//                $this->editOldmessage($id);
+//            }
+//            else
+//            {
+//                $receiverId = $this->input->get('receiverId');
+//                $subject = $this->input->get('subject');
+//                $messageStatus = $this->input->get('messageStatus');
+//                $messageContent = $this->input->get('messageContent');
+//
+//                $messageInfo = array();
+//
+//                $messageInfo = array(
+//                    'receiverId'=>$receiverId,
+//                    'subject'=>$subject,
+//                    'messageStatus'=> $messageStatus,
+//                    'messageContent'=>$messageContent);
+//
+//                $result = $this->message_model->editmessage($messageInfo, $id);
+//
+//                if($result == true)
+//                {
+//                    $this->session->set_flashdata('success', 'message updated successfully');
+//                }
+//                else
+//                {
+//                    $this->session->set_flashdata('error', 'message updated failed');
+//                }
 
                 redirect('messageListing');
-            }
+//            }
         }
     }
+
+
 
 
 }

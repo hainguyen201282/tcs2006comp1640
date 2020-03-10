@@ -10,8 +10,8 @@ $messageContent = $messageInfo->messageContent;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Message Management
-            <small>Add / Edit Message</small>
+            <i class="fa fa-comments"></i> Message
+            <small>Message Detail</small>
         </h1>
     </section>
 
@@ -24,18 +24,18 @@ $messageContent = $messageInfo->messageContent;
 
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Enter Message Details</h3>
+                        <h3 class="box-title">Message Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="editMessage" action="<?php echo base_url() ?>editMessage" method="post" role="form">
+                    <form role="form" id="editMessage" action="<?php echo base_url() ?>editMessage" method="get" role="form">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="fname">ReceiverId</label>
-                                        <input type="text" class="form-control required"
+                                        <input type="text" class="form-control required" disabled
                                                value="<?php echo $receiverId; ?>"
                                                id="appointmentTime" name="appointmentTime" placeholder="Appointment Time" maxlength="128">
                                         <input type="hidden" value="<?php echo $id; ?>" name="id" id="id" />
@@ -44,7 +44,7 @@ $messageContent = $messageInfo->messageContent;
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email">Subject</label>
-                                        <input type="text" class="form-control required"
+                                        <input type="text" class="form-control required" disabled
                                                value="<?php echo $subject; ?>"
                                                id="email" name="location" maxlength="200">
                                     </div>
@@ -54,7 +54,7 @@ $messageContent = $messageInfo->messageContent;
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="password">Message Status</label>
-                                        <input type="text" class="form-control required"
+                                        <input type="text" class="form-control required" disabled
                                                value="<?php echo $messageStatus; ?>"
                                                id="topic" name="topic" maxlength="50">
                                     </div>
@@ -65,8 +65,8 @@ $messageContent = $messageInfo->messageContent;
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="mobile">Message Content</label>
-                                        <textarea rows="15" class="form-control"  aria-label="With textarea"
-                                                  id="messageContent" name="messageContent" maxlength="200"><?php echo set_value('messageContent'); ?></textarea>
+                                        <textarea class="form-control" aria-label="With textarea" disabled
+                                                  id="messageContent" name="messageContent" maxlength="200"><?php echo $messageContent; ?></textarea>
                                     </div>
                                 </div>
                             </div>

@@ -3,7 +3,7 @@
     <section class="content-header">
         <h1>
             <i class="fa fa-users"></i> Message
-            <small>Add</small>
+            <small>Send message</small>
         </h1>
     </section>
 
@@ -44,7 +44,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="password">MessageStatus</label>
+                                        <label for="password">Message Status</label>
                                         <input type="text" class="form-control required"
                                                value="<?php echo set_value('messageStatus'); ?>"
                                                id="messageStatus" name="messageStatus" maxlength="30">
@@ -55,8 +55,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="mobile">Message Content</label>
-                                        <textarea rows="15" class="form-control"  aria-label="With textarea"
+                                        <label for="messageContent">Message Content</label>
+                                        <textarea class="form-control"  aria-label="With textarea"
                                                   id="messageContent" name="messageContent" maxlength="200"><?php echo set_value('messageContent'); ?></textarea>
                                     </div>
                                 </div>

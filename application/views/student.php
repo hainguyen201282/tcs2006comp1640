@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Student Management
+            <i class="fa fa-graduation-cap"></i> Student Management
             <small>Add, Edit, Delete</small>
         </h1>
     </section>
@@ -18,7 +18,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Students List</h3>
+                        <h3 class="box-title">Student List</h3>
                         <div class="box-tools">
                             <form action="<?php echo base_url() ?>studentListing" method="POST" id="searchList">
                                 <div class="input-group">
@@ -33,11 +33,12 @@
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
                             <tr>
-                                <th>Name</th>
                                 <th>Email</th>
-                                <th>Mobile</th>
+                                <th>Student Name</th>
+                                <th>Mobile Phone Number</th>
+<!--                                <th>roleId</th>-->
                                 <th>Gender</th>
-                                <th>Role</th>
+                                <th>TutorID</th>
                                 <th>Created On</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -48,16 +49,18 @@
                                 {
                                     ?>
                                     <tr>
-                                        <td><?php echo $record->name ?></td>
                                         <td><?php echo $record->email ?></td>
+                                        <td><?php echo $record->name ?></td>
                                         <td><?php echo $record->mobile ?></td>
+<!--                                        <td>--><?php //echo $record->roleId ?><!--</td>-->
                                         <td><?php echo $record->gender ?></td>
-                                        <td><?php echo $record->role ?></td>
+                                        <td><?php echo $record->tutorId ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-primary" href="<?= base_url().'login-history/'.$record->studentId; ?>" title="Login history"><i class="fa fa-history"></i></a> |
-                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldStudent/'.$record->studentId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="<?php echo $record->studentId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldStudent/'.$record->studentId; ?>" title="Edit"><i class="fa fa-pencil"></i></a> |
+                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'assignOldStudent/'.$record->studentId; ?>" title="Asssign"><i class="fa fa-puzzle-piece"></i></a> |
+                                            <a class="btn btn-sm btn-danger deleteStudent" href="#" data-studentId="<?php echo $record->studentId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php
@@ -75,7 +78,7 @@
         </div>
     </section>
 </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery('ul.pagination li a').click(function (e) {
