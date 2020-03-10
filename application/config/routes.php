@@ -81,11 +81,17 @@ $route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STA
 $route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editOldStudent/(:num)'] = ["student/editOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
 //$route['deleteUser'] = ["student/deleteUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profile'] = ["student/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profile/(:any)'] = ["student/profile/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profileUpdate'] = ["student/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profileUpdate/(:any)'] = ["student/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
+//$route['deleteStudent'] = "student/deleteStudent";
+//$route['assignStudent'] = "student/assignStudent";
+//$route['assignOldStudent'] = "student/assignOldStudent";
+//$route['assignOldStudent/(:num)'] = "student/assignOldStudent/$1";
 
 //$route['conference'] = ['conference', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['conferenceListing'] = ['conference/conferenceListing', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -96,6 +102,15 @@ $route['deleteConference'] = ["conference/deleteConference", [AUTHORISED_STAFF, 
 $route['editConference'] = ["conference/editConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editOldConference'] = ["conference/editOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editOldConference/(:num)'] = ["conference/editOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
+$route['messageListing'] = 'message/messageListing';
+$route['messageListing/(:num)'] = "message/messageListing/$1";
+$route['addNewMessage'] = "message/addNewMessage";
+$route['submitAddMessage'] = "message/submitAddMessage";
+$route['editMessage'] = "message/editMessage";
+$route['editOldMessage'] = "message/editOldMessage";
+$route['editOldMessage/(:num)'] = "message/editOldMessage/$1";
+$route['deleteMessage'] = "message/deleteMessage";
 //End of Dat-doing
 
 $route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
