@@ -88,10 +88,10 @@ $route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF, TUTOR,
 //$route['profileUpdate'] = ["student/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profileUpdate/(:any)'] = ["student/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-//$route['deleteStudent'] = "student/deleteStudent";
-//$route['assignStudent'] = "student/assignStudent";
-//$route['assignOldStudent'] = "student/assignOldStudent";
-//$route['assignOldStudent/(:num)'] = "student/assignOldStudent/$1";
+$route['deleteStudent'] = ["student/deleteStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignStudent'] = ["student/assignStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignOldStudent'] = ["student/assignOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignOldStudent/(:num)'] = ["student/assignOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 //$route['conference'] = ['conference', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['conferenceListing'] = ['conference/conferenceListing', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
