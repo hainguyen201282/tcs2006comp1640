@@ -11,7 +11,10 @@ class Student extends BaseController
     {
         parent::__construct();
         $this->load->model('student_model');
-        $this->isLoggedIn();
+        if ($this->uri->segments[1] != 'loginStudent') {
+            $this->isStudentLoggedIn();
+        }
+        
     }
 
     public function index()
@@ -19,6 +22,58 @@ class Student extends BaseController
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
 
         $this->loadViews("dashboard", $this->global, NULL, NULL);
+    }
+
+    /**
+     * This function used to logged in student
+     */
+    public function loginStudent()
+    {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|max_length[128]|trim');
+        $this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
+        
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->index();
+        }
+        else
+        {
+            $email = strtolower($this->security->xss_clean($this->input->post('email')));
+            $password = $this->input->post('password');
+            
+            $result = $this->student_model->loginStudent($email, $password);
+            
+            if(!empty($result))
+            {
+                $lastLogin = $this->student_model->lastLoginInfo($result->studentId);
+
+                $sessionArray = array('userId'=> $result->studentId,                    
+                                        'role'=> STUDENT,
+                                        'roleText'=> 'Student',
+                                        'name'=> $result->name,
+                                        'lastLogin'=> isset($lastLogin->createdDtm) ? $lastLogin->createdDtm : date('Y-m-d H:i:s'),
+                                        'isLoggedIn' => TRUE
+                                );
+
+                $this->session->set_userdata($sessionArray);
+
+                unset($sessionArray['studentId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
+
+                $loginInfo = array("userId"=>$result->studentId, "sessionData" => json_encode($sessionArray), "machineIp"=>$_SERVER['REMOTE_ADDR'], "userAgent"=>getBrowserAgent(), "agentString"=>$this->agent->agent_string(), "platform"=>$this->agent->platform());
+
+                $this->student_model->lastLogin($loginInfo);
+                
+                redirect('/dashboard');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'Email or password mismatch');
+                
+                redirect('loginMe');
+            }
+        }
     }
 
     function addNewStudent()

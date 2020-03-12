@@ -50,7 +50,7 @@
                 <?php echo $success; ?>                    
             </div>
         <?php } ?>
-        <form action="<?php echo base_url(); ?>loginMe" method="post">
+        <form action="<?php echo base_url(); ?>loginMe" method="post" onsubmit="return checkSubmitRoles(event, this);">
           <div class="form-group has-feedback">
             <input type="email" class="form-control" placeholder="Email" name="email" required />
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -60,25 +60,44 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
-            <div class="col-xs-8">    
-              <!-- <div class="checkbox icheck">
+            <div class="col-xs-6">
+              <input type="hidden" id="loginRole" name="loginRole" />
+              <input type="submit" onclick="switchLoginRole('loginMe');" class="btn btn-primary btn-block btn-flat" value="Log In for Staff/Tutor" />
+              
+            </div><!-- /.col -->
+            <!-- <div class="col-xs-4">    
+              <div class="checkbox icheck">
                 <label>
                   <input type="checkbox"> Remember Me
                 </label>
-              </div>  -->                       
-            </div><!-- /.col -->
-            <div class="col-xs-4">
-              <input type="submit" class="btn btn-primary btn-block btn-flat" value="Sign In" />
-            </div><!-- /.col -->
+              </div>                       
+            </div> --><!-- /.col -->
+            <div class="col-xs-6" style="text-align: center;">
+              <input type="submit" onclick="switchLoginRole('loginStudent');" class="btn btn-primary btn-block btn-flat" value="Log In for Student" />
+
+            </div>
+            
           </div>
         </form>
 
-        <a href="<?php echo base_url() ?>forgotPassword">Forgot Password?</a><br>
+        <!-- <a href="<?php //echo base_url() ?>forgotPassword">Forgot Password?</a><br> -->
         
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 
     <script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      function switchLoginRole(value){
+        $('#loginRole').val(value);
+      }
+      function checkSubmitRoles(event, thisElement){
+        console.log($('#loginRole').val());
+        console.log($(thisElement).attr('action'));
+        $(thisElement).attr('action', "<?php echo base_url(); ?>" + $('#loginRole').val());
+        // $(thisElement).submit();
+        return true;
+      }
+    </script>
   </body>
 </html>

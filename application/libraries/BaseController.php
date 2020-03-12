@@ -49,7 +49,33 @@ class BaseController extends CI_Controller {
 			$this->global ['last_login'] = $this->lastLogin;
 		}
 
-		if (!in_array($this->role, $this->uri->roles)) {
+		if ($this->role && !in_array($this->role, $this->uri->roles)) {
+			$this->loadThis();
+		}
+	}
+	
+	/**
+	 * This function used to check the user is logged in or not
+	 */
+	function isStudentLoggedIn() {
+		$isLoggedIn = $this->session->userdata ( 'isLoggedIn' );
+		
+		if (! isset ( $isLoggedIn ) || $isLoggedIn != TRUE) {
+			redirect ( 'loginStudent' );
+		} else {
+			$this->role = $this->session->userdata ( 'role' );
+			$this->vendorId = $this->session->userdata ( 'userId' );
+			$this->name = $this->session->userdata ( 'name' );
+			$this->roleText = $this->session->userdata ( 'roleText' );
+			$this->lastLogin = $this->session->userdata ( 'lastLogin' );
+			
+			$this->global ['name'] = $this->name;
+			$this->global ['role'] = $this->role;
+			$this->global ['role_text'] = $this->roleText;
+			$this->global ['last_login'] = $this->lastLogin;
+		}
+
+		if ($this->role && !in_array($this->role, $this->uri->roles)) {
 			$this->loadThis();
 		}
 	}
