@@ -163,19 +163,30 @@ class Student extends BaseController
 
             $studentId = $this->input->post('studentId');
 
+<<<<<<< Updated upstream
             $this->form_validation->set_rules('email','email','trim|required|max_length[128]');
             $this->form_validation->set_rules('name','name','trim|required|max_length[200]');
             $this->form_validation->set_rules('mobile','mobile','trim|required|max_length[50]');
 //            $this->form_validation->set_rules('roleId','roleId','trim|required|max_length[11]');
             $this->form_validation->set_rules('gender','gender','trim|required|max_length[50]');
             $this->form_validation->set_rules('tutorId','tutorId','trim|required|max_length[11]');
+=======
+            $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
+            $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
+            $this->form_validation->set_rules('password','Password','matches[cpassword]|max_length[20]');
+            $this->form_validation->set_rules('cpassword','Confirm Password','matches[password]|max_length[20]');
+            $this->form_validation->set_rules('role','Role','trim|required|numeric');
+            $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
+            $this->form_validation->set_rules('gender','Gender','trim|required|max_length[10]');
+>>>>>>> Stashed changes
 
             if($this->form_validation->run() == FALSE)
             {
-                $this->editOldStudent($studentId);
+                $this->editOld($studentId);
             }
             else
             {
+<<<<<<< Updated upstream
                 $email = $this->input->post('email');
                 $name = $this->input->post('name');
                 $mobile = $this->input->post('mobile');
@@ -194,6 +205,35 @@ class Student extends BaseController
                     'tutorId'=>$tutorId,
                     'updatedBy'=>$this->vendorId,
                     'updatedDtm'=>date('Y-m-d H:i:s'));
+=======
+                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+                $email = strtolower($this->security->xss_clean($this->input->post('email')));
+                $password = $this->input->post('password');
+                $roleId = $this->input->post('role');
+                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $gender = $this->input->post('gender');
+
+                $studentInfo = array();
+
+                if(empty($password))
+                {
+                    $studentInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name,
+                        'mobile'=>$mobile, 'gender'=>$gender, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+                }
+                else
+                {
+                    $studentInfo = array(
+                        'email'=>$email,
+                        'password'=>getHashedPassword($password),
+                        'roleId'=>$roleId,
+                        'name'=>ucwords($name),
+                        'mobile'=>$mobile,
+                        'gender'=>$gender,
+                        'updatedBy'=>$this->vendorId,
+                        'updatedDtm'=>date('Y-m-d H:i:s')
+                    );
+                }
+>>>>>>> Stashed changes
 
                 $result = $this->student_model->editStudent($studentInfo, $studentId);
 
@@ -211,7 +251,52 @@ class Student extends BaseController
         }
     }
 
+<<<<<<< Updated upstream
     function assignOldStudent($studentDd = NULL)
+=======
+
+
+
+
+
+    /**
+     * This function is used to delete the student using studentId
+     * @return boolean $result : TRUE / FALSE
+     */
+    function deleteStudent()
+    {
+        if($this->isAdmin() == TRUE)
+        {
+            echo(json_encode(array('status'=>'access')));
+        }
+        else
+        {
+            $studentId = $this->input->post('studentId');
+            $studentInfo = array('isDeleted'=>1,'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+
+            $result = $this->student_model->deleteStudent($studentId, $studentInfo);
+
+            if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
+            else { echo(json_encode(array('status'=>FALSE))); }
+        }
+    }
+
+    /**
+     * Page not found : error 404
+     */
+    function pageNotFound()
+    {
+        $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
+
+        $this->loadViews("404", $this->global, NULL, NULL);
+    }
+
+    /**
+     * This function used to show login history
+     * @param number $studentId : This is student id
+     */
+    function loginHistoy($studentId = NULL)
+>>>>>>> Stashed changes
     {
         if($this->isAdmin() == TRUE)
         {
