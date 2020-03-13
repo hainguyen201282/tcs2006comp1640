@@ -173,7 +173,7 @@
                         </a>
                     </li>
                     <li>
-                    <a href="<?php echo base_url(); ?>blog">
+                    <a href="<?php echo base_url(); ?>blogListing">
                             <i class="fa fa-files-o"></i>
                             <span>Blogs</span>
                         </a>

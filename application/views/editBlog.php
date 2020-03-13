@@ -1,3 +1,11 @@
+<?php
+$id = $blogInfo->id;
+$title = $blogInfo->title;
+$content = $blogInfo->content;
+$topic = $blogInfo->topic;
+$cover = $blogInfo->cover;
+?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -17,19 +25,20 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addBlog" action="<?php echo base_url() ?>submitNewBlog" method="post" enctype="multipart/form-data">
+                    <form role="form" id="addBlog" action="<?php echo base_url() ?>editBlog" method="post">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">                                
                                     <div class="form-group">
                                         <label for="title">Title</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('title'); ?>" id="title" name="title" maxlength="128">
+                                        <input type="text" class="form-control required" value="<?php echo $title; ?>" id="title" name="title" maxlength="128">
+                                        <input type="hidden" value="<?php echo $id; ?>" name="blogId" id="blogId" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="topic">Topic</label>
-                                        <input type="text" class="form-control required topic" id="topic" value="<?php echo set_value('topic'); ?>" name="topic" maxlength="128">
+                                        <input type="text" disabled class="form-control required topic" id="topic" value="<?php echo $topic; ?>" name="topic">
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +46,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="content">Content</label>
-                                        <textarea id="content" style="width:100%" value="<?php echo set_value('content'); ?>" name="content" maxlength="65000"></textarea>
+                                        <textarea id="content" style="width:100%" value="<?php echo $content; ?>" name="content" maxlength="65000"></textarea>
                                     </div>
                                 </div>
                             </div>

@@ -129,9 +129,11 @@ $route['resetPasswordConfirmUser/(:any)'] = ["login/resetPasswordConfirmUser/$1"
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = ["login/resetPasswordConfirmUser/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['createPasswordUser'] = ["login/createPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['blog'] = ["blog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['blogListing'] = ["blog/blogListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['addNewBlog'] = ["blog/addNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['submitNewBlog'] = ["blog/submitNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['editBlog'] = ["blog/editBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
