@@ -90,7 +90,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="<?php echo base_url(); ?>profile" class="btn btn-warning btn-flat"><i
+                                    <a href="<?php echo base_url(); ?>profile" class="btn btn-warning btn-flat" style="color: #666;"><i
                                                 class="fa fa-user-circle"></i> Profile</a>
                                 </div>
                                 <div class="pull-right">
@@ -256,7 +256,7 @@
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="<?php echo base_url(); ?>userListing">
                             <i class="fa fa-users"></i>
                             <span>Users</span>
@@ -267,7 +267,7 @@
                             <i class="fa fa-id-card"></i>
                             <span>Students</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="<?php echo base_url(); ?>conferenceListing">
                             <i class="fa fa-comments"></i>

@@ -5,6 +5,7 @@ $email = $userInfo->email;
 $mobile = $userInfo->mobile;
 $roleId = $userInfo->roleId;
 $role = $userInfo->role;
+$roleText = $userInfo->roleText;
 ?>
 
 <div class="content-wrapper">
@@ -29,7 +30,7 @@ $role = $userInfo->role;
                         <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/dist/img/avatar.png" alt="User profile picture">
                         <h3 class="profile-username text-center"><?= $name ?></h3>
 
-                        <p class="text-muted text-center"><?= $role ?></p>
+                        <p class="text-muted text-center"><?= $roleText ?></p>
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
