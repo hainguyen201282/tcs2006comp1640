@@ -64,6 +64,14 @@ class CI_URI {
 	 */
 	public $uri_string = '';
 
+
+	/**
+	 * List of permitted roles of URI
+	 *
+	 * @var	array
+	 */
+	public $roles =	array();
+
 	/**
 	 * List of URI segments
 	 *

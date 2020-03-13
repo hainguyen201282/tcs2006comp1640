@@ -50,51 +50,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
-$route['default_controller'] = "login";
-$route['404_override'] = 'error_404';
-$route['translate_uri_dashes'] = FALSE;
+$route['default_controller'] = ["login", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['404_override'] = ['error_404', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['translate_uri_dashes'] = [FALSE, [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 
 /*********** USER DEFINED ROUTES *******************/
 
-$route['loginMe'] = 'login/loginMe';
-$route['dashboard'] = 'user';
-$route['logout'] = 'user/logout';
-$route['userListing'] = 'user/userListing';
-$route['userListing/(:num)'] = "user/userListing/$1";
-$route['addNew'] = "user/addNew";
-$route['addNewUser'] = "user/addNewUser";
-$route['editOld'] = "user/editOld";
-$route['editOld/(:num)'] = "user/editOld/$1";
-$route['editUser'] = "user/editUser";
-$route['deleteUser'] = "user/deleteUser";
-$route['profile'] = "user/profile";
-$route['profile/(:any)'] = "user/profile/$1";
-$route['profileUpdate'] = "user/profileUpdate";
-$route['profileUpdate/(:any)'] = "user/profileUpdate/$1";
+$route['loginMe'] = ['login/loginMe', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['dashboard'] = ['user', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['logout'] = ['user/logout', [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['userListing'] = ['user/userListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['userListing/(:num)'] = ["user/userListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['addNew'] = ["user/addNew", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['addNewUser'] = ["user/addNewUser", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['editOld'] = ["user/editOld", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['editOld/(:num)'] = ["user/editOld/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['editUser'] = ["user/editUser", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['deleteUser'] = ["user/deleteUser", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['profile'] = ["user/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['profile/(:any)'] = ["user/profile/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['profileUpdate'] = ["user/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['profileUpdate/(:any)'] = ["user/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-//start Dat-doing
-$route['studentListing'] = 'student/studentListing';
-$route['studentListing/(:num)'] = "student/studentListing/$1";
-$route['addNewStudent'] = "student/addNewStudent";
-$route['submitAddStudent'] = "student/submitAddStudent";
-$route['editStudent'] = "student/editStudent";
-$route['editOldStudent'] = "student/editOldStudent";
-$route['editOldStudent/(:num)'] = "student/editOldStudent/$1";
-$route['deleteStudent'] = "student/deleteStudent";
-$route['assignStudent'] = "student/assignStudent";
-$route['assignOldStudent'] = "student/assignOldStudent";
-$route['assignOldStudent/(:num)'] = "student/assignOldStudent/$1";
+$route['loginStudent'] = ['student/loginStudent', [AUTHORISED_STAFF, STAFF, TUTOR] ];
+//Dat-doing
+$route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['editOldStudent/(:num)'] = ["student/editOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
 
-//$route['conference'] = 'conference';
-$route['conferenceListing'] = 'conference/conferenceListing';
-$route['conferenceListing/(:num)'] = "conference/conferenceListing/$1";
-$route['addNewConference'] = "conference/addNewConference";
-$route['submitAddConference'] = "conference/submitAddConference";
-$route['editConference'] = "conference/editConference";
-$route['editOldConference'] = "conference/editOldConference";
-$route['editOldConference/(:num)'] = "conference/editOldConference/$1";
-$route['deleteConference'] = "conference/deleteConference";
+//$route['deleteUser'] = ["student/deleteUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+//$route['profile'] = ["student/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+//$route['profile/(:any)'] = ["student/profile/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+//$route['profileUpdate'] = ["student/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+//$route['profileUpdate/(:any)'] = ["student/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
+$route['deleteStudent'] = ["student/deleteStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignStudent'] = ["student/assignStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignOldStudent'] = ["student/assignOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignOldStudent/(:num)'] = ["student/assignOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
+//$route['conference'] = ['conference', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['conferenceListing'] = ['conference/conferenceListing', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['conferenceListing/(:num)'] = ["conference/conferenceListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['addNewConference'] = ["conference/addNewConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['submitAddConference'] = ["conference/submitAddConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['deleteConference'] = ["conference/deleteConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['editConference'] = ["conference/editConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['editOldConference'] = ["conference/editOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['editOldConference/(:num)'] = ["conference/editOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 $route['messageListing'] = 'message/messageListing';
 $route['messageListing/(:num)'] = "message/messageListing/$1";
@@ -104,24 +112,27 @@ $route['editMessage'] = "message/editMessage";
 $route['editOldMessage'] = "message/editOldMessage";
 $route['editOldMessage/(:num)'] = "message/editOldMessage/$1";
 $route['deleteMessage'] = "message/deleteMessage";
-
 //End of Dat-doing
 
-$route['loadChangePass'] = "user/loadChangePass";
-$route['changePassword'] = "user/changePassword";
-$route['changePassword/(:any)'] = "user/changePassword/$1";
-$route['pageNotFound'] = "user/pageNotFound";
-$route['checkEmailExists'] = "user/checkEmailExists";
-$route['login-history'] = "user/loginHistoy";
-$route['login-history/(:num)'] = "user/loginHistoy/$1";
-$route['login-history/(:num)/(:num)'] = "user/loginHistoy/$1/$2";
+$route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['changePassword'] = ["user/changePassword", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['changePassword/(:any)'] = ["user/changePassword/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['pageNotFound'] = ["user/pageNotFound", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['checkEmailExists'] = ["user/checkEmailExists", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['login-history'] = ["user/loginHistoy", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['login-history/(:num)'] = ["user/loginHistoy/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['login-history/(:num)/(:num)'] = ["user/loginHistoy/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['forgotPassword'] = "login/forgotPassword";
-$route['resetPasswordUser'] = "login/resetPasswordUser";
-$route['resetPasswordConfirmUser'] = "login/resetPasswordConfirmUser";
-$route['resetPasswordConfirmUser/(:any)'] = "login/resetPasswordConfirmUser/$1";
-$route['resetPasswordConfirmUser/(:any)/(:any)'] = "login/resetPasswordConfirmUser/$1/$2";
-$route['createPasswordUser'] = "login/createPasswordUser";
+$route['forgotPassword'] = ["login/forgotPassword", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['resetPasswordUser'] = ["login/resetPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['resetPasswordConfirmUser'] = ["login/resetPasswordConfirmUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['resetPasswordConfirmUser/(:any)'] = ["login/resetPasswordConfirmUser/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['resetPasswordConfirmUser/(:any)/(:any)'] = ["login/resetPasswordConfirmUser/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['createPasswordUser'] = ["login/createPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
+$route['blog'] = ["blog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['addNewBlog'] = ["blog/addNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['submitNewBlog'] = ["blog/submitNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

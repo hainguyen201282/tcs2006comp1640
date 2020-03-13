@@ -89,6 +89,7 @@ switch (ENVIRONMENT)
 		exit(1); // EXIT_ERROR
 }
 
+require_once 'library/functions.php'; // basic common
 /*
  *---------------------------------------------------------------
  * SYSTEM DIRECTORY NAME
