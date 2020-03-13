@@ -12,7 +12,7 @@ $tutorId = $studentInfo->tutorId;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-graduation-cap"></i> Student Management
+            <i class="fa fa-users"></i> Student Management
             <small>Add / Edit Student</small>
         </h1>
     </section>
@@ -23,15 +23,13 @@ $tutorId = $studentInfo->tutorId;
             <!-- left column -->
             <div class="col-md-8">
                 <!-- general form elements -->
-
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Enter Student Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="editStudent" action="<?php echo base_url() ?>editStudent" method="post"
-                          role="form">
+                    <form role="form" action="<?php echo base_url() ?>editOldStudent" method="post" id="editOldStudent" role="form">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -60,6 +58,9 @@ $tutorId = $studentInfo->tutorId;
                                         <input type="text" class="form-control required"
                                                value="<?php echo $mobile; ?>"
                                                id="mobile" name="mobile" maxlength="50">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" placeholder="Password"
+                                               name="password" maxlength="20">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -68,6 +69,9 @@ $tutorId = $studentInfo->tutorId;
                                         <input disabled type="text" class="form-control"
                                                value="<?php echo $roleId; ?>"
                                                id="roleId" name="roleId" maxlength="50">
+                                        <label for="cpassword">Confirm Password</label>
+                                        <input type="password" class="form-control" id="cpassword"
+                                               placeholder="Confirm Password" name="cpassword" maxlength="20">
                                     </div>
                                 </div>
                             </div>
