@@ -80,9 +80,10 @@ class Student extends BaseController
     {
         $this->load->model('student_model');
 
+        $data['tutors'] = $this->student_model->getAllTutors();
         $this->global['pageTitle'] = 'CodeInsect : Add New Student';
 
-        $this->loadViews("addNewStudent", $this->global, NULL);
+        $this->loadViews("addNewStudent", $this->global, $data, NULL);
     }
 
     function submitAddStudent()
@@ -92,10 +93,7 @@ class Student extends BaseController
         $this->form_validation->set_rules('email', 'email', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('name', 'name', 'trim|required|max_length[200]');
         $this->form_validation->set_rules('mobile', 'mobile', 'trim|required|max_length[50]');
-        //default value of student role Id is 4
-//            $this->form_validation->set_rules('roleId','roleId','trim|required|max_length[11]');
         $this->form_validation->set_rules('gender', 'gender', 'trim|required|max_length[50]');
-        $this->form_validation->set_rules('tutorId', 'tutorId', 'trim|required|max_length[11]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->addNewStudent();
@@ -103,10 +101,9 @@ class Student extends BaseController
             $email = $this->input->post('email');
             $name = $this->input->post('name');
             $mobile = $this->input->post('mobile');
-//                $roleId = $this->input->post('roleId');
             $roleId = 4;
             $gender = $this->input->post('gender');
-            $tutorId = $this->input->post('tutorId');
+            $tutorId = $this->input->post('tutor');
 
             $studentInfo = array('email' => $email,
                 'name' => $name,
@@ -137,11 +134,11 @@ class Student extends BaseController
 
         $this->load->library('pagination');
 
-        $count = $this->student_model->studentListingCount($searchText);
+        $count = $this->student_model->studentListingCount($searchText, $this->vendorId);
 
         $returns = $this->paginationCompress("studentListing/", $count, 10);
 
-        $data['studentRecords'] = $this->student_model->studentListing($searchText, $returns["page"], $returns["segment"]);
+        $data['studentRecords'] = $this->student_model->studentListing($searchText, $returns["page"], $returns["segment"], $this->vendorId);
 
         $this->global['pageTitle'] = 'CodeInsect : Student Listing';
 
@@ -155,15 +152,16 @@ class Student extends BaseController
         $this->loadViews("404", $this->global, NULL, NULL);
     }
 
-    function editOldStudent($studentDd = NULL)
+    function editOldStudent($studentId = NULL)
     {
-        if ($studentDd == null) {
+        if ($studentId == null) {
             redirect('studentListing');
         }
 
         $this->global['pageTitle'] = 'CodeInsect : Edit Student';
 
-        $data['studentInfo'] = $this->student_model->getStudentInfo($studentDd);
+        $data['tutors'] = $this->student_model->getAllTutors();
+        $data['studentInfo'] = $this->student_model->getStudentInfo($studentId);
 
         $this->loadViews("editOldStudent", $this->global, $data, NULL);
     }
@@ -177,11 +175,10 @@ class Student extends BaseController
 
         $studentId = $this->input->post('studentId');
 
-            $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
+            $this->form_validation->set_rules('name','Full Name','trim|required|max_length[128]');
             $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
             $this->form_validation->set_rules('password','Password','matches[cpassword]|max_length[20]');
             $this->form_validation->set_rules('cpassword','Confirm Password','matches[password]|max_length[20]');
-            $this->form_validation->set_rules('role','Role','trim|required|numeric');
             $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
             $this->form_validation->set_rules('gender','Gender','trim|required|max_length[10]');
 
@@ -191,20 +188,20 @@ class Student extends BaseController
             }
             else
             {
-
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('name'))));
                 $email = strtolower($this->security->xss_clean($this->input->post('email')));
                 $password = $this->input->post('password');
                 $roleId = $this->input->post('role');
                 $mobile = $this->security->xss_clean($this->input->post('mobile'));
                 $gender = $this->input->post('gender');
+                $tutorId = $this->input->post('tutor');
 
                 $studentInfo = array();
 
                 if(empty($password))
                 {
-                    $studentInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name,
-                        'mobile'=>$mobile, 'gender'=>$gender, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+                    $studentInfo = array('email'=>$email, 'name'=>$name,
+                        'mobile'=>$mobile, 'gender'=>$gender, 'tutorId' => $tutorId, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
                 }
                 else
                 {
@@ -215,6 +212,7 @@ class Student extends BaseController
                         'name'=>ucwords($name),
                         'mobile'=>$mobile,
                         'gender'=>$gender,
+                        'tutorId' => $tutorId,
                         'updatedBy'=>$this->vendorId,
                         'updatedDtm'=>date('Y-m-d H:i:s')
                     );
@@ -230,10 +228,7 @@ class Student extends BaseController
                 {
                     $this->session->set_flashdata('error', 'Student updated failed');
                 }
-
-                redirect('studentListing');
             }
-
             redirect('studentListing');
         }
     }
@@ -276,13 +271,13 @@ class Student extends BaseController
      */
     function loginHistoy($studentId = NULL)
     {
-        if ($studentDd == null) {
+        if ($studentId == null) {
             redirect('studentListing');
         }
 
         $this->global['pageTitle'] = 'CodeInsect : Edit Student';
 
-        $data['studentInfo'] = $this->student_model->getStudentInfo($studentDd);
+        $data['studentInfo'] = $this->student_model->getStudentInfo($studentId);
 
         $this->loadViews("assignOldStudent", $this->global, $data, NULL);
     }
@@ -304,8 +299,6 @@ class Student extends BaseController
             $roleId = $this->input->post('roleId');
             $gender = $this->input->post('gender');
             $tutorId = $this->input->post('tutorId');
-
-            $StudentInfo = array();
 
             $studentInfo = array(
                 'email' => $email,
@@ -347,5 +340,4 @@ class Student extends BaseController
 //        }
 //    }
 
-}
 

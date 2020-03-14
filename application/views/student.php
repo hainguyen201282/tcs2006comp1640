@@ -52,14 +52,12 @@
                                         <td><?php echo $record->email ?></td>
                                         <td><?php echo $record->name ?></td>
                                         <td><?php echo $record->mobile ?></td>
-<!--                                        <td>--><?php //echo $record->roleId ?><!--</td>-->
                                         <td><?php echo $record->gender ?></td>
                                         <td><?php echo $record->tutorId ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-primary" href="<?= base_url().'login-history/'.$record->studentId; ?>" title="Login history"><i class="fa fa-history"></i></a> |
                                             <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldStudent/'.$record->studentId; ?>" title="Edit"><i class="fa fa-pencil"></i></a> |
-                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'assignOldStudent/'.$record->studentId; ?>" title="Asssign"><i class="fa fa-puzzle-piece"></i></a> |
                                             <a class="btn btn-sm btn-danger deleteStudent" href="#" data-studentId="<?php echo $record->studentId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
