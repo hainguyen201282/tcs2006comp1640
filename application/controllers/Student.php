@@ -177,65 +177,64 @@ class Student extends BaseController
 
         $studentId = $this->input->post('studentId');
 
-            $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
-            $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
-            $this->form_validation->set_rules('password','Password','matches[cpassword]|max_length[20]');
-            $this->form_validation->set_rules('cpassword','Confirm Password','matches[password]|max_length[20]');
-            $this->form_validation->set_rules('role','Role','trim|required|numeric');
-            $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
-            $this->form_validation->set_rules('gender','Gender','trim|required|max_length[10]');
+        $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
+        $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
+        $this->form_validation->set_rules('password','Password','matches[cpassword]|max_length[20]');
+        $this->form_validation->set_rules('cpassword','Confirm Password','matches[password]|max_length[20]');
+        $this->form_validation->set_rules('role','Role','trim|required|numeric');
+        $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
+        $this->form_validation->set_rules('gender','Gender','trim|required|max_length[10]');
 
-            if($this->form_validation->run() == FALSE)
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->editOld($studentId);
+        }
+        else
+        {
+
+            $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+            $email = strtolower($this->security->xss_clean($this->input->post('email')));
+            $password = $this->input->post('password');
+            $roleId = $this->input->post('role');
+            $mobile = $this->security->xss_clean($this->input->post('mobile'));
+            $gender = $this->input->post('gender');
+
+            $studentInfo = array();
+
+            if(empty($password))
             {
-                $this->editOld($studentId);
+                $studentInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name,
+                    'mobile'=>$mobile, 'gender'=>$gender, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
             }
             else
             {
+                $studentInfo = array(
+                    'email'=>$email,
+                    'password'=>getHashedPassword($password),
+                    'roleId'=>$roleId,
+                    'name'=>ucwords($name),
+                    'mobile'=>$mobile,
+                    'gender'=>$gender,
+                    'updatedBy'=>$this->vendorId,
+                    'updatedDtm'=>date('Y-m-d H:i:s')
+                );
+            }
 
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
-                $password = $this->input->post('password');
-                $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
-                $gender = $this->input->post('gender');
+            $result = $this->student_model->editStudent($studentInfo, $studentId);
 
-                $studentInfo = array();
-
-                if(empty($password))
-                {
-                    $studentInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name,
-                        'mobile'=>$mobile, 'gender'=>$gender, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
-                }
-                else
-                {
-                    $studentInfo = array(
-                        'email'=>$email,
-                        'password'=>getHashedPassword($password),
-                        'roleId'=>$roleId,
-                        'name'=>ucwords($name),
-                        'mobile'=>$mobile,
-                        'gender'=>$gender,
-                        'updatedBy'=>$this->vendorId,
-                        'updatedDtm'=>date('Y-m-d H:i:s')
-                    );
-                }
-
-                $result = $this->student_model->editStudent($studentInfo, $studentId);
-
-                if($result == true)
-                {
-                    $this->session->set_flashdata('success', 'Student updated successfully');
-                }
-                else
-                {
-                    $this->session->set_flashdata('error', 'Student updated failed');
-                }
-
-                redirect('studentListing');
+            if($result == true)
+            {
+                $this->session->set_flashdata('success', 'Student updated successfully');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'Student updated failed');
             }
 
             redirect('studentListing');
         }
+
+        redirect('studentListing');
     }
 
     /**
@@ -258,16 +257,6 @@ class Student extends BaseController
             if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
             else { echo(json_encode(array('status'=>FALSE))); }
         }
-    }
-
-    /**
-     * Page not found : error 404
-     */
-    function pageNotFound()
-    {
-        $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
-
-        $this->loadViews("404", $this->global, NULL, NULL);
     }
 
     /**
