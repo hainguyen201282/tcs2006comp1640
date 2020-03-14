@@ -26,16 +26,24 @@ class Blog_model extends CI_Model
         return TRUE;
     }
 
+    function deleteBlog($blogInfo, $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_blog', $blogInfo);
+        
+        return $this->db->affected_rows();
+    }
+
     function blogListingCount($searchText = '')
     {
         $this->db->select('Basetbl.id, Basetbl.title, Basetbl.topic, Basetbl.content, Basetbl.authorId, Basetbl.createdDate, Basetbl.updatedDate');
-        $this->db->from('tbl_blog as BaseTbl');
+        $this->db->from('tbl_blog as Basetbl');
 
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.title  LIKE '%".$searchText."%' OR  BaseTbl.topic  LIKE '%".$searchText."%')";
+            $likeCriteria = "(Basetbl.title  LIKE '%".$searchText."%' OR  Basetbl.topic  LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        $this->db->where('BaseTbl.status', 'PUBLISH'); 
+        $this->db->where('Basetbl.status', 'PUBLISH' ); 
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -50,14 +58,14 @@ class Blog_model extends CI_Model
     function blogListing($searchText = '', $page, $segment)
     {
         $this->db->select('Basetbl.id, Basetbl.title, Basetbl.topic, Basetbl.content, Basetbl.authorId, Basetbl.createdDate, Basetbl.updatedDate');
-        $this->db->from('tbl_blog as BaseTbl');
+        $this->db->from('tbl_blog as Basetbl');
 
         if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.title  LIKE '%".$searchText."%' OR  BaseTbl.topic  LIKE '%".$searchText."%')";
+            $likeCriteria = "(Basetbl.title  LIKE '%".$searchText."%' OR  Basetbl.topic  LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        // $this->db->where('BaseTbl.status', 'PUBLISH');
-        $this->db->order_by('BaseTbl.id', 'DESC');
+        // $this->db->where('Basetbl.status', 'PUBLISH');
+        $this->db->order_by('Basetbl.id', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
         
