@@ -1,7 +1,12 @@
 /application/config/database.php
 /application/config/constants.php
 
-.htaccess
 .index.php
+.htaccess
 
 *.iml
+
+.vscode/
+*.sql
+/assets/resources
+
