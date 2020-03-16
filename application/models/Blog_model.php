@@ -43,7 +43,7 @@ class Blog_model extends CI_Model
             $likeCriteria = "(Basetbl.title  LIKE '%".$searchText."%' OR  Basetbl.topic  LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
         }
-        $this->db->where('Basetbl.status', 'PUBLISH' ); 
+        $this->db->where('Basetbl.status', 'PUBLISH'); 
         $query = $this->db->get();
         return $query->num_rows();
     }

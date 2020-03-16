@@ -135,6 +135,7 @@ $route['addNewBlog'] = ["blog/addNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUD
 $route['submitNewBlog'] = ["blog/submitNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editBlog'] = ["blog/editBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['deleteBlog'] = ["blog/deleteBlog", [AUTHORISED_STAFF, STAFF, TUTOR] ];
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
