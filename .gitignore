@@ -6,7 +6,12 @@
 # IDE
 *.iml
 .project
-/.idea/
+.idea/
+.idea/.gitignore
+.idea/.name
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
 .vscode/
 
 # Resources
