@@ -246,4 +246,30 @@ class Conference extends BaseController
         $this->load->view( 'calendar' );
     }
 
+    function upload_ckeditor()
+    {
+        $uploadImageConfig = [
+            'upload_path' => './uploads/',
+            'allowed_types' => 'gif|jpg|png|jpeg|JPG|JPEG|GIF|PNG',
+            'max_size' => 10240000,
+            'max_width' => 20000,
+            'max_height' => 20000,
+        ];
+
+        $this->load->library('upload', $uploadImageConfig);
+
+        if ($this->upload->do_upload('upload')) {
+            $fileData = $this->upload->data();
+            echo json_encode(array('file_name' => $fileData['file_name']));
+        } else {
+            echo json_encode(array('error' => $this->upload->display_errors()));
+        }
+    }
+
+    function file_browser(){
+        $data['filelist'] = glob('uploads');
+
+        $this->load->view('file_browser', $data);
+    }
+
 }

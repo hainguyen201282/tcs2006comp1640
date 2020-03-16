@@ -166,7 +166,6 @@ class Student_model extends CI_Model
     {
         $this->db->where('studentId', $studentId);
         $this->db->update('tbl_student', $studentInfo);
-
         return TRUE;
     }
 
@@ -196,7 +195,6 @@ class Student_model extends CI_Model
     {
         $this->db->where('studentId', $studentId);
         $this->db->update('tbl_student', $studentInfo);
-
         return TRUE;
     }
 
@@ -206,11 +204,40 @@ class Student_model extends CI_Model
         $this->db->from('tbl_users as BaseTbl');
         $likeCriteria = "(BaseTbl.roleId = 3 AND BaseTbl.isDeleted = 0)";
         $this->db->where($likeCriteria);
-
         $query = $this->db->get();
 
         return $query->result();
     }
 
+    function getAllStudents()
+    {
+        $this->db->select(
+            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.tutorId, StudentTbl.createdDtm,
+            TutorTbl.name as tutorName, '
+        );
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId');
+        $this->db->order_by('StudentTbl.studentId', 'ASC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    function getAllStudentsByTutorId($tutorId)
+    {
+        $this->db->select(
+            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.tutorId, StudentTbl.createdDtm,
+            TutorTbl.name as tutorName, '
+        );
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId');
+        $this->db->where('TutorTbl.userId', $tutorId);
+        $this->db->order_by('StudentTbl.studentId', 'ASC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
 }
 

@@ -20,7 +20,6 @@ class Student extends BaseController
     public function index()
     {
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
-
         $this->loadViews("dashboard", $this->global, NULL, NULL);
     }
 
@@ -72,10 +71,10 @@ class Student extends BaseController
 
     function addNewStudent()
     {
-        $this->load->model('student_model');
-
-        $data['tutors'] = $this->student_model->getAllTutors();
         $this->global['pageTitle'] = 'CodeInsect : Add New Student';
+
+        $this->load->model('student_model');
+        $data['tutors'] = $this->student_model->getAllTutors();
 
         $this->loadViews("addNewStudent", $this->global, $data, NULL);
     }
@@ -124,18 +123,18 @@ class Student extends BaseController
 
     function studentListing()
     {
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
-        $data['searchText'] = $searchText;
-
+        $this->global['pageTitle'] = 'CodeInsect : Student Listing';
         $this->load->library('pagination');
 
-        $count = $this->student_model->studentListingCount($searchText, $this->vendorId);
+        $data['studentRecords'] = array();
 
-        $returns = $this->paginationCompress("studentListing/", $count, 10);
-
-        $data['studentRecords'] = $this->student_model->studentListing($searchText, $returns["page"], $returns["segment"], $this->vendorId);
-
-        $this->global['pageTitle'] = 'CodeInsect : Student Listing';
+        if (AUTHORISED_STAFF == $this->role || STAFF == $this->role) {
+            $data['studentRecords'] =
+                $this->student_model->getAllStudents();
+        } else if (TUTOR == $this->role ) {
+            $data['studentRecords'] =
+                $this->student_model->getAllStudentsByTutorId($this->vendorId);
+        }
 
         $this->loadViews("student", $this->global, $data, NULL);
     }
@@ -143,7 +142,6 @@ class Student extends BaseController
     function pageNotFound()
     {
         $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
-
         $this->loadViews("404", $this->global, NULL, NULL);
     }
 
