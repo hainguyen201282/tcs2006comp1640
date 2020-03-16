@@ -19,13 +19,15 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="<?php echo base_url(); ?>assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
-    <style>
+    <style type="text/css">
         .error {
             color: red;
             font-weight: normal;
         }
     </style>
-    <script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/ckfinder/ckfinder.js" type="text/javascript"></script>
     <script type="text/javascript">
         var baseURL = "<?php echo base_url(); ?>";
     </script>
@@ -339,15 +341,15 @@
                   ipAddress = "localhost"
               }
 
-              const port = "3000";
-              const socketIoAddress = `http://` + ipAddress + `:` + port;
-              const socket = io(socketIoAddress);
+              // const port = "3000";
+              // const socketIoAddress = `http://` + ipAddress + `:` + port;
+              // const socket = io(socketIoAddress);
 
-              // socket.emit('subscribe', {abc: 111});
+              // // socket.emit('subscribe', {abc: 111});
 
-              socket.on('subscribe_callback', (data) => {
-                console.log(data)
-              });
+              // socket.on('subscribe_callback', (data) => {
+              //   console.log(data)
+              // });
           // })
       </script>
     </aside>

@@ -103,6 +103,7 @@ $route['deleteConference'] = ["conference/deleteConference", [AUTHORISED_STAFF, 
 $route['editConference'] = ["conference/editConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editOldConference'] = ["conference/editOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editOldConference/(:num)'] = ["conference/editOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['conferenceUpload'] = ["conference/upload_ckeditor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 $route['messageListing'] = 'message/messageListing';
 $route['messageListing/(:num)'] = "message/messageListing/$1";
