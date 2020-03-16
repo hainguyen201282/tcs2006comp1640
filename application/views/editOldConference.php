@@ -8,18 +8,12 @@ $cstatus = $conferenceInfo->cstatus;
 $description = $conferenceInfo->description;
 ?>
 
-<script type="text/javascript">
-    // filebrowserUploadUrl: '<?php echo site_url('conferenceUpload?type=files');?>',
-    //         // filebrowserBrowseUrl 
-    //         extraPlugins: 'filebrowser,popup,filetools,uploadimage,uploadwidget'
-            
+<script type="text/javascript">      
     $(document).ready(function(){
         var ckeditor = CKEDITOR.replace('description', {
             filebrowserBrowseUrl: '<?php echo site_url('assets/js/ckfinder/ckfinder.html');?>',
             filebrowserUploadUrl: '<?php echo site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files');?>',
         });
-
-        // CKFinder.setupCKEditor( ckeditor );
     });   
 </script>
 
