@@ -63,15 +63,17 @@ $config['images'] = array(
 /*=================================== Backends ========================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_backends
 
+$base  = "http://". $_SERVER['SERVER_NAME'] . '/comp1640';
 $config['backends'][] = array(
     'name'         => 'default',
     'adapter'      => 'local',
-    'baseUrl'      => '/ckfinder/userfiles/',
- // 'root'         => '/c/xampp/htdocs/tcs2006comp1640/uploads/', // Can be used to explicitly set the CKFinder user files directory.
+    'baseUrl'      => $base . '/uploads/',
+    'root'         => '/var/www/html/comp1640/uploads', // Can be used to explici$
     'chmodFiles'   => 0777,
     'chmodFolders' => 0755,
     'filesystemEncoding' => 'UTF-8',
 );
+
 
 /*================================ Resource Types =====================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_resourceTypes
