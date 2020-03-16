@@ -265,6 +265,7 @@ class User extends BaseController
     function profile($active = "details")
     {
         $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);
+        $data['roles'] = $this->user_model->getAllRoles();
         $data["active"] = $active;
 
         $this->global['pageTitle'] = $active == "details" ? 'CodeInsect : My Profile' : 'CodeInsect : Change Password';
@@ -278,12 +279,13 @@ class User extends BaseController
     function profileUpdate($active = "details")
     {
         $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('fname', 'Full Name', 'trim|required|max_length[128]');
-        $this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[10]');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]|callback_emailExists');
-
-        if ($this->form_validation->run() == FALSE) {
+            
+        $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
+        $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
+        $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]|callback_emailExists');     
+        
+        if($this->form_validation->run() == FALSE)
+        {
             $this->profile($active);
         } else {
             $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));

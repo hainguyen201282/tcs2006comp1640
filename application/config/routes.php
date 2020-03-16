@@ -103,14 +103,14 @@ $route['editConference'] = ["conference/editConference", [AUTHORISED_STAFF, STAF
 $route['editOldConference'] = ["conference/editOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editOldConference/(:num)'] = ["conference/editOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['messageListing'] = 'message/messageListing';
-$route['messageListing/(:num)'] = "message/messageListing/$1";
-$route['addNewMessage'] = "message/addNewMessage";
-$route['submitAddMessage'] = "message/submitAddMessage";
-$route['editMessage'] = "message/editMessage";
-$route['editOldMessage'] = "message/editOldMessage";
-$route['editOldMessage/(:num)'] = "message/editOldMessage/$1";
-$route['deleteMessage'] = "message/deleteMessage";
+// $route['messageListing'] = 'message/messageListing';
+// $route['messageListing/(:num)'] = "message/messageListing/$1";
+// $route['addNewMessage'] = "message/addNewMessage";
+// $route['submitAddMessage'] = "message/submitAddMessage";
+// $route['editMessage'] = "message/editMessage";
+// $route['editOldMessage'] = "message/editOldMessage";
+// $route['editOldMessage/(:num)'] = "message/editOldMessage/$1";
+// $route['deleteMessage'] = "message/deleteMessage";
 //End of Dat-doing
 
 $route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
