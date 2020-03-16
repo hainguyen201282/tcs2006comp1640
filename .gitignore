@@ -1,5 +1,13 @@
+# Configuration
+.htaccess
 /application/config/database.php
 /application/config/constants.php
 
-.htaccess
-.index.php
+# IDE
+*.iml
+.project
+/.idea/
+.vscode/
+
+# Resources
+/assets/resources

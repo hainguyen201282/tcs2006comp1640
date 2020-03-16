@@ -5,6 +5,8 @@ $email = $userInfo->email;
 $mobile = $userInfo->mobile;
 $address = $userInfo->address;
 $roleId = $userInfo->roleId;
+$role = $userInfo->role;
+$roleText = $userInfo->roleText;
 ?>
 
 <div class="content-wrapper">
@@ -28,7 +30,7 @@ $roleId = $userInfo->roleId;
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/dist/img/avatar.png" alt="User profile picture">
                         <h3 class="profile-username text-center"><?= $name ?></h3>
-
+                        <p class="text-muted text-center"><?= $roleText ?></p>
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
                                 <b>Email</b> <a class="pull-right"><?= $email ?></a>
@@ -81,6 +83,7 @@ $roleId = $userInfo->roleId;
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
+
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" id="address" name="address" placeholder="<?php echo $address; ?>" value="<?php echo set_value('address', $address); ?>">
                                             </div>
@@ -112,6 +115,7 @@ $roleId = $userInfo->roleId;
                                     </div>
                                 </div> 
                             </div>    
+
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
                                     <input type="submit" class="btn btn-primary" value="Submit" />

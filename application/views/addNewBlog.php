@@ -6,27 +6,24 @@
         <small>Add / Edit Blog</small>
       </h1>
     </section>
-    
     <section class="content">
-    
         <div class="row">
             <!-- left column -->
             <div class="col-md-8">
               <!-- general form elements -->
-                
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Enter Blog Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addBlog" action="<?php echo base_url() ?>submitNewBlog" method="post" role="form">
+                    <form role="form" id="addBlog" action="<?php echo base_url() ?>submitNewBlog" method="post" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">                                
                                     <div class="form-group">
-                                        <label for="fname">Blog name</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('fname'); ?>" id="fname" name="fname" maxlength="128">
+                                        <label for="title">Title</label>
+                                        <input type="text" class="form-control required" value="<?php echo set_value('title'); ?>" id="title" name="title" maxlength="128">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -40,11 +37,20 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="content">Content</label>
-                                        <textarea id="content" style="width:100%" value="<?php echo set_value('content'); ?>" name="content"></textarea>
+                                        <textarea id="content" style="width:100%" value="<?php echo set_value('content'); ?>" name="content" maxlength="65000"></textarea>
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- /.box-body -->
+                            <!-- Upload -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="file" name="userfile" size="20"/>
+                                    </div>   
+                                </div>
+                            </div>
+                            <!--  -->
+                        </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit"/>
                             <input type="reset" class="btn btn-default" value="Reset"/>
@@ -82,6 +88,4 @@
             </div>
         </div>    
     </section>
-    
 </div>
-<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>

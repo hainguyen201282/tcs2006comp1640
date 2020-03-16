@@ -19,13 +19,15 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="<?php echo base_url(); ?>assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
-    <style>
+    <style type="text/css">
         .error {
             color: red;
             font-weight: normal;
         }
     </style>
-    <script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/ckfinder/ckfinder.js" type="text/javascript"></script>
     <script type="text/javascript">
         var baseURL = "<?php echo base_url(); ?>";
     </script>
@@ -58,16 +60,57 @@
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown tasks-menu">
+                    <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                            <i class="fa fa-history"></i>
+                          <i class="fa fa-bell-o"></i>
+                          <span class="label label-warning">10</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header"> Last Login : <i
-                                        class="fa fa-clock-o"></i> <?= empty($last_login) ? "First Time Login" : $last_login; ?>
-                            </li>
+                          <li class="header">You have 10 notifications</li>
+                          <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                              <li>
+                                <a href="#">
+                                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                  page and may cause design problems
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <i class="fa fa-users text-red"></i> 5 new members joined
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <i class="fa fa-user text-red"></i> You changed your username
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="footer"><a href="#">View all</a></li>
                         </ul>
-                    </li>
+                      </li>
+                    <li class="dropdown tasks-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                          <i class="fa fa-history"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li class="header"> Last Login : <i
+                                        class="fa fa-clock-o"></i> <?= empty($last_login) ? "First Time Login" : $last_login; ?>
+                          </li>
+                        </ul>
+                      </li>
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -90,7 +133,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="<?php echo base_url(); ?>profile" class="btn btn-warning btn-flat"><i
+                                    <a href="<?php echo base_url(); ?>profile" class="btn btn-warning btn-flat" style="color: #666;"><i
                                                 class="fa fa-user-circle"></i> Profile</a>
                                 </div>
                                 <div class="pull-right">
@@ -173,7 +216,7 @@
                         </a>
                     </li>
                     <li>
-                    <a href="<?php echo base_url(); ?>blog">
+                    <a href="<?php echo base_url(); ?>blogListing">
                             <i class="fa fa-files-o"></i>
                             <span>Blogs</span>
                         </a>
@@ -256,7 +299,7 @@
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="<?php echo base_url(); ?>userListing">
                             <i class="fa fa-users"></i>
                             <span>Users</span>
@@ -267,7 +310,7 @@
                             <i class="fa fa-id-card"></i>
                             <span>Students</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="<?php echo base_url(); ?>conferenceListing">
                             <i class="fa fa-comments"></i>
@@ -298,15 +341,15 @@
                   ipAddress = "localhost"
               }
 
-              const port = "3000";
-              const socketIoAddress = `http://` + ipAddress + `:` + port;
-              const socket = io(socketIoAddress);
+              // const port = "3000";
+              // const socketIoAddress = `http://` + ipAddress + `:` + port;
+              // const socket = io(socketIoAddress);
 
-              // socket.emit('subscribe', {abc: 111});
+              // // socket.emit('subscribe', {abc: 111});
 
-              socket.on('subscribe_callback', (data) => {
-                console.log(data)
-              });
+              // socket.on('subscribe_callback', (data) => {
+              //   console.log(data)
+              // });
           // })
       </script>
     </aside>

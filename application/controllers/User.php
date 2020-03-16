@@ -265,11 +265,38 @@ class User extends BaseController
     function profile($active = "details")
     {
         $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);
+
         $data['roles'] = $this->user_model->getAllRoles();
+
+        $data["userInfo"]->roleText = '';
+        
+        if (isset($data["userInfo"]->role)) {
+
+            switch ($data["userInfo"]->role) {
+                case AUTHORISED_STAFF:
+                    $data["userInfo"]->roleText = "AUTHORISED STAFF";
+                    break;
+                
+                case STAFF:
+                    $data["userInfo"]->roleText = "STAFF";
+                    break;
+                
+                case TUTOR:
+                    $data["userInfo"]->roleText = "TUTOR";
+                    break;
+                
+                case STUDENT:
+                    $data["userInfo"]->roleText = "STUDENT";
+                    break;
+            }
+        }
+        
         $data["active"] = $active;
 
         $this->global['pageTitle'] = $active == "details" ? 'CodeInsect : My Profile' : 'CodeInsect : Change Password';
+        
         $this->loadViews("profile", $this->global, $data, NULL);
+        
     }
 
     /**
@@ -294,7 +321,13 @@ class User extends BaseController
 
             $userInfo = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
 
-            $result = $this->user_model->editUser($userInfo, $this->vendorId);
+            if ($this->session->userdata ( 'role' ) == STUDENT) {
+                $this->load->model('student_model');
+                $result = $this->student_model->editStudent($userInfo, $this->vendorId);
+            } else {
+                $result = $this->user_model->editUser($userInfo, $this->vendorId);
+            }
+            
 
             if ($result == true) {
                 $this->session->set_userdata('name', $name);
@@ -325,7 +358,12 @@ class User extends BaseController
             $oldPassword = $this->input->post('oldPassword');
             $newPassword = $this->input->post('newPassword');
 
-            $resultPas = $this->user_model->matchOldPassword($this->vendorId, $oldPassword);
+            if ($this->session->userdata ( 'role' ) == STUDENT) {
+                $this->load->model('student_model');
+                $resultPas = $this->student_model->matchOldPassword($this->vendorId, $oldPassword);
+            } else {
+                $resultPas = $this->user_model->matchOldPassword($this->vendorId, $oldPassword);
+            }
 
             if (empty($resultPas)) {
                 $this->session->set_flashdata('nomatch', 'Your old password is not correct');
@@ -334,7 +372,11 @@ class User extends BaseController
                 $usersData = array('password' => getHashedPassword($newPassword), 'updatedBy' => $this->vendorId,
                     'updatedDtm' => date('Y-m-d H:i:s'));
 
-                $result = $this->user_model->changePassword($this->vendorId, $usersData);
+                if ($this->session->userdata ( 'role' ) == STUDENT) {
+                    $result = $this->student_model->changePassword($this->vendorId, $usersData);
+                } else {
+                    $result = $this->user_model->changePassword($this->vendorId, $usersData);
+                }
 
                 if ($result > 0) {
                     $this->session->set_flashdata('success', 'Password updation successful');
