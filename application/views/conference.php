@@ -59,7 +59,7 @@
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-primary" href="<?= base_url().'login-history/'.$record->id; ?>" title="Login history"><i class="fa fa-history"></i></a> |
                                             <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldConference/'.$record->id; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-sm btn-danger deleteConference" href="#" data-conferenceId="<?php echo $record->id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-sm btn-danger" href="<?php echo base_url().'deleteOldConference/'.$record->id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php
@@ -81,7 +81,7 @@
 <!--<script type="text/javascript">-->
 <!--    jQuery(document).ready(function(){-->
 <!--        jQuery(document).on("click", ".deleteConference", function(){-->
-<!--            var userId = $(this).data("conferenceId"),-->
+<!--            var id = $(this).data("id"),-->
 <!--                hitURL = baseURL + "deleteConference",-->
 <!--                currentRow = $(this);-->
 <!---->
@@ -93,12 +93,12 @@
 <!--                    type : "POST",-->
 <!--                    dataType : "json",-->
 <!--                    url : hitURL,-->
-<!--                    data : { conferenceId : conferenceId }-->
+<!--                    data : { id : id }-->
 <!--                }).done(function(data){-->
 <!--                    console.log(data);-->
 <!--                    currentRow.parents('tr').remove();-->
-<!--                    if(data.status = true) { alert("User successfully deleted"); }-->
-<!--                    else if(data.status = false) { alert("User deletion failed"); }-->
+<!--                    if(data.status = true) { alert("Conference successfully deleted"); }-->
+<!--                    else if(data.status = false) { alert("Conference deletion failed"); }-->
 <!--                    else { alert("Access denied..!"); }-->
 <!--                });-->
 <!--            }-->
@@ -117,7 +117,7 @@
             e.preventDefault();
             var link = jQuery(this).get(0).href;
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "referenceListing/" + value);
+            jQuery("#searchList").attr("action", baseURL + "conferenceListing/" + value);
             jQuery("#searchList").submit();
         });
     });

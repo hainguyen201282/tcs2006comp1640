@@ -3,6 +3,7 @@ $userId = $userInfo->userId;
 $name = $userInfo->name;
 $email = $userInfo->email;
 $mobile = $userInfo->mobile;
+$address = $userInfo->address;
 $roleId = $userInfo->roleId;
 $role = $userInfo->role;
 $roleText = $userInfo->roleText;
@@ -29,9 +30,7 @@ $roleText = $userInfo->roleText;
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/dist/img/avatar.png" alt="User profile picture">
                         <h3 class="profile-username text-center"><?= $name ?></h3>
-
                         <p class="text-muted text-center"><?= $roleText ?></p>
-
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
                                 <b>Email</b> <a class="pull-right"><?= $email ?></a>
@@ -84,19 +83,39 @@ $roleText = $userInfo->roleText;
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="role">Role</label>
-                                                <input type="text" class="form-control" id="role" name="role" placeholder="<?php echo $role; ?>" value="<?php echo set_value('role', $role); ?>">
-                                                <select class ="dropdownstyle" name="category" selected="<?php print($messageeditdetails[0]['category_id']); ?>">
 
-                                                <option value=""><?php echo "Select"; ?></option>
-
-                                                <?php  foreach ($dropdowndetails as $dropdowndetails) { ?>
-                                                    <option <?php if($messageeditdetails[0]['category_id'] == $dropdowndetails['id']) { ?> selected="<?php echo $dropdowndetails['id']; ?>" <?php } ?> value="<?php echo $dropdowndetails['id']; ?>"><?php echo $dropdowndetails['category_name']; ?></option>
-                                                <?php } ?>
-                                                </select>
+                                                <label for="address">Address</label>
+                                                <input type="text" class="form-control" id="address" name="address" placeholder="<?php echo $address; ?>" value="<?php echo set_value('address', $address); ?>">
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                        <label for="role">Role</label>
+                                        <select class="form-control required" id="role" name="role">
+                                            <option value="0">Select Role</option>
+                                            <?php
+                                            if(!empty($roles))
+                                            {
+                                                foreach ($roles as $item)
+                                                {
+                                                    ?>
+                                                        <option value="<?php echo $item->roleId ?>" 
+                                                            <?php 
+                                                                if($item->roleId == $roleId) {echo "selected=selected";} 
+                                                            ?>>
+                                                            <?php echo $item->role ?>
+                                                        </option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div> 
+                            </div>    
+
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
                                     <input type="submit" class="btn btn-primary" value="Submit" />

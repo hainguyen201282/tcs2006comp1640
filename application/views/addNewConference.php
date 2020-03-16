@@ -20,31 +20,45 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addConference" action="<?php echo base_url() ?>submitAddConference" method="post"
-                          role="form">
+                    <form role="form" id="addConference" action="<?php echo base_url() ?>submitAddConference"
+                          method="post" role="form">
                         <div class="box-body">
+                            <!--                            Update 15-03-2020-->
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="fname">Appointment Time</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('appointmentTime'); ?>"
-                                               id="appointmentTime" name="appointmentTime" maxlength="128">
-                                    </div>
+                                <div class="col-md-6 form-group">
+                                    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+                                          rel="stylesheet"/>
+                                    <label for="email">Time Picker</label>
+                                    <input type="text" id="picker" class="form-control" name="appointmentTime"
+                                           value="<?php echo set_value('appointmentTime'); ?>"/>
                                 </div>
+                                <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+                                <script>
+                                    $('#picker').datetimepicker({
+                                        timepicker: true,
+                                        datepicker: true,
+                                        format: 'yy-m-d H:i',
+                                        hours12: false,
+                                        step: 15
+                                    })
+                                </script>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Location</label>
+                                        <label for="location">Location</label>
                                         <input type="text" class="form-control required"
                                                value="<?php echo set_value('location'); ?>"
-                                               id="email" name="location" maxlength="200">
+                                               id="location" name="location" maxlength="200">
                                     </div>
                                 </div>
                             </div>
+                            <!--                        End of Update 15-03-2020-->
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="password">Topic</label>
+                                        <label for="topic">Topic</label>
                                         <input type="text" class="form-control required"
                                                value="<?php echo set_value('topic'); ?>"
                                                id="topic" name="topic" maxlength="50">
@@ -57,7 +71,9 @@
                                             <option value="0">Select Type</option>
                                             <option value="Real">Real</option>
                                             <option value="Virtual">Virtual</option>
-                                            <?php if(isset($_POST["type"])) { echo $_POST["type"]; } ?>
+                                            <?php if (isset($_POST["type"])) {
+                                                echo $_POST["type"];
+                                            } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -70,15 +86,18 @@
                                             <option value="0">Select Status</option>
                                             <option value="Activated">Activated</option>
                                             <option value="Deactivated">Deactivated</option>
-                                            <?php if(isset($_POST["status"])) { echo $_POST["status"]; } ?>
+                                            <?php if (isset($_POST["status"])) {
+                                                echo $_POST["status"];
+                                            } ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mobile">Description</label>
-                                        <textarea class="form-control"  aria-label="With textarea"
-                                                  id="description" name="description" maxlength="200"><?php echo set_value('description'); ?></textarea>
+                                        <textarea class="form-control" aria-label="With textarea"
+                                                  id="description" name="description"
+                                                  maxlength="200"><?php echo set_value('description'); ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -122,5 +141,8 @@
     </section>
 
 </div>
-<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/addNewConference.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!--//Update 15-03-2020-->
 
+//End of Update 15-03-2020
