@@ -62,7 +62,7 @@
                 <?php
                     $this->load->helper('form');
                     $error = $this->session->flashdata('error');
-                    if($error)
+                    if($this->session->flashdata('error') !== null)
                     {
                 ?>
                     <div class="alert alert-danger alert-dismissable">

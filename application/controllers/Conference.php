@@ -170,15 +170,106 @@ class Conference extends BaseController
         }
     }
 
+    function deleteOldConference($id = NULL)
+    {
+        if($id == null)
+        {
+            redirect('conferenceListing');
+        }
+
+        $this->global['pageTitle'] = 'CodeInsect : Delete Conference';
+
+        $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
+
+        $this->loadViews("deleteOldConference", $this->global, $data, NULL);
+    }
+
+
+    /**
+     * This function is used to delete the student information
+     */
     function deleteConference()
     {
+        $this->load->library('form_validation');
+
         $id = $this->input->post('id');
-        $conferenceInfo = array('cstatus'=>"Deactivated",'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
 
-        $result = $this->conference_model->deleteConference($id, $conferenceInfo);
+        $this->form_validation->set_rules('appointmentTime','AppointmentTime','trim|required|max_length[128]');
+        $this->form_validation->set_rules('location','Location','trim|required|max_length[200]');
+        $this->form_validation->set_rules('topic','Topic','trim|required|max_length[50]');
+        $this->form_validation->set_rules('type','Type','trim|required|max_length[10]');
+        $this->form_validation->set_rules('cstatus','Cstatus','trim|required|max_length[50]');
+        $this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[200]');
 
-        if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
-        else { echo(json_encode(array('status'=>FALSE))); }
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->deleteOldConference($id);
+        }
+        else
+        {
+            $appointmentTime = $this->input->post('appointmentTime');
+            $location = $this->input->post('location');
+            $topic = $this->input->post('topic');
+            $type = $this->input->post('type');
+            $cstatus = $this->input->post('cstatus');
+            $description = $this->input->post('description');
+
+            $ConferenceInfo = array();
+
+            $conferenceInfo = array(
+                'appointmentTime'=>$appointmentTime,
+                'location'=>$location,
+                'topic'=> $topic,
+                'type'=>$type,
+                'cstatus'=>$cstatus,
+                'description'=>$description,
+                'updatedBy'=>$this->vendorId,
+                'updatedDtm'=>date('Y-m-d H:i:s'));
+
+            $result = $this->conference_model->deleteConference($conferenceInfo, $id);
+
+            if($result == true)
+            {
+                $this->session->set_flashdata('success', 'Conference updated successfully');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'Conference updated failed');
+            }
+
+            redirect('conferenceListing');
+        }
+    }
+
+    function calendar()
+    {
+        $this->load->view( 'calendar' );
+    }
+
+    function upload_ckeditor()
+    {
+        $uploadImageConfig = [
+            'upload_path' => './uploads/',
+            'allowed_types' => 'gif|jpg|png|jpeg|JPG|JPEG|GIF|PNG',
+            'max_size' => 10240000,
+            'max_width' => 20000,
+            'max_height' => 20000,
+        ];
+
+        $this->load->library('upload', $uploadImageConfig);
+
+        if ($this->upload->do_upload('upload')) {
+            $fileData = $this->upload->data();
+            echo json_encode(array('file_name' => $fileData['file_name']));
+        } else {
+            echo json_encode(array('error' => $this->upload->display_errors()));
+        }
+    }
+
+    function file_browser(){
+        $data['filelist'] = glob('uploads');
+
+        $this->load->view('file_browser', $data);
     }
 
 }

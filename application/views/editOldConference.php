@@ -8,6 +8,15 @@ $cstatus = $conferenceInfo->cstatus;
 $description = $conferenceInfo->description;
 ?>
 
+<script type="text/javascript">      
+    $(document).ready(function(){
+        var ckeditor = CKEDITOR.replace('description', {
+            filebrowserBrowseUrl: '<?php echo site_url('assets/js/ckfinder/ckfinder.html');?>',
+            filebrowserUploadUrl: '<?php echo site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files');?>',
+        });
+    });   
+</script>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

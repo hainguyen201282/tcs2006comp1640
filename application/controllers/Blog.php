@@ -73,12 +73,12 @@ class Blog extends BaseController
             $this->load->model('blog_model');
             $result = $this->blog_model->addNewBlog($blogInfo);
 
-            if($result > 0) {
+            if($result > 0 && $_FILES['theFile']['name'] !='') {
                 $this->upload($result);
-            } else {
+            } else if ($result <= 0) {
                 $this->session->set_flashdata('error', 'blog creation failed'); 
             }
-            // redirect('addNewBlog');
+            redirect('blogListing');
         }
     }
 
@@ -130,8 +130,25 @@ class Blog extends BaseController
             } else {
                 $this->session->set_flashdata('error', 'Blog updation failed');
             }
-
             redirect('blogListing');
+        }
+    }
+
+    function deleteBlog()
+    {
+        $id = $this->input->post('blogId');
+        
+        $blogInfo = array(
+            'status' => 'DELETED', 
+            'updatedDate' => date('Y-m-d H:i:s')
+        );
+
+        $result = $this->blog_model->deleteBlog($id, $blogInfo);
+
+        if ($result > 0) {
+            echo(json_encode(array('status' => TRUE)));
+        } else {
+            echo(json_encode(array('status' => FALSE)));
         }
     }
 
@@ -149,7 +166,7 @@ class Blog extends BaseController
 
         if (!$this->upload->do_upload('userfile')) {
             $error = array('error' => $this->upload->display_errors());
-            $this->session->set_flashdata('error', $error);
+            $this->session->set_flashdata('error', $this->upload->display_errors());
             return;
         }
         $fileData = $this->upload->data(); // get data about the file
