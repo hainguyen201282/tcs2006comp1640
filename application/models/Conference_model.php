@@ -82,6 +82,7 @@ class Conference_model extends CI_Model
     {
         $this->db->where('id', $id);
         $this->db->update('tbl_conference', $conferenceInfo);
-        return $this->db->affected_rows();
+
+        return TRUE;
     }
 }

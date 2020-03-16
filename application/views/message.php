@@ -3,15 +3,15 @@
     <section class="content-header">
         <h1>
             <i class="fa fa-comments"></i> Message Management
-            <small>Send, View Message</small>
+            <small>Add, Edit, Delete</small>
         </h1>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewMessage"><i class="fa fa-paper-plane"></i> Send New Massage</a>
-            </div>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewMessage"><i class="fa fa-paper-plane"></i>&nbsp Send New Massage</a>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -37,7 +37,7 @@
                                 <th>Subject</th>
                                 <th>MessageStatus</th>
                                 <th>MessageContent</th>
-                                <th>Sent On</th>
+                                <th>Created On</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             <?php
@@ -53,7 +53,7 @@
                                         <td><?php echo $record->messageContent ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldMessage/'.$record->id; ?>" title="View Message"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'viewOldMessage/'.$record->id; ?>" title="View Message"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                     <?php
@@ -71,7 +71,6 @@
         </div>
     </section>
 </div>
-
 
 <script type="text/javascript">
     jQuery(document).ready(function(){
