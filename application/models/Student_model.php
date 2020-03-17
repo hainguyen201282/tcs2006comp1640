@@ -217,6 +217,7 @@ class Student_model extends CI_Model
         );
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId');
+        $this->db->where('StudentTbl.isDeleted', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');
         $query = $this->db->get();
 
@@ -233,6 +234,7 @@ class Student_model extends CI_Model
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId');
         $this->db->where('TutorTbl.userId', $tutorId);
+        $this->db->where('StudentTbl.isDeleted', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');
         $query = $this->db->get();
 

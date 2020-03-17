@@ -75,6 +75,7 @@
     </section>
 </div>
 
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js?<?php echo time();?>" charset="utf-8"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#tbl-student').DataTable({

@@ -75,13 +75,13 @@ $route['profileUpdate/(:any)'] = ["user/profileUpdate/$1", [AUTHORISED_STAFF, ST
 
 $route['loginStudent'] = ['student/loginStudent', [AUTHORISED_STAFF, STAFF, TUTOR] ];
 //Dat-doing
-$route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editOldStudent/(:num)'] = ["student/editOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF] ];
+$route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF] ];
+$route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['editOldStudent/(:num)'] = ["student/editOldStudent/$1", [AUTHORISED_STAFF, STAFF] ];
+$route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF] ];
 
 //$route['deleteUser'] = ["student/deleteUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profile'] = ["student/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -89,7 +89,7 @@ $route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF, TUTOR]
 //$route['profileUpdate'] = ["student/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profileUpdate/(:any)'] = ["student/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['deleteStudent'] = ["student/deleteStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['deleteStudent'] = ["student/deleteStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['assignStudent'] = ["student/assignStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['assignOldStudent'] = ["student/assignOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['assignOldStudent/(:num)'] = ["student/assignOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
