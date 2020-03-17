@@ -26,7 +26,7 @@ class Blog_model extends CI_Model
         return TRUE;
     }
 
-    function deleteBlog($blogInfo, $id)
+    function deleteBlog($id, $blogInfo)
     {
         $this->db->where('id', $id);
         $this->db->update('tbl_blog', $blogInfo);
