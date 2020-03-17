@@ -5,7 +5,7 @@
 
 jQuery(document).ready(function(){
 	
-	jQuery(document).on("click", ".deleteUser, .deleteStudent", function(){
+	jQuery(document).on("click touchend", ".deleteUser, .deleteStudent", function(){
 
 		var userId = $(this).data("userid"),
 			hitURL = baseURL + "deleteUser",

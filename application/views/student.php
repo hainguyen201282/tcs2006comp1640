@@ -47,7 +47,10 @@
                                         <td><?php echo $record->gender ?></td>
                                         <td><?php echo $record->tutorId ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
-                                        <td class="text-center">
+                                        <?php if ($role == AUTHORISED_STAFF ||
+                                                     $role == STAFF) {
+                                        ?>
+                                            <td class="text-center">
                                             <a class="btn btn-sm btn-primary"
                                                href="<?= base_url() . 'login-history/' . $record->studentId; ?>"
                                                title="Login history"><i class="fa fa-history"></i></a> |
@@ -58,6 +61,8 @@
                                                data-studentId="<?php echo $record->studentId; ?>" title="Delete"><i
                                                         class="fa fa-trash"></i></a>
                                         </td>
+                                        <?php } ?>
+                                        
                                     </tr>
                                     <?php
                                 }
@@ -81,6 +86,18 @@
         $('#tbl-student').DataTable({
             'initComplete': function () {
             }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('ul.pagination li a').click(function (e) {
+            e.preventDefault();            
+            var link = jQuery(this).get(0).href;            
+            var value = link.substring(link.lastIndexOf('/') + 1);
+            jQuery("#searchList").attr("action", baseURL + "userListing/" + value);
+            jQuery("#searchList").submit();
         });
     });
 </script>

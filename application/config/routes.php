@@ -75,8 +75,8 @@ $route['profileUpdate/(:any)'] = ["user/profileUpdate/$1", [AUTHORISED_STAFF, ST
 
 $route['loginStudent'] = ['student/loginStudent', [AUTHORISED_STAFF, STAFF, TUTOR] ];
 //Dat-doing
-$route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF] ];
-$route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF] ];
+$route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
 $route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF] ];
