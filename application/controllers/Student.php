@@ -131,7 +131,7 @@ class Student extends BaseController
         if (AUTHORISED_STAFF == $this->role || STAFF == $this->role) {
             $data['studentRecords'] =
                 $this->student_model->getAllStudents();
-        } else if (TUTOR == $this->role ) {
+        } else if (TUTOR == $this->role) {
             $data['studentRecords'] =
                 $this->student_model->getAllStudentsByTutorId($this->vendorId);
         }
@@ -298,23 +298,53 @@ class Student extends BaseController
             }
             redirect('studentListing');
         }
+    }
 
-//    function deleteStudent()
-//    {
-//        if($this->isAdmin() == TRUE)
-//        {
-//            echo(json_encode(array('status'=>'access')));
-//        }
-//        else
-//        {
-//            $id = $this->input->post('id');
-//            $studentInfo = array('cstatus'=>"Deactivated",'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
-//
-//            $result = $this->student_model->deleteStudent($id, $studentInfo);
-//
-//            if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
-//            else { echo(json_encode(array('status'=>FALSE))); }
-//        }
-//    }
+    function viewAssignTutor($active = "details")
+    {
+        $this->global['pageTitle'] = $active == "details" ? 'CodeInsect : Allocate' : 'CodeInsect : Reallocate';
+
+        $data["active"] = $active;
+        $data["tutors"] = $this->student_model->getAllTutors();
+        $data['studentRecords'] = $this->student_model->getAllStudentFree();
+
+        $this->loadViews("assignTutor", $this->global, $data, NULL);
+    }
+
+    function assignTutor()
+    {
+        $studentIds = $this->input->post('studentIds');
+        $tutorId = $this->input->post('tutorId');
+
+        $result = array();
+        foreach ($studentIds as $studentId) {
+
+            $studentInfo = array(
+                'tutorId' => $tutorId,
+                'updatedBy' => $this->vendorId,
+                'updatedDtm' => date('Y-m-d H:i:s'));
+
+            array_push($result, $this->student_model->assignStudent($studentInfo, $studentId));
+        }
+
+        if (sizeof($result) == sizeof($studentIds)) {
+            echo(json_encode(array(
+                'status' => true,
+            )));
+        } else {
+            echo(json_encode(array(
+                'status' => false,
+            )));
+        }
+    }
+
+    function getAllStudentByTutorId()
+    {
+        $tutorId = $this->input->post('tutorId');
+        $result['students'] = $this->student_model->getAllStudentByTutorId($tutorId);
+
+        echo(json_encode(array(
+            'result' => $result,
+        )));
     }
 }

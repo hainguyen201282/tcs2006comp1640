@@ -7,24 +7,26 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-xs-12 text-right">
+            <div class="col-xs-6 text-left">
+                <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor">
+                    Allocate / Reallocate Tutor
+                </a>
+            </div>
+            <div class="col-xs-6 text-right">
                 <div class="form-group">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"><i class="fa fa-plus"></i>
-                        Add New</a>
+                        Add New
+                    </a>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Student List</h3>
-                    </div>
                     <div class="box-body table-responsive">
                         <table id="tbl-student" class="table display" style="width:100%">
                             <thead>
                             <tr>
-                                <th >Checkbox</th>
                                 <th>Email</th>
                                 <th>Student Name</th>
                                 <th>Mobile Phone Number</th>
@@ -40,7 +42,6 @@
                                 foreach ($studentRecords as $record) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $record->studentId ?></td>
                                         <td><?php echo $record->email ?></td>
                                         <td><?php echo $record->name ?></td>
                                         <td><?php echo $record->mobile ?></td>
@@ -75,12 +76,14 @@
     </section>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         $('#tbl-student').DataTable({
-            'initComplete': function () {
-            }
+            'info': true,
+            'searching': true,
+            'paging': true,
+            'lengthChange': true,
         });
-    });
+    })
 </script>
 

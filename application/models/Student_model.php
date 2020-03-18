@@ -239,5 +239,33 @@ class Student_model extends CI_Model
         $result = $query->result();
         return $result;
     }
+
+    function getAllStudentFree()
+    {
+        $this->db->select(
+            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, '
+        );
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->where('StudentTbl.tutorId', 0);
+        $this->db->order_by('StudentTbl.studentId', 'ASC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    function getAllStudentByTutorId($tutorId) {
+        $this->db->select(
+            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, '
+        );
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->where('StudentTbl.tutorId', $tutorId);
+        $this->db->order_by('StudentTbl.studentId', 'ASC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+
+    }
 }
 
