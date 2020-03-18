@@ -34,7 +34,7 @@ class Student extends BaseController
         $this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->index();
+            redirect('loginMe');
         } else {
             $email = strtolower($this->security->xss_clean($this->input->post('email')));
             $password = $this->input->post('password');
