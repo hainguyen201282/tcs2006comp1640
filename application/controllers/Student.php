@@ -34,7 +34,7 @@ class Student extends BaseController
         $this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->index();
+            redirect('loginMe');
         } else {
             $email = strtolower($this->security->xss_clean($this->input->post('email')));
             $password = $this->input->post('password');
@@ -228,19 +228,15 @@ class Student extends BaseController
      */
     function deleteStudent()
     {
-        if ($this->isAdmin() == TRUE) {
-            echo(json_encode(array('status' => 'access')));
+        $studentId = $this->input->post('studentId');
+        $studentInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
+
+        $result = $this->student_model->deleteStudent($studentId, $studentInfo);
+
+        if ($result > 0) {
+            echo(json_encode(array('status' => TRUE)));
         } else {
-            $studentId = $this->input->post('studentId');
-            $studentInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
-
-            $result = $this->student_model->deleteStudent($studentId, $studentInfo);
-
-            if ($result > 0) {
-                echo(json_encode(array('status' => TRUE)));
-            } else {
-                echo(json_encode(array('status' => FALSE)));
-            }
+            echo(json_encode(array('status' => FALSE)));
         }
     }
 
