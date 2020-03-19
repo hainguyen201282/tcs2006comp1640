@@ -135,12 +135,13 @@ $route['resetPasswordConfirmUser/(:any)'] = ["login/resetPasswordConfirmUser/$1"
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = ["login/resetPasswordConfirmUser/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['createPasswordUser'] = ["login/createPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['blogListing'] = ["blog/blogListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['addNewBlog'] = ["blog/addNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['submitNewBlog'] = ["blog/submitNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['editBlog'] = ["blog/editBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['deleteBlog'] = ["blog/deleteBlog", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['blogListing'] = ["blog/blogListing", [TUTOR, STUDENT] ];
+$route['blogListing/(:num)'] = ["blog/blogListing/$1", [TUTOR, STUDENT] ];
+$route['addNewBlog'] = ["blog/addNewBlog", [TUTOR, STUDENT] ];
+$route['submitNewBlog'] = ["blog/submitNewBlog", [TUTOR, STUDENT] ];
+$route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [TUTOR, STUDENT] ];
+$route['editBlog'] = ["blog/editBlog", [TUTOR, STUDENT] ];
+$route['deleteBlog'] = ["blog/deleteBlog", [TUTOR, STUDENT] ];
 
 $route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
