@@ -142,9 +142,12 @@ $route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [AUTHORISED_STAFF, STAF
 $route['editBlog'] = ["blog/editBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['deleteBlog'] = ["blog/deleteBlog", [AUTHORISED_STAFF, STAFF, TUTOR] ];
 
-$route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['getAllStudentByTutorId'] = ["student/getAllStudentByTutorId", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['unassignTutor'] = ["student/unassignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

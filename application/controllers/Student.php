@@ -312,35 +312,48 @@ class Student extends BaseController
         $studentIds = $this->input->post('studentIds');
         $tutorId = $this->input->post('tutorId');
 
-        $result = array();
-        foreach ($studentIds as $studentId) {
-
-            $studentInfo = array(
-                'tutorId' => $tutorId,
-                'updatedBy' => $this->vendorId,
-                'updatedDtm' => date('Y-m-d H:i:s'));
-
-            array_push($result, $this->student_model->assignStudent($studentInfo, $studentId));
-        }
-
-        if (sizeof($result) == sizeof($studentIds)) {
-            echo(json_encode(array(
-                'status' => true,
-            )));
-        } else {
-            echo(json_encode(array(
-                'status' => false,
-            )));
-        }
+        $status = $this->updateTutorToStudent($studentIds, $tutorId);
+        echo(json_encode(array(
+            'status' => $status,
+        )));
     }
 
     function getAllStudentByTutorId()
     {
         $tutorId = $this->input->post('tutorId');
-        $result['students'] = $this->student_model->getAllStudentByTutorId($tutorId);
+        $result = $this->student_model->getAllStudentByTutorId($tutorId);
 
         echo(json_encode(array(
             'result' => $result,
         )));
+    }
+
+    function unassignTutor()
+    {
+        $studentIds = $this->input->post('studentIds');
+
+        $status = $this->updateTutorToStudent($studentIds);
+        echo(json_encode(array(
+            'status' => $status,
+        )));
+    }
+
+    function updateTutorToStudent($studentIds, $tutor = 0)
+    {
+        $result = array();
+        foreach ($studentIds as $studentId) {
+
+            $studentInfo = array(
+                'tutorId' => $tutor,
+                'updatedBy' => $this->vendorId,
+                'updatedDtm' => date('Y-m-d H:i:s'));
+
+            array_push($result, $this->student_model->assignStudent($studentInfo, $studentId));
+        }
+        if (sizeof($result) == sizeof($studentIds)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

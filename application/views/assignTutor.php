@@ -118,19 +118,32 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="box-body table-responsive">
-                                                <table id="tbl-student-reallocate" class="table display"
-                                                       style="width:100%">
-                                                </table>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="box-body table-responsive">
+                                                    <table id="tbl-student-reallocate" class="table display"
+                                                           style="width:100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:1%">
+                                                                <label>
+                                                                    <input name="select_all" value="1"
+                                                                           type="checkbox"/>
+                                                                </label>
+                                                            </th>
+                                                            <th>Student Name</th>
+                                                            <th>Email</th>
+                                                        </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="box-footer">
-                                        <input type="button" class="btn btn-primary" value="Submit"/>
-                                        <input type="reset" class="btn btn-default" value="Reset"/>
+                                        <div class="box-footer">
+                                            <input id="btn-unassign" type="button" class="btn btn-primary"
+                                                   value="Submit"/>
+                                            <input type="reset" class="btn btn-default" value="Reset"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -142,49 +155,36 @@
     </section>
 </div>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/allocateStudent.js" charset="utf-8"></script>
-
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#tutor-reallocate').change(function () {
-            // selected value
-            const tutorId = $(this).val();
+    // Updates "Select all" control in a data table
+    function updateDataTableSelectAllCtrl(table) {
+        const $table = table.table().node();
+        const $chkbox_all = $('tbody input[type="checkbox"]', $table);
+        const $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+        const chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
 
-            const result = [];
-            $.ajax({
-                type: 'POST',
-                url: baseURL + "getAllStudentByTutorId",
-                dataType: "json",
-                data: {
-                    "tutorId": tutorId
-                }
-            }).done(function (data) {
-                result.push(data.result);
-            });
+        // If none of the checkboxes are checked
+        if ($chkbox_checked.length === 0) {
+            chkbox_select_all.checked = false;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
 
-            setTimeout(function () {
-                console.log(result[0]);
+            // If all of the checkboxes are checked
+        } else if ($chkbox_checked.length === $chkbox_all.length) {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
 
-                // refresh datatable
-                // const datatable = $("#tbl-student-reallocate").DataTable({
-                //     'info': false,
-                //     'searching': false,
-                //     'paging': true,
-                //     'lengthChange': false,
-                //     'data' : result[0],
-                //     "columns": [
-                //         {
-                //             title: "Email", "render": function (data) {
-                //                 console.log(data);
-                //                 return '<span>sdadasd</span>';
-                //             }
-                //         },
-                //     ]
-                // });
-                // datatable.clear().draw();
-                // datatable.rows.add(result[0]); // add new data
-                // datatable.columns.adjust().draw();
-            }, 1000);
-        });
-    });
+            // If some of the checkboxes are checked
+        } else {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = true;
+            }
+        }
+    }
 </script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/allocateStudent.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reallocateStudent.js" charset="utf-8"></script>

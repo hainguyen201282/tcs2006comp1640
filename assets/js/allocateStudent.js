@@ -1,37 +1,6 @@
-// Updates "Select all" control in a data table
-function updateDataTableSelectAllCtrl(table) {
-    const $table = table.table().node();
-    const $chkbox_all = $('tbody input[type="checkbox"]', $table);
-    const $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
-    const chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
-
-    // If none of the checkboxes are checked
-    if ($chkbox_checked.length === 0) {
-        chkbox_select_all.checked = false;
-        if ('indeterminate' in chkbox_select_all) {
-            chkbox_select_all.indeterminate = false;
-        }
-
-        // If all of the checkboxes are checked
-    } else if ($chkbox_checked.length === $chkbox_all.length) {
-        chkbox_select_all.checked = true;
-        if ('indeterminate' in chkbox_select_all) {
-            chkbox_select_all.indeterminate = false;
-        }
-
-        // If some of the checkboxes are checked
-    } else {
-        chkbox_select_all.checked = true;
-        if ('indeterminate' in chkbox_select_all) {
-            chkbox_select_all.indeterminate = true;
-        }
-    }
-}
-
-const rows_selected = [];
-
 $(document).ready(function () {
-    // Array holding selected row IDs
+    const rows_selected = [];
+
     const table = $('#tbl-student-allocate').DataTable({
         'info': false,
         'searching': false,
@@ -137,9 +106,9 @@ $(document).ready(function () {
                 "tutorId": tutorId
             }
         }).done(function (data) {
-            if(data.status === true) {
+            if (data.status === true) {
                 alert("Students successfully allocated");
-            } else if(data.status === false) {
+            } else if (data.status === false) {
                 alert("Students allocation failed");
             }
             location.reload();

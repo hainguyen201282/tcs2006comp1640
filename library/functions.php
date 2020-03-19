@@ -90,28 +90,28 @@ if (!function_exists("socket_io_message")) {
     }
 }
 
-if (!function_exists("decrypt")) {
-    function decrypt($input, $key_seed)
-    {
-
-        $input = @base64_decode($input);
-        $key = @substr(md5($key_seed), 0, 24);
-        $text = @mcrypt_decrypt(MCRYPT_TRIPLEDES, $key, $input, MCRYPT_MODE_ECB, '12345678');
-        $block = @mcrypt_get_block_size('tripledes', 'ecb');
-
-        $packing = @ord($text{strlen($text) - 1});
-        if ($packing and ($packing < $block)) {
-            for ($P = @strlen($text) - 1; $P >= @strlen($text) - $packing; $P--) {
-                if (@ord($text{$P}) != $packing) {
-                    $packing = 0;
-                }
-            }
-        }
-        $text = @substr($text, 0, strlen($text) - $packing);
-
-        return $text;
-    }
-}
+//if (!function_exists("decrypt")) {
+//    function decrypt($input, $key_seed)
+//    {
+//
+//        $input = @base64_decode($input);
+//        $key = @substr(md5($key_seed), 0, 24);
+//        $text = @mcrypt_decrypt(MCRYPT_TRIPLEDES, $key, $input, MCRYPT_MODE_ECB, '12345678');
+//        $block = @mcrypt_get_block_size('tripledes', 'ecb');
+//
+//        $packing = @ord($text{strlen($text) - 1});
+//        if ($packing and ($packing < $block)) {
+//            for ($P = @strlen($text) - 1; $P >= @strlen($text) - $packing; $P--) {
+//                if (@ord($text{$P}) != $packing) {
+//                    $packing = 0;
+//                }
+//            }
+//        }
+//        $text = @substr($text, 0, strlen($text) - $packing);
+//
+//        return $text;
+//    }
+//}
 if (!function_exists("getIP")) {
     function getIP()
     {
