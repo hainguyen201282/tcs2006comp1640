@@ -10,7 +10,8 @@
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewConference"><i class="fa fa-plus"></i> Add New</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewConference"><i class="fa fa-plus"></i>
+                        Add New</a>
                 </div>
             </div>
         </div>
@@ -19,21 +20,26 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Conference List</h3>
-                        <div class="box-tools">
-                            <form action="<?php echo base_url() ?>conferenceListing" method="POST" id="searchList">
-                                <div class="input-group">
-                                    <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+                        <!--                        <div class="box-tools">-->
+                        <!--                            <form action="--><?php //echo base_url() ?><!--conferenceListing" method="POST" id="searchList">-->
+                        <!--                                <div class="input-group">-->
+                        <!--                                    <input type="text" name="searchText" value="--><?php //echo $searchText; ?><!--"-->
+                        <!--                                           class="form-control input-sm pull-right" style="width: 150px;"-->
+                        <!--                                           placeholder="Search"/>-->
+                        <!--                                    <div class="input-group-btn">-->
+                        <!--                                        <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i>-->
+                        <!--                                        </button>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </form>-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="box-body table-responsive">
+                        <table id="tbl-conference" class="table display" style="width:100%">
+                            <thead>
                             <tr>
-                                <th>ApointmentTime</th>
+                                <th>Conference ID</th>
+                                <th>Appointment Time</th>
                                 <th>Location</th>
                                 <th>Topic</th>
                                 <th>Type</th>
@@ -42,13 +48,14 @@
                                 <th>Created On</th>
                                 <th class="text-center">Actions</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <?php
-                            if(!empty($conferenceRecords))
-                            {
-                                foreach($conferenceRecords as $record)
-                                {
+                            if (!empty($conferenceRecords)) {
+                                foreach ($conferenceRecords as $record) {
                                     ?>
                                     <tr>
+                                        <td><?php echo $record->id ?></td>
                                         <td><?php echo $record->appointmentTime ?></td>
                                         <td><?php echo $record->location ?></td>
                                         <td><?php echo $record->topic ?></td>
@@ -57,22 +64,25 @@
                                         <td><?php echo $record->description ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-sm btn-primary" href="<?= base_url().'login-history/'.$record->id; ?>" title="Login history"><i class="fa fa-history"></i></a> |
-                                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldConference/'.$record->id; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-sm btn-danger" href="<?php echo base_url().'deleteOldConference/'.$record->id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-sm btn-info"
+                                               href="<?php echo base_url() . 'editOldConference/' . $record->id; ?>"
+                                               title="Edit"><i class="fa fa-pencil"></i></a> |
+                                            <a class="btn btn-sm btn-danger deleteConference" href="#"
+                                               data-conferenceId="<?php echo $record->id; ?>" title="Delete"><i
+                                                    class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php
                                 }
                             }
                             ?>
+                            </tbody>
                         </table>
-
-                    </div><!-- /.box-body -->
+                    </div>
                     <div class="box-footer clearfix">
                         <?php echo $this->pagination->create_links(); ?>
                     </div>
-                </div><!-- /.box -->
+                </div>
             </div>
         </div>
     </section>

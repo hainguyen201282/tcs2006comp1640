@@ -85,4 +85,18 @@ class Conference_model extends CI_Model
 
         return TRUE;
     }
+
+    //Update 19-3-2020
+
+    function getCStudent($id)
+    {
+        $this->db->select('BaseTbl.conferenceId, BaseTbl.studentId, StudentTbl.name as studentName');
+        $this->db->from('tbl_conference_student as BaseTbl');
+        $this->db->join('tbl_student as StudentTbl', 'BaseTbl.studentId = StudentTbl.studentId');
+        $this->db->where('BaseTbl.conferenceId', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+    //End of update 19-3-2020
 }

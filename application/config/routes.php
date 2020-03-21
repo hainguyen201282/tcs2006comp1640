@@ -77,11 +77,11 @@ $route['loginStudent'] = ['student/loginStudent', [AUTHORISED_STAFF, STAFF, TUTO
 //Dat-doing
 $route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
 $route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editOldStudent/(:num)'] = ["student/editOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+$route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['editOldStudent/(:num)'] = ["student/editOldStudent/$1", [AUTHORISED_STAFF, STAFF] ];
+$route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF] ];
 
 //$route['deleteUser'] = ["student/deleteUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profile'] = ["student/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -89,10 +89,10 @@ $route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF, TUTOR]
 //$route['profileUpdate'] = ["student/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 //$route['profileUpdate/(:any)'] = ["student/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['deleteStudent'] = ["student/deleteStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['assignStudent'] = ["student/assignStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['assignOldStudent'] = ["student/assignOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['assignOldStudent/(:num)'] = ["student/assignOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['deleteStudent'] = ["student/deleteStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['assignStudent'] = ["student/assignStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['assignOldStudent'] = ["student/assignOldStudent", [AUTHORISED_STAFF, STAFF] ];
+$route['assignOldStudent/(:num)'] = ["student/assignOldStudent/$1", [AUTHORISED_STAFF, STAFF] ];
 
 //$route['conference'] = ['conference', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['conferenceListing'] = ["conference/conferenceListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -106,8 +106,8 @@ $route['editOldConference'] = ["conference/editOldConference", [AUTHORISED_STAFF
 $route['editOldConference/(:num)'] = ["conference/editOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['conferenceUpload'] = ["conference/upload_ckeditor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['messageListing'] = ["message/messageListing", [TUTOR, STUDENT] ];
-$route['messageListing/(:num)'] = ["message/messageListing/$1", [TUTOR, STUDENT] ];
+$route['messageListing'] = ["message/messageListing", [TUTOR] ];
+$route['messageListing/(:num)'] = ["message/messageListing/$1", [TUTOR] ];
 $route['addNewMessage'] = ["message/addNewMessage", [TUTOR, STUDENT] ];
 $route['submitAddMessage'] = ["message/submitAddMessage", [TUTOR, STUDENT] ];
 $route['viewMessage'] = ["message/viewMessage", [TUTOR, STUDENT] ];
@@ -117,6 +117,18 @@ $route['deleteMessage'] = ["message/deleteMessage", [TUTOR, STUDENT] ];
 
 $route['deleteOldConference'] = ["conference/deleteOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['deleteOldConference/(:num)'] = ["conference/deleteOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
+//Update 17-3-2020
+$route['calendar'] = ["conference/calendar", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['calendar2'] = ["conference/calendar2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['fullCalendar'] = ["fullcalendar/fullCalendar", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+//End of update 17-3-2020
+
+//Update 18-3-2020
+$route['messageViewByStudent'] = ["message/messageListingByStudent", [STUDENT] ];
+$route['messageViewByStudent/(:num)'] = ["message/messageListingByStudent/$1", [STUDENT] ];
+
+//End of Update 18-3-2020
 //End of Dat-doing
 
 $route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
