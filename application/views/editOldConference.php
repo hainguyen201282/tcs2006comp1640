@@ -6,6 +6,10 @@ $topic = $conferenceInfo->topic;
 $type = $conferenceInfo->type;
 $cstatus = $conferenceInfo->cstatus;
 $description = $conferenceInfo->description;
+
+$studentId = $studentInfo->studentId;
+$studentName = $studentInfo->studentName;
+
 ?>
 
 <script type="text/javascript">      
@@ -101,6 +105,44 @@ $description = $conferenceInfo->description;
                                     </div>
                                 </div>
                             </div>
+                            <!--Update 19-3-2020-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mobile">Student</label>
+                                        <input type="text" class="form-control required"
+                                               value="<?php echo $studentName; ?>"
+                                               id="topic" name="topic" maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-body table-responsive">
+                                <table id="tbl-student" class="table display" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Student Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+<!--                                    --><?php
+//                                    if (!empty($studentInfo)) {
+//                                        foreach ($studentInfo as $record) {
+//                                            ?>
+<!--                                            <tr>-->
+<!--                                                <td>--><?php //echo $record->studentId ?><!--</td>-->
+<!--                                                <td>--><?php //echo $record->studentName ?><!--</td>-->
+<!---->
+<!--                                            </tr>-->
+<!--                                            --><?php
+//                                        }
+//                                    }
+//                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- End of Update 19-3-2020-->
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">

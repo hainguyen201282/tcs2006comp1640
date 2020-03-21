@@ -282,7 +282,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url(); ?>messageListing">
+                        <a href="<?php echo base_url(); ?>messageViewByStudent">
                         <i class="fa fa-comments"></i>
                         <span>Message</span>
                         </a>

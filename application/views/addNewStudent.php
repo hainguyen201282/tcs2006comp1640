@@ -6,14 +6,10 @@
             <small>Add / Edit student</small>
         </h1>
     </section>
-
     <section class="content">
-
         <div class="row">
-            <!-- left column -->
             <div class="col-md-8">
                 <!-- general form elements -->
-
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Enter student Details</h3>
@@ -54,8 +50,7 @@
                                     <div class="form-group">
                                         <label for="gender">Gender</label>
                                         <select class="form-control" id="gender" name="gender">
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                             <option value="Female">Female</option>
                                             <?php if (isset($_POST["gender"])) {
                                                 echo $_POST["gender"];
                                             } ?>
@@ -82,6 +77,7 @@
                                     <div class="form-group">
                                         <label for="tutor">Assign New Tutor</label>
                                         <select class="form-control required" id="tutor" name="tutor">
+                                            <option value="0">Select Tutor</option>
                                             <?php
                                             if(!empty($tutors))
                                             {
@@ -97,12 +93,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-
-                            </div>
-
-                        </div><!-- /.box-body -->
-
+                        </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit"/>
                             <input type="reset" class="btn btn-default" value="Reset"/>
@@ -130,7 +121,6 @@
                         <?php echo $this->session->flashdata('success'); ?>
                     </div>
                 <?php } ?>
-
                 <div class="row">
                     <div class="col-md-12">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
@@ -139,7 +129,6 @@
             </div>
         </div>
     </section>
-
 </div>
 <script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
 

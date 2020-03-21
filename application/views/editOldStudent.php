@@ -5,6 +5,7 @@ $name = $studentInfo->name;
 $mobile = $studentInfo->mobile;
 $roleId = $studentInfo->roleId;
 $gender = $studentInfo->gender;
+
 $tutorId = $studentInfo->tutorId;
 $tutorName = $studentInfo->tutorName;
 ?>
@@ -17,9 +18,7 @@ $tutorName = $studentInfo->tutorName;
             <small>Add / Edit Student</small>
         </h1>
     </section>
-
     <section class="content">
-
         <div class="row">
             <!-- left column -->
             <div class="col-md-8">
@@ -126,7 +125,6 @@ $tutorName = $studentInfo->tutorName;
                                 </div>
                             </div>
                         </div><!-- /.box-body -->
-
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit"/>
                             <input type="reset" class="btn btn-default" value="Reset"/>

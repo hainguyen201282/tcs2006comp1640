@@ -92,8 +92,8 @@ class Student extends BaseController
 
         $this->form_validation->set_rules('name', 'Full Name', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]');
-//        $this->form_validation->set_rules('password', 'Password', 'matches[cpassword]|max_length[20]');
-//        $this->form_validation->set_rules('cpassword', 'Confirm Password', 'matches[password]|max_length[20]');
+        $this->form_validation->set_rules('password', 'Password', 'matches[cpassword]|max_length[20]');
+        $this->form_validation->set_rules('cpassword', 'Confirm Password', 'matches[password]|max_length[20]');
         $this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[10]');
         $this->form_validation->set_rules('gender', 'Gender', 'trim|required|max_length[10]');
 
@@ -103,12 +103,14 @@ class Student extends BaseController
             $email = $this->input->post('email');
             $name = $this->input->post('name');
             $mobile = $this->input->post('mobile');
+            $password = $this->input->post('password');
             $gender = $this->input->post('gender');
             $tutorId = $this->input->post('tutor');
 
             $studentInfo = array('email' => $email,
                 'name' => $name,
                 'mobile' => $mobile,
+                'password' => getHashedPassword($password),
                 'roleId' => 4,
                 'gender' => $gender,
                 'tutorId' => $tutorId,

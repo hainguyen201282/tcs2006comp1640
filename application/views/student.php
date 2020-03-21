@@ -6,7 +6,8 @@
         </h1>
     </section>
     <section class="content">
-        <div class="row">
+        <div <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
+            style="display:block !important;" class="row">
             <div class="col-xs-6 text-left">
                 <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor">
                     Allocate / Reallocate Tutor
@@ -19,7 +20,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div><?php endif; ?>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -33,7 +34,9 @@
                                 <th>Gender</th>
                                 <th>TutorID</th>
                                 <th>Created On</th>
-                                <th class="text-center">Actions</th>
+                                <th <?php if ($role != AUTHORISED_STAFF || $role != STAFF): ?>
+                                    style="display: block !important;" class="text-center">Actions
+                                </th><?php endif; ?>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,20 +51,19 @@
                                         <td><?php echo $record->gender ?></td>
                                         <td><?php echo $record->tutorId ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
-                                        <?php if ($role == AUTHORISED_STAFF || $role == STAFF) {
-                                            ?>
-                                            <td class="text-center">
-                                                <a class="btn btn-sm btn-primary"
-                                                   href="<?= base_url() . 'login-history/' . $record->studentId; ?>"
-                                                   title="Login history"><i class="fa fa-history"></i></a> |
-                                                <a class="btn btn-sm btn-info"
-                                                   href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
-                                                   title="Edit"><i class="fa fa-pencil"></i></a> |
-                                                <a class="btn btn-sm btn-danger deleteStudent" href="#"
-                                                   data-studentId="<?php echo $record->studentId; ?>" title="Delete"><i
-                                                            class="fa fa-trash"></i></a>
-                                            </td>
-                                        <?php } ?>
+                                        <td <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
+                                                style="display:block !important;" class="text-center">
+                                            <a class="btn btn-sm btn-primary"
+                                               href="<?= base_url() . 'login-history/' . $record->studentId; ?>"
+                                               title="Login history"><i class="fa fa-history"></i></a> |
+                                            <a class="btn btn-sm btn-info"
+                                               href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
+                                               title="Edit"><i class="fa fa-pencil"></i></a> |
+                                            <a class="btn btn-sm btn-danger deleteStudent" href="#"
+                                               data-studentId="<?php echo $record->studentId; ?>" title="Delete"><i
+                                                        class="fa fa-trash"></i></a>
+                                        </td>
+                                        <?php endif; ?>
                                     </tr>
                                     <?php
                                 }
