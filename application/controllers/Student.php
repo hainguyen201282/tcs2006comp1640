@@ -18,6 +18,10 @@ class Student extends BaseController
             $this->isStudentLoggedIn();
         }
 
+        if ($this->role == STUDENT) {
+            $studentNotificationLogsInfo = $this->student_model->getStudentLogs($this->vendorId);
+            $this->global ['notifficationLogs'] = $studentNotificationLogsInfo;
+        }
     }
 
     public function index()
@@ -214,8 +218,38 @@ class Student extends BaseController
                 );
             }
 
+            $oldStudentInfo = $this->student_model->getStudentInfo($studentId);
             $result = $this->student_model->editStudent($studentInfo, $studentId);
 
+            $this->load->model('user_model');
+            $tutorInfo = $this->user_model->getUserInfoWithRole($tutorId);
+
+            if ($oldStudentInfo->tutorId != $tutorId) {
+                $logInfo = array(
+                    'studentId' => $studentId,
+                    'notification_text' => "You are just assigned to tutor " . $tutorInfo->name,
+                    'createdBy' => $this->vendorId,
+                    'createdDtm' => date('Y-m-d H:i:s')
+                );
+
+                $result = $this->student_model->submitAddStudentNotificationLog($logInfo);
+
+                require APPPATH . '../vendor/autoload.php';
+
+                $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));
+
+                $client->initialize();
+                // send message to connected clients
+                $messagePayload = [
+                    'eventName' => 'assign_student_to_tutor',
+                    'student_ids' => $studentId,
+                    'tutor_id' => $tutorId
+                ];
+
+                $client->emit('send_notification', $messagePayload);
+                $client->close();
+            }
+            
             if ($result == true) {
                 $this->session->set_flashdata('success', 'Student updated successfully');
             } else {
@@ -317,6 +351,20 @@ class Student extends BaseController
 
         $status = $this->updateTutorToStudent($studentIds, $tutorId);
 
+        $this->load->model('user_model');
+        $tutorInfo = $this->user_model->getUserInfoWithRole($tutorId);
+
+        foreach ($studentIds as $key => $studentId) {
+            $logInfo = array(
+                'studentId' => $studentId,
+                'notification_text' => "You are just assigned to tutor " . $tutorInfo->name,
+                'createdBy' => $this->vendorId,
+                'createdDtm' => date('Y-m-d H:i:s')
+            );
+
+            $result = $this->student_model->submitAddStudentNotificationLog($logInfo);
+        }
+        
         require APPPATH . '../vendor/autoload.php';
 
         $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));

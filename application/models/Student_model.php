@@ -73,6 +73,23 @@ class Student_model extends CI_Model
     }
 
     /**
+     * This function used to get user information by id with role
+     * @param number $userId : This is user id
+     * @return aray $result : This is user information
+     */
+    function getStudentLogs($studentId)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_student_notification_log as BaseTbl');
+        $this->db->where('BaseTbl.studentId', $studentId);
+        $this->db->where('BaseTbl.is_read', 0);
+        $this->db->order_by('BaseTbl.createdDtm DESC');
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    /**
      * This function is used to match users password for change password
      * @param number $userId : This is user id
      */
@@ -122,11 +139,23 @@ class Student_model extends CI_Model
         return $insert_id;
     }
 
+    function submitAddStudentNotificationLog($logInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('tbl_student_notification_log', $logInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
     function studentListingCount($searchText = '', $vendorId)
     {
         $this->db->select('BaseTbl.studentId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, Tutor.name as tutorName, BaseTbl.gender, BaseTbl.tutorId, BaseTbl.createdDtm,');
         $this->db->from('tbl_student as BaseTbl');
-        $this->db->join('tbl_users as Tutor', 'Tutor.userId = BaseTbl.tutorId');
+        $this->db->join('tbl_users as Tutor', 'Tutor.userId = BaseTbl.tutorId', 'left');
         if (!empty($searchText)) {
             $likeCriteria = "(BaseTbl.email  LIKE '%" . $searchText . "%'
                         OR  BaseTbl.name LIKE '%" . $searchText . "%'
@@ -216,7 +245,7 @@ class Student_model extends CI_Model
             TutorTbl.name as tutorName, '
         );
         $this->db->from('tbl_student as StudentTbl');
-        $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId');
+        $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId', 'left');
         $this->db->where('StudentTbl.isDeleted', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');
         $query = $this->db->get();
@@ -232,7 +261,7 @@ class Student_model extends CI_Model
             TutorTbl.name as tutorName '
         );
         $this->db->from('tbl_student as StudentTbl');
-        $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId');
+        $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId', 'left');
         $this->db->where('TutorTbl.userId', $tutorId);
         $this->db->where('StudentTbl.isDeleted', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');

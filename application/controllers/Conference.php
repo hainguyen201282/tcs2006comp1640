@@ -12,6 +12,12 @@ class Conference extends BaseController
         parent::__construct();
         $this->load->model('conference_model');
         $this->isLoggedIn();
+
+        if ($this->role == STUDENT) {
+            $this->load->model('student_model');
+            $studentNotificationLogsInfo = $this->student_model->getStudentLogs($this->vendorId);
+            $this->global ['notifficationLogs'] = $studentNotificationLogsInfo;
+        }
     }
 
     public function index()

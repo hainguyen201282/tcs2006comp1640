@@ -79,39 +79,21 @@
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                           <i class="fa fa-bell-o"></i>
-                          <span class="label label-warning"></span>
+                          <span class="label label-warning"><?= (isset($notifficationLogs) && $notifficationLogs && count($notifficationLogs) > 0) ? count($notifficationLogs) : ""?></span>
                         </a>
                         <ul class="dropdown-menu">
-                          <!-- <li class="header">You have 10 notifications</li> -->
                           <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
-                              <!-- <li>
-                                <a href="#">
-                                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                </a>
-                              </li>
+                            <?php 
+                            if (isset($notifficationLogs) && $notifficationLogs && count($notifficationLogs) > 0) {
+                                foreach($notifficationLogs as $notifficationLog) { ?>
                               <li>
                                 <a href="#">
-                                  <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                  page and may cause design problems
+                                  <i class="fa fa-users text-aqua"></i><?= $notifficationLog->notification_text;?>
                                 </a>
                               </li>
-                              <li>
-                                <a href="#">
-                                  <i class="fa fa-users text-red"></i> 5 new members joined
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i class="fa fa-user text-red"></i> You changed your username
-                                </a>
-                              </li> -->
+                            <?php } }?>
                             </ul>
                           </li>
                           <li class="footer"><a href="#">View all</a></li>
@@ -170,40 +152,6 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
-
-                <!-- <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-share"></i> <span>Multilevel</span>
-                        <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                        <li class="treeview">
-                            <a href="#"><i class="fa fa-circle-o"></i> Level One
-                                <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                                <li class="treeview">
-                                    <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                    </ul>
-                </li> -->
                
                 <?php
                 if ($role == AUTHORISED_STAFF) {
@@ -321,18 +269,6 @@
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="<?php echo base_url(); ?>userListing">
-                            <i class="fa fa-users"></i>
-                            <span>Users</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url(); ?>studentListing">
-                            <i class="fa fa-id-card"></i>
-                            <span>Students</span>
-                        </a>
-                    </li> -->
                     <li>
                         <a href="<?php echo base_url(); ?>conferenceListing">
                             <i class="fa fa-handshake-o"></i>
@@ -370,9 +306,6 @@
               //     ipAddress = "localhost"
               // }
 
-              
-
-
               const port = "3000";
               const socketIoAddress = `http://` + `35.238.162.110` + `:` + port;
               const socket = io(socketIoAddress);
@@ -387,7 +320,7 @@
                     studentArr = studentIds.split(",");
                     
                     if ( '<?= $role; ?>' == '<?= STUDENT; ?>' && studentArr.indexOf('<?= $vendorId; ?>') != -1) {
-                        $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu').append('<li><a href="#"><i class="fa fa-users text-aqua"></i> You are just assigned to tutor ' + tutorName + '</a> </li>');
+                        $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu').prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>You are just assigned to tutor ' + tutorName + '</a> </li>');
 
                           let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
                           if (notiCountElement.text() == '') {
@@ -395,9 +328,7 @@
                           } else {
                             notiCountElement.text(parseInt(notiCountElement.text()) + 1);    
                           }
-                    }
-                    
-
+                    }   
                 }
               });
           // })

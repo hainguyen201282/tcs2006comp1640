@@ -19,6 +19,15 @@ class User extends BaseController
         parent::__construct();
         $this->load->model('user_model');
         $this->isLoggedIn();
+
+        if ($this->role == STUDENT) {
+            $this->load->model('student_model');
+            $studentNotificationLogsInfo = $this->student_model->getStudentLogs($this->vendorId);
+            // echo "<PRE>" . print_r($studentNotificationLogsInfo, true) . "</PRE>";
+
+            $this->global ['notifficationLogs'] = $studentNotificationLogsInfo;
+        }
+        
     }
 
     /**
