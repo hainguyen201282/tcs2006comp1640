@@ -270,7 +270,14 @@ class User extends BaseController
      */
     function profile($active = "details")
     {
-        $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);
+        if ($this->session->userdata ( 'role' ) == STUDENT) {
+            $this->load->model('student_model');
+            $data["userInfo"] = $this->student_model->getStudentProfile($this->vendorId);
+            $data["userInfo"]->role = STUDENT;
+        }
+        else {
+            $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);    
+        }
 
         $data['roles'] = $this->user_model->getAllRoles();
 
