@@ -369,15 +369,15 @@
                   ipAddress = "localhost"
               }
 
-              // const port = "3000";
-              // const socketIoAddress = `http://` + ipAddress + `:` + port;
-              // const socket = io(socketIoAddress);
+              const port = "3000";
+              const socketIoAddress = `http://` + ipAddress + `:` + port;
+              const socket = io(socketIoAddress);
 
-              // // socket.emit('subscribe', {abc: 111});
+              // socket.emit('subscribe', {abc: 111});
 
-              // socket.on('subscribe_callback', (data) => {
-              //   console.log(data)
-              // });
+              socket.on('send_notification_callback', (data) => {
+                console.log(data)
+              });
           // })
       </script>
     </aside>

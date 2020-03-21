@@ -2,6 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version2X;
+
 class Student extends BaseController
 {
     /**
@@ -313,6 +316,22 @@ class Student extends BaseController
         $tutorId = $this->input->post('tutorId');
 
         $status = $this->updateTutorToStudent($studentIds, $tutorId);
+
+        require APPPATH . '../vendor/autoload.php';
+
+        $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));
+
+        $client->initialize();
+        // send message to connected clients
+        $messagePayload = [
+            'eventName' => 'assign_student_to_tutor',
+            'student_ids' => implode(",", $studentIds),
+            'tutor_id' => $tutorId
+        ];
+
+        $client->emit('subscribe', $messagePayload);
+        $client->close();
+
         echo(json_encode(array(
             'status' => $status,
         )));
