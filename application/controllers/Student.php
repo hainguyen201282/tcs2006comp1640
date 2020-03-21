@@ -2,6 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version2X;
+
 class Student extends BaseController
 {
     /**
@@ -34,7 +37,7 @@ class Student extends BaseController
         $this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->index();
+            redirect('loginMe');
         } else {
             $email = strtolower($this->security->xss_clean($this->input->post('email')));
             $password = $this->input->post('password');
@@ -131,7 +134,7 @@ class Student extends BaseController
         if (AUTHORISED_STAFF == $this->role || STAFF == $this->role) {
             $data['studentRecords'] =
                 $this->student_model->getAllStudents();
-        } else if (TUTOR == $this->role ) {
+        } else if (TUTOR == $this->role) {
             $data['studentRecords'] =
                 $this->student_model->getAllStudentsByTutorId($this->vendorId);
         }
@@ -228,19 +231,15 @@ class Student extends BaseController
      */
     function deleteStudent()
     {
-        if ($this->isAdmin() == TRUE) {
-            echo(json_encode(array('status' => 'access')));
+        $studentId = $this->input->post('studentId');
+        $studentInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
+
+        $result = $this->student_model->deleteStudent($studentId, $studentInfo);
+
+        if ($result > 0) {
+            echo(json_encode(array('status' => TRUE)));
         } else {
-            $studentId = $this->input->post('studentId');
-            $studentInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
-
-            $result = $this->student_model->deleteStudent($studentId, $studentInfo);
-
-            if ($result > 0) {
-                echo(json_encode(array('status' => TRUE)));
-            } else {
-                echo(json_encode(array('status' => FALSE)));
-            }
+            echo(json_encode(array('status' => FALSE)));
         }
     }
 
@@ -298,23 +297,82 @@ class Student extends BaseController
             }
             redirect('studentListing');
         }
+    }
 
-//    function deleteStudent()
-//    {
-//        if($this->isAdmin() == TRUE)
-//        {
-//            echo(json_encode(array('status'=>'access')));
-//        }
-//        else
-//        {
-//            $id = $this->input->post('id');
-//            $studentInfo = array('cstatus'=>"Deactivated",'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
-//
-//            $result = $this->student_model->deleteStudent($id, $studentInfo);
-//
-//            if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
-//            else { echo(json_encode(array('status'=>FALSE))); }
-//        }
-//    }
+    function viewAssignTutor($active = "details")
+    {
+        $this->global['pageTitle'] = $active == "details" ? 'CodeInsect : Allocate' : 'CodeInsect : Reallocate';
+
+        $data["active"] = $active;
+        $data["tutors"] = $this->student_model->getAllTutors();
+        $data['studentRecords'] = $this->student_model->getAllStudentFree();
+
+        $this->loadViews("assignTutor", $this->global, $data, NULL);
+    }
+
+    function assignTutor()
+    {
+        $studentIds = $this->input->post('studentIds');
+        $tutorId = $this->input->post('tutorId');
+
+        $status = $this->updateTutorToStudent($studentIds, $tutorId);
+
+        require APPPATH . '../vendor/autoload.php';
+
+        $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));
+
+        $client->initialize();
+        // send message to connected clients
+        $messagePayload = [
+            'eventName' => 'assign_student_to_tutor',
+            'student_ids' => implode(",", $studentIds),
+            'tutor_id' => $tutorId
+        ];
+
+        $client->emit('send_notification', $messagePayload);
+        $client->close();
+
+        echo(json_encode(array(
+            'status' => $status,
+        )));
+    }
+
+    function getAllStudentByTutorId()
+    {
+        $tutorId = $this->input->post('tutorId');
+        $result = $this->student_model->getAllStudentByTutorId($tutorId);
+
+        echo(json_encode(array(
+            'result' => $result,
+        )));
+    }
+
+    function unassignTutor()
+    {
+        $studentIds = $this->input->post('studentIds');
+
+        $status = $this->updateTutorToStudent($studentIds);
+        echo(json_encode(array(
+            'status' => $status,
+        )));
+    }
+
+    function updateTutorToStudent($studentIds, $tutor = 0)
+    {
+        $result = array();
+        foreach ($studentIds as $studentId) {
+
+            $studentInfo = array(
+                'tutorId' => $tutor,
+                'updatedBy' => $this->vendorId,
+                'updatedDtm' => date('Y-m-d H:i:s'));
+
+            array_push($result, $this->student_model->assignStudent($studentInfo, $studentId));
+        }
+        if (sizeof($result) == sizeof($studentIds)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

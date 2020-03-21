@@ -94,6 +94,7 @@ $route['assignStudent'] = ["student/assignStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['assignOldStudent'] = ["student/assignOldStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['assignOldStudent/(:num)'] = ["student/assignOldStudent/$1", [AUTHORISED_STAFF, STAFF] ];
 
+
 //$route['conference'] = ['conference', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['conferenceListing'] = ["conference/conferenceListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
@@ -118,12 +119,6 @@ $route['deleteMessage'] = ["message/deleteMessage", [TUTOR, STUDENT] ];
 $route['deleteOldConference'] = ["conference/deleteOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['deleteOldConference/(:num)'] = ["conference/deleteOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-//Update 17-3-2020
-$route['calendar'] = ["conference/calendar", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['calendar2'] = ["conference/calendar2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['fullCalendar'] = ["fullcalendar/fullCalendar", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-//End of update 17-3-2020
-
 //Update 18-3-2020
 $route['messageViewByStudent'] = ["message/messageListingByStudent", [STUDENT] ];
 $route['messageViewByStudent/(:num)'] = ["message/messageListingByStudent/$1", [STUDENT] ];
@@ -147,11 +142,19 @@ $route['resetPasswordConfirmUser/(:any)'] = ["login/resetPasswordConfirmUser/$1"
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = ["login/resetPasswordConfirmUser/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['createPasswordUser'] = ["login/createPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-$route['blogListing'] = ["blog/blogListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['addNewBlog'] = ["blog/addNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['submitNewBlog'] = ["blog/submitNewBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['editBlog'] = ["blog/editBlog", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['blogListing'] = ["blog/blogListing", [TUTOR, STUDENT] ];
+$route['blogListing/(:num)'] = ["blog/blogListing/$1", [TUTOR, STUDENT] ];
+$route['addNewBlog'] = ["blog/addNewBlog", [TUTOR, STUDENT] ];
+$route['submitNewBlog'] = ["blog/submitNewBlog", [TUTOR, STUDENT] ];
+$route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [TUTOR, STUDENT] ];
+$route['editBlog'] = ["blog/editBlog", [TUTOR, STUDENT] ];
+$route['deleteBlog'] = ["blog/deleteBlog", [TUTOR, STUDENT] ];
+
+$route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['getAllStudentByTutorId'] = ["student/getAllStudentByTutorId", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['unassignTutor'] = ["student/unassignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
