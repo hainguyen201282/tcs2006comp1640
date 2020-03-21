@@ -37,14 +37,16 @@
                                 foreach ($messageRecords1 as $record1) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $record1->studentName ?></td>
+                                        <td><?php echo $record1->senderByUserId ?></td>
                                         <td><?php echo $record1->subject ?></td>
                                         <td><?php echo $record1->messageContent ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record1->createdDtm)) ?></td>
                                         <td class="text-center">
+
 <!--                                            <a class="btn btn-sm btn-info"-->
-<!--                                               href="--><?php //echo base_url() . 'viewOldMessage/' . $record1->id; ?><!--"-->
-<!--                                               title="Edit"><i class="fa fa-pencil"></i></a>-->
+<!--                                               href="--><?php //echo base_url() . 'editOldMessage/' . $record1->id; ?><!--"-->
+<!--                                               title="Edit"><i class="fa fa-pencil"></i></a> |-->
+
                                         </td>
                                     </tr>
                                     <?php
@@ -60,6 +62,7 @@
                 </div>
             </div>
         </div>
+        <!--        fdasfsa-->
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -84,15 +87,15 @@
                                 foreach ($messageRecords2 as $record2) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $record2->studentName ?></td>
+                                        <td><?php echo $record2->receiverByUserId ?></td>
                                         <td><?php echo $record2->subject ?></td>
                                         <td><?php echo $record2->messageContent ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record2->createdDtm)) ?></td>
                                         <td class="text-center">
 
 <!--                                            <a class="btn btn-sm btn-info"-->
-<!--                                               href="--><?php //echo base_url() . 'viewOldMessage/' . $record2->id; ?><!--"-->
-<!--                                               title="Edit"><i class="fa fa-pencil"></i></a>-->
+<!--                                               href="--><?php //echo base_url() . 'editOldMessage/' . $record2->id; ?><!--"-->
+<!--                                               title="Edit"><i class="fa fa-pencil"></i></a> |-->
 
                                         </td>
                                     </tr>
@@ -110,6 +113,8 @@
             </div>
         </div>
 
+
+        <!--        fdsafsd-->
     </section>
 </div>
 

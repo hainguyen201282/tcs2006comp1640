@@ -1,9 +1,15 @@
+<?php
+$id = $messageInfo->id;
+$subject = $messageInfo->subject;
+$messageContent = $messageInfo->messageContent;
+?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Message
-            <small>Send message</small>
+            <i class="fa fa-comments"></i> Message Management
+            <small>View Message</small>
         </h1>
     </section>
 
@@ -19,46 +25,38 @@
                         <h3 class="box-title">Enter Message Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
+
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addMessage" action="<?php echo base_url() ?>submitAddMessage" method="post"
-                          role="form">
+                    <form role="form" id="editMessage" action="<?php echo base_url() ?>viewMessage" method="post" role="form">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="fname">Sent To</label>
-<!--                                        <input type="text" class="form-control required"-->
-<!--                                               value="--><?php //echo set_value('receiverByStudentId'); ?><!--"-->
-<!--                                               id="receiverByStudentId" name="receiverByStudentId" maxlength="11">-->
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('receiver'); ?>"
-                                               id="receiver" name="receiver" maxlength="11">
+                                        <label for="fname">subject</label>
+                                        <input type="text" class="form-control"
+                                               value="<?php echo $subject; ?>"
+                                               id="subject" name="subject" placeholder="subject" maxlength="128">
+                                        <input type="hidden" value="<?php echo $id; ?>" name="id" id="id" />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Subject</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('subject'); ?>"
-                                               id="subject" name="subject" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
-                        </br>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="messageContent">Message Content</label>
-                                        <textarea class="form-control"  aria-label="With textarea"
-                                                  id="messageContent" name="messageContent" maxlength="200"><?php echo set_value('messageContent'); ?></textarea>
-                                    </div>
-                                </div>
+
                             </div>
 
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="messageContent">messageContent</label>
+                                        <textarea class="form-control"  aria-label="With textarea"
+                                                  id="messageContent" name="messageContent" maxlength="200"><?php echo $messageContent; ?>
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" value="Send Message"/>
+                            <input type="submit" class="btn btn-primary" value="Submit"/>
                             <input type="reset" class="btn btn-default" value="Reset"/>
                         </div>
                     </form>
@@ -68,7 +66,8 @@
                 <?php
                 $this->load->helper('form');
                 $error = $this->session->flashdata('error');
-                if ($error) {
+                if($error)
+                {
                     ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -77,7 +76,8 @@
                 <?php } ?>
                 <?php
                 $success = $this->session->flashdata('success');
-                if ($success) {
+                if($success)
+                {
                     ?>
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -93,7 +93,6 @@
             </div>
         </div>
     </section>
-
 </div>
-<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
 
+<script src="<?php echo base_url(); ?>assets/js/editMessage.js" type="text/javascript"></script>
