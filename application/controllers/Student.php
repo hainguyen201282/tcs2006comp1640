@@ -329,7 +329,7 @@ class Student extends BaseController
             'tutor_id' => $tutorId
         ];
 
-        $client->emit('subscribe', $messagePayload);
+        $client->emit('send_notification', $messagePayload);
         $client->close();
 
         echo(json_encode(array(
