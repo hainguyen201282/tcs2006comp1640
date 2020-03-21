@@ -79,14 +79,14 @@
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                           <i class="fa fa-bell-o"></i>
-                          <span class="label label-warning">10</span>
+                          <span class="label label-warning"></span>
                         </a>
                         <ul class="dropdown-menu">
-                          <li class="header">You have 10 notifications</li>
+                          <!-- <li class="header">You have 10 notifications</li> -->
                           <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
-                              <li>
+                              <!-- <li>
                                 <a href="#">
                                   <i class="fa fa-users text-aqua"></i> 5 new members joined today
                                 </a>
@@ -111,7 +111,7 @@
                                 <a href="#">
                                   <i class="fa fa-user text-red"></i> You changed your username
                                 </a>
-                              </li>
+                              </li> -->
                             </ul>
                           </li>
                           <li class="footer"><a href="#">View all</a></li>
@@ -346,7 +346,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url(); ?>messageListing">
+                        <a href="<?php echo base_url(); ?>messageViewByStudent">
                         <i class="fa fa-comments"></i>
                         <span>Message</span>
                         </a>
@@ -365,19 +365,41 @@
           // $(function () {
               let ipAddress = "<?= $_SERVER['HTTP_HOST']; ?>";
 
-              if (ipAddress == "::1") {
-                  ipAddress = "localhost"
-              }
+              
+              // if (ipAddress == "::1") {
+              //     ipAddress = "localhost"
+              // }
 
-              // const port = "3000";
-              // const socketIoAddress = `http://` + ipAddress + `:` + port;
-              // const socket = io(socketIoAddress);
+              
 
-              // // socket.emit('subscribe', {abc: 111});
 
-              // socket.on('subscribe_callback', (data) => {
-              //   console.log(data)
-              // });
+              const port = "3000";
+              const socketIoAddress = `http://` + `35.238.162.110` + `:` + port;
+              const socket = io(socketIoAddress);
+
+              socket.on('send_notification_callback', (response) => {
+                const data = response.data;
+                const eventName = data['eventName'];
+                if (eventName == "assign_student_to_tutor") {
+                    studentIds = data['student_ids'];
+                    tutorId = data['tutor_id'];
+                    tutorName = data['tutor_name'];
+                    studentArr = studentIds.split(",");
+                    
+                    if ( '<?= $role; ?>' == '<?= STUDENT; ?>' && studentArr.indexOf('<?= $vendorId; ?>') != -1) {
+                        $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu').append('<li><a href="#"><i class="fa fa-users text-aqua"></i> You are just assigned to tutor ' + tutorName + '</a> </li>');
+
+                          let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
+                          if (notiCountElement.text() == '') {
+                            notiCountElement.text('1');
+                          } else {
+                            notiCountElement.text(parseInt(notiCountElement.text()) + 1);    
+                          }
+                    }
+                    
+
+                }
+              });
           // })
       </script>
     </aside>

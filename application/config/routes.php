@@ -95,7 +95,6 @@ $route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF
 $route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF] ];
 $route['unassignTutor'] = ["student/unassignTutor", [AUTHORISED_STAFF, STAFF] ];
 $route['getAllStudentByTutorId'] = ["student/getAllStudentByTutorId", [AUTHORISED_STAFF, STAFF] ];
-/* -------------------------------------------------------------------- */
 
 /* CONFERENCE MANAGEMENT */
 $route['conferenceListing'] = ["conference/conferenceListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -120,6 +119,10 @@ $route['viewMessage'] = ["message/viewMessage", [TUTOR, STUDENT] ];
 $route['viewOldMessage'] = ["message/viewOldMessage", [TUTOR, STUDENT] ];
 $route['viewOldMessage/(:num)'] = ["message/viewOldMessage/$1", [TUTOR, STUDENT] ];
 $route['deleteMessage'] = ["message/deleteMessage", [TUTOR, STUDENT] ];
+$route['deleteOldConference'] = ["conference/deleteOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['deleteOldConference/(:num)'] = ["conference/deleteOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['messageViewByStudent'] = ["message/messageListingByStudent", [STUDENT] ];
+$route['messageViewByStudent/(:num)'] = ["message/messageListingByStudent/$1", [STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 $route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];

@@ -109,6 +109,7 @@ class Conference extends BaseController
         $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
 
         $data['conferenceInfo'] = $this->conference_model->getConferenceInfo($id);
+        $data['studentInfo'] = $this->conference_model->getCStudent($id);
 
         $this->loadViews("editOldConference", $this->global, $data, NULL);
     }
@@ -270,6 +271,11 @@ class Conference extends BaseController
         $data['filelist'] = glob('uploads');
 
         $this->load->view('file_browser', $data);
+    }
+
+    function calendar2()
+    {
+        $this->load->view( 'calendar2' );
     }
 
 }

@@ -26,10 +26,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="fname">ReceiverId</label>
+                                        <label for="fname">Sent To</label>
+<!--                                        <input type="text" class="form-control required"-->
+<!--                                               value="--><?php //echo set_value('receiverByStudentId'); ?><!--"-->
+<!--                                               id="receiverByStudentId" name="receiverByStudentId" maxlength="11">-->
                                         <input type="text" class="form-control required"
-                                               value="<?php echo set_value('receiverId'); ?>"
-                                               id="receiverId" name="receiverId" maxlength="11">
+                                               value="<?php echo set_value('receiver'); ?>"
+                                               id="receiver" name="receiver" maxlength="11">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -38,16 +41,6 @@
                                         <input type="text" class="form-control required"
                                                value="<?php echo set_value('subject'); ?>"
                                                id="subject" name="subject" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password">Message Status</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('messageStatus'); ?>"
-                                               id="messageStatus" name="messageStatus" maxlength="30">
                                     </div>
                                 </div>
                             </div>
@@ -61,6 +54,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">

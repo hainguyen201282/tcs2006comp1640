@@ -26,22 +26,21 @@
                             <!--                            Update 15-03-2020-->
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
-                                          rel="stylesheet"/>
+                                    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" />
                                     <label for="email">Time Picker</label>
                                     <input type="text" id="picker" class="form-control" name="appointmentTime"
                                            value="<?php echo set_value('appointmentTime'); ?>"/>
                                 </div>
                                 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
                                 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
                                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
                                 <script>
                                     $('#picker').datetimepicker({
                                         timepicker: true,
                                         datepicker: true,
-                                        format: 'yy-m-d H:i',
-                                        hours12: false,
-                                        step: 15
+                                        format: 'Y-m-d H:i',
+                                        step: 60
                                     })
                                 </script>
                                 <div class="col-md-6">
