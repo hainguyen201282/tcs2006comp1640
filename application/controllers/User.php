@@ -27,7 +27,6 @@ class User extends BaseController
     public function index()
     {
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
-
         $this->loadViews("dashboard", $this->global, NULL, NULL);
     }
 
@@ -36,18 +35,16 @@ class User extends BaseController
      */
     function userListing()
     {
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
-        $data['searchText'] = $searchText;
-
-        $this->load->library('pagination');
-
-        $count = $this->user_model->userListingCount($searchText);
-
-        $returns = $this->paginationCompress("userListing/", $count, 10);
-
-        $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
+//        $searchText = $this->security->xss_clean($this->input->post('searchText'));
+//        $data['searchText'] = $searchText;
+//        $count = $this->user_model->userListingCount($searchText);
+//        $returns = $this->paginationCompress("userListing/", $count, 10);
+//        $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
 
         $this->global['pageTitle'] = 'CodeInsect : User Listing';
+        $this->load->library('pagination');
+
+        $data['userRecords'] = $this->user_model->getAllUsers();
 
         $this->loadViews("users", $this->global, $data, NULL);
     }

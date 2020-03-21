@@ -54,27 +54,32 @@ $route['default_controller'] = ["login", [AUTHORISED_STAFF, STAFF, TUTOR, STUDEN
 $route['404_override'] = ['error_404', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['translate_uri_dashes'] = [FALSE, [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
-
 /*********** USER DEFINED ROUTES *******************/
 
-$route['loginMe'] = ['login/loginMe', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['dashboard'] = ['user', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['loginMe'] = ['login/loginMe', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['loginStudent'] = ['student/loginStudent', [AUTHORISED_STAFF, STAFF, TUTOR] ];
 $route['logout'] = ['user/logout', [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['userListing'] = ['user/userListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['userListing/(:num)'] = ["user/userListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['addNew'] = ["user/addNew", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['addNewUser'] = ["user/addNewUser", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editOld'] = ["user/editOld", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editOld/(:num)'] = ["user/editOld/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['editUser'] = ["user/editUser", [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['deleteUser'] = ["user/deleteUser", [AUTHORISED_STAFF, STAFF, TUTOR] ];
+
+/* USER MANAGEMENT */
+$route['userListing'] = ['user/userListing', [AUTHORISED_STAFF, STAFF] ];
+$route['userListing/(:num)'] = ["user/userListing/$1", [AUTHORISED_STAFF, STAFF] ];
+$route['addNew'] = ["user/addNew", [AUTHORISED_STAFF, STAFF] ];
+$route['addNewUser'] = ["user/addNewUser", [AUTHORISED_STAFF, STAFF] ];
+$route['editOld'] = ["user/editOld", [AUTHORISED_STAFF, STAFF] ];
+$route['editOld/(:num)'] = ["user/editOld/$1", [AUTHORISED_STAFF, STAFF] ];
+$route['editUser'] = ["user/editUser", [AUTHORISED_STAFF, STAFF] ];
+$route['deleteUser'] = ["user/deleteUser", [AUTHORISED_STAFF, STAFF] ];
+/* ---THOSE API ACCEPTABLE FOR AUTHORISED_STAFF AND STAFF--- */
+
+/* PROFILE */
 $route['profile'] = ["user/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['profile/(:any)'] = ["user/profile/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['profileUpdate'] = ["user/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['profileUpdate/(:any)'] = ["user/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+/* -------------------------------------------------------------------- */
 
-$route['loginStudent'] = ['student/loginStudent', [AUTHORISED_STAFF, STAFF, TUTOR] ];
-//Dat-doing
+/* STUDENT MANAGEMENT */
 $route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
 $route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
 $route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF] ];
@@ -82,21 +87,18 @@ $route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STA
 $route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['editOldStudent/(:num)'] = ["student/editOldStudent/$1", [AUTHORISED_STAFF, STAFF] ];
 $route['editStudent'] = ["student/editStudent", [AUTHORISED_STAFF, STAFF] ];
-
-//$route['deleteUser'] = ["student/deleteUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-//$route['profile'] = ["student/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-//$route['profile/(:any)'] = ["student/profile/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-//$route['profileUpdate'] = ["student/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-//$route['profileUpdate/(:any)'] = ["student/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-
 $route['deleteStudent'] = ["student/deleteStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['assignStudent'] = ["student/assignStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['assignOldStudent'] = ["student/assignOldStudent", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['assignOldStudent/(:num)'] = ["student/assignOldStudent/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF] ];
+$route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF] ];
+$route['unassignTutor'] = ["student/unassignTutor", [AUTHORISED_STAFF, STAFF] ];
+$route['getAllStudentByTutorId'] = ["student/getAllStudentByTutorId", [AUTHORISED_STAFF, STAFF] ];
+/* -------------------------------------------------------------------- */
 
-//$route['conference'] = ['conference', [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+/* CONFERENCE MANAGEMENT */
 $route['conferenceListing'] = ["conference/conferenceListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-
 $route['conferenceListing/(:num)'] = ["conference/conferenceListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['addNewConference'] = ["conference/addNewConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['submitAddConference'] = ["conference/submitAddConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -105,7 +107,11 @@ $route['editConference'] = ["conference/editConference", [AUTHORISED_STAFF, STAF
 $route['editOldConference'] = ["conference/editOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['editOldConference/(:num)'] = ["conference/editOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['conferenceUpload'] = ["conference/upload_ckeditor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['deleteOldConference'] = ["conference/deleteOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['deleteOldConference/(:num)'] = ["conference/deleteOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+/* -------------------------------------------------------------------- */
 
+/* CONFERENCE MANAGEMENT */
 $route['messageListing'] = ["message/messageListing", [TUTOR, STUDENT] ];
 $route['messageListing/(:num)'] = ["message/messageListing/$1", [TUTOR, STUDENT] ];
 $route['addNewMessage'] = ["message/addNewMessage", [TUTOR, STUDENT] ];
@@ -114,10 +120,7 @@ $route['viewMessage'] = ["message/viewMessage", [TUTOR, STUDENT] ];
 $route['viewOldMessage'] = ["message/viewOldMessage", [TUTOR, STUDENT] ];
 $route['viewOldMessage/(:num)'] = ["message/viewOldMessage/$1", [TUTOR, STUDENT] ];
 $route['deleteMessage'] = ["message/deleteMessage", [TUTOR, STUDENT] ];
-
-$route['deleteOldConference'] = ["conference/deleteOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['deleteOldConference/(:num)'] = ["conference/deleteOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-//End of Dat-doing
+/* -------------------------------------------------------------------- */
 
 $route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['changePassword'] = ["user/changePassword", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -135,6 +138,7 @@ $route['resetPasswordConfirmUser/(:any)'] = ["login/resetPasswordConfirmUser/$1"
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = ["login/resetPasswordConfirmUser/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['createPasswordUser'] = ["login/createPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
+/* BLOG MANAGEMENT */
 $route['blogListing'] = ["blog/blogListing", [TUTOR, STUDENT] ];
 $route['blogListing/(:num)'] = ["blog/blogListing/$1", [TUTOR, STUDENT] ];
 $route['addNewBlog'] = ["blog/addNewBlog", [TUTOR, STUDENT] ];
@@ -142,13 +146,7 @@ $route['submitNewBlog'] = ["blog/submitNewBlog", [TUTOR, STUDENT] ];
 $route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [TUTOR, STUDENT] ];
 $route['editBlog'] = ["blog/editBlog", [TUTOR, STUDENT] ];
 $route['deleteBlog'] = ["blog/deleteBlog", [TUTOR, STUDENT] ];
-
-$route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['getAllStudentByTutorId'] = ["student/getAllStudentByTutorId", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['unassignTutor'] = ["student/unassignTutor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-
-
+/* -------------------------------------------------------------------- */
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

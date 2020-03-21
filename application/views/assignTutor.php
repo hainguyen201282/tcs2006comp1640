@@ -1,7 +1,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            <i class="fa fa-graduation-cap"></i> Assign Tutor Management
+            <i class="fa fa-graduation-cap"></i> Tutor Management
             <small>Allocate, Reallocate</small>
         </h1>
     </section>
