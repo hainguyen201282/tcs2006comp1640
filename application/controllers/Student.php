@@ -377,8 +377,8 @@ class Student extends BaseController
             $result = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
 
             $emailParams = [
-                "email" => $studentInfo->email,
-                'content' => $notificationText,
+                "email=" . $studentInfo->email,
+                'content=' . $notificationText,
             ];
 
             $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . implode("&", $emailParams);
