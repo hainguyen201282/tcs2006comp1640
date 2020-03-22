@@ -233,14 +233,23 @@ class Student extends BaseController
             $tutorInfo = $this->user_model->getUserInfoWithRole($tutorId);
 
             if ($oldStudentInfo->tutorId != $tutorId) {
-                $logInfo = array(
+                $logStudentInfo = array(
                     'studentId' => $studentId,
                     'notification_text' => "You are just assigned to tutor " . $tutorInfo->name,
                     'createdBy' => $this->vendorId,
                     'createdDtm' => date('Y-m-d H:i:s')
                 );
 
-                $result = $this->student_model->submitAddStudentNotificationLog($logInfo);
+                $result = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
+
+                $logTutorInfo = array(
+                    'tutorId' => $tutorId,
+                    'notification_text' => 'Students (' . $studentId .') are assigned to you',
+                    'createdBy' => $this->vendorId,
+                    'createdDtm' => date('Y-m-d H:i:s')
+                );
+
+                $result1 = $this->student_model->submitAddTutorNotificationLog($logTutorInfo);
 
                 require APPPATH . '../vendor/autoload.php';
 
@@ -256,6 +265,31 @@ class Student extends BaseController
 
                 $client->emit('send_notification', $messagePayload);
                 $client->close();
+
+                $emailList = [
+                    [
+                        "email" => $email,
+                        'content' => "You are just assigned to tutor " . $tutorInfo->name,
+                    ],
+                    [
+                        "email" => $email,
+                        'content' => 'Students (' . $studentId .') are assigned to you',
+                    ],
+                ]
+
+                foreach ($emailList as $key => $emailParams) {
+                    $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . http_build_query($emailParams);
+
+                    $ch = curl_init();
+                    // set url
+                    curl_setopt($ch, CURLOPT_URL, $emailFullURL);
+                    //return the transfer as a string
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    // $output contains the output string
+                    $response = curl_exec($ch);
+                    // close curl resource to free up system resources
+                    curl_close($ch);
+                } 
             }
             
             if ($result == true) {
