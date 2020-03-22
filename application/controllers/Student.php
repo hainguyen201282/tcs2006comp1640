@@ -377,11 +377,11 @@ class Student extends BaseController
             $result = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
 
             $emailParams = [
-                "email=" . $studentInfo->email,
-                'content=' . $notificationText,
+                "email" => $studentInfo->email,
+                'content' => $notificationText,
             ];
 
-            $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . implode("&", $emailParams);
+            $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . http_build_query($emailParams);
 
             $ch = curl_init();
             // set url
@@ -402,6 +402,23 @@ class Student extends BaseController
         );
 
         $result1 = $this->student_model->submitAddTutorNotificationLog($logTutorInfo);
+
+        $emailParams = [
+            "email" => $tutorInfo->email,
+            'content' => 'Students (' . implode(",", $studentIds) .') are assigned to you',
+        ];
+
+        $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . http_build_query($emailParams);
+
+        $ch = curl_init();
+        // set url
+        curl_setopt($ch, CURLOPT_URL, $emailFullURL);
+        //return the transfer as a string
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // $output contains the output string
+        $response = curl_exec($ch);
+        // close curl resource to free up system resources
+        curl_close($ch);
         
         require APPPATH . '../vendor/autoload.php';
 
