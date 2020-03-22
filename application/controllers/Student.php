@@ -392,8 +392,6 @@ class Student extends BaseController
             $response = curl_exec($ch);
             // close curl resource to free up system resources
             curl_close($ch);
-
-            exit;
         }
 
         $logTutorInfo = array(
