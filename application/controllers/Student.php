@@ -272,7 +272,7 @@ class Student extends BaseController
                         'content' => "You are just assigned to tutor " . $tutorInfo->name,
                     ],
                     [
-                        "email" => $email,
+                        "email" => $tutorInfo->email,
                         'content' => 'Students (' . $studentId .') are assigned to you',
                     ],
                 ]
