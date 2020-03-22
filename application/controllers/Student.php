@@ -275,7 +275,7 @@ class Student extends BaseController
                         "email" => $tutorInfo->email,
                         'content' => 'Students (' . $studentId .') are assigned to you',
                     ],
-                ]
+                ];
 
                 foreach ($emailList as $key => $emailParams) {
                     $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . http_build_query($emailParams);
