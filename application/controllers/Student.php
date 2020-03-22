@@ -22,6 +22,12 @@ class Student extends BaseController
             $studentNotificationLogsInfo = $this->student_model->getStudentLogs($this->vendorId);
             $this->global ['notifficationLogs'] = $studentNotificationLogsInfo;
         }
+
+        if ($this->role == TUTOR) {
+            $this->load->model('user_model');
+            $tutorNotificationLogsInfo = $this->user_model->getTutorLogs($this->vendorId);
+            $this->global ['notifficationLogs'] = $tutorNotificationLogsInfo;
+        }
     }
 
     public function index()
@@ -356,16 +362,48 @@ class Student extends BaseController
         $this->load->model('user_model');
         $tutorInfo = $this->user_model->getUserInfoWithRole($tutorId);
 
+        $notificationText = "You are just assigned to tutor " . $tutorInfo->name;
         foreach ($studentIds as $key => $studentId) {
-            $logInfo = array(
+
+            $studentInfo = $this->student_model->getStudentInfo($studentId);
+
+            $logStudentInfo = array(
                 'studentId' => $studentId,
-                'notification_text' => "You are just assigned to tutor " . $tutorInfo->name,
+                'notification_text' => $notificationText,
                 'createdBy' => $this->vendorId,
                 'createdDtm' => date('Y-m-d H:i:s')
             );
 
-            $result = $this->student_model->submitAddStudentNotificationLog($logInfo);
+            $result = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
+
+            $emailParams = [
+                "email" => $studentInfo->email,
+                'content' => $notificationText,
+            ];
+
+            $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . implode("&", $emailParams);
+
+            $ch = curl_init();
+            // set url
+            curl_setopt($ch, CURLOPT_URL, $emailFullURL);
+            //return the transfer as a string
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            // $output contains the output string
+            $response = curl_exec($ch);
+            // close curl resource to free up system resources
+            curl_close($ch);
+
+            exit;
         }
+
+        $logTutorInfo = array(
+            'tutorId' => $tutorId,
+            'notification_text' => 'Students (' . implode(",", $studentIds) .') are assigned to you',
+            'createdBy' => $this->vendorId,
+            'createdDtm' => date('Y-m-d H:i:s')
+        );
+
+        $result1 = $this->student_model->submitAddTutorNotificationLog($logTutorInfo);
         
         require APPPATH . '../vendor/autoload.php';
 

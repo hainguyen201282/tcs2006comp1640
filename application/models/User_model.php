@@ -81,6 +81,23 @@ class User_model extends CI_Model
     }
 
     /**
+     * This function is used to get active tutor notification log
+     * @param {number} $tutorId : This is tutor id
+     * @return {mixed} $result : This is searched result
+     */
+    function getTutorLogs($tutorId)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_tutor_notification_log as BaseTbl');
+        $this->db->where('BaseTbl.tutorId', $tutorId);
+        $this->db->where('BaseTbl.is_read', 0);
+        $this->db->order_by('BaseTbl.createdDtm DESC');
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    /**
      * This function is used to check whether email id is already exist or not
      * @param {string} $email : This is email id
      * @param {number} $userId : This is user id

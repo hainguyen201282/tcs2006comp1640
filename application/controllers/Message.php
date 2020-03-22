@@ -18,6 +18,12 @@ class Message extends BaseController
             $studentNotificationLogsInfo = $this->student_model->getStudentLogs($this->vendorId);
             $this->global ['notifficationLogs'] = $studentNotificationLogsInfo;
         }
+
+        if ($this->role == TUTOR) {
+            $this->load->model('user_model');
+            $tutorNotificationLogsInfo = $this->user_model->getTutorLogs($this->vendorId);
+            $this->global ['notifficationLogs'] = $tutorNotificationLogsInfo;
+        }
     }
 
     public function index()

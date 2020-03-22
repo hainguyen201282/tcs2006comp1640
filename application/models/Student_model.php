@@ -151,6 +151,18 @@ class Student_model extends CI_Model
         return $insert_id;
     }
 
+    function submitAddTutorNotificationLog($logInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('tbl_tutor_notification_log', $logInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
 //    function studentListingCount($searchText = '', $vendorId)
 //    {
 //        $this->db->select('BaseTbl.studentId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, Tutor.name as tutorName, BaseTbl.gender, BaseTbl.tutorId, BaseTbl.createdDtm,');

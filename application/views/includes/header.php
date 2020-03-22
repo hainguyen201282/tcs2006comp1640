@@ -328,6 +328,17 @@
                           } else {
                             notiCountElement.text(parseInt(notiCountElement.text()) + 1);    
                           }
+                    }  
+
+                    if ( '<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId =='<?= $vendorId; ?>') {
+                        $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu').prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>Students ('+studentIds+') are assigned to you</a> </li>');
+
+                          let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
+                          if (notiCountElement.text() == '') {
+                            notiCountElement.text('1');
+                          } else {
+                            notiCountElement.text(parseInt(notiCountElement.text()) + 1);    
+                          }
                     }   
                 }
               });

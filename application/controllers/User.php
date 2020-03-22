@@ -27,6 +27,11 @@ class User extends BaseController
 
             $this->global ['notifficationLogs'] = $studentNotificationLogsInfo;
         }
+
+        if ($this->role == TUTOR) {
+            $tutorNotificationLogsInfo = $this->user_model->getTutorLogs($this->vendorId);
+            $this->global ['notifficationLogs'] = $tutorNotificationLogsInfo;
+        }
         
     }
 
