@@ -90,7 +90,7 @@ $roleText = $userInfo->roleText;
                                             </div>
                                         </div>
                                     </div>
-                                    <?php } ?>
+
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -116,7 +116,8 @@ $roleText = $userInfo->roleText;
                                         </select>
                                     </div>
                                 </div> 
-                            </div>    
+                            </div> 
+                            <?php } ?>   
 
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
