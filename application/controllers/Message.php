@@ -227,8 +227,7 @@ class Message extends BaseController
 
     function viewOldMessage($id = NULL)
     {
-        if($id == null)
-        {
+        if ($id == null) {
             redirect('messageListing');
         }
 
@@ -255,6 +254,67 @@ class Message extends BaseController
         $this->loadViews("addNewMessage", $this->global, NULL);
     }
 
+    function populateWithPost($obj = NULL)
+    {
+        if (is_object($obj)) {
 
+        } else {
+            $obj = new StdClass ();
+        }
+
+        foreach ($_POST as $var => $value) {
+            $obj->$var = trim($value);
+        }
+
+        return $obj;
+    }
+
+    function sendMessage()
+    {
+        $message = $this->input->post('message');
+        $messageAttr = $this->input->post('messageAttr');
+
+        $messageEntity = (object) array_merge($message, array('createdDate' => date('Y-m-d H:i:s')));
+
+        // save message entity
+        $result = $this->message_model->saveMessage($message, $messageAttr);
+
+        // prepare data to send email
+        $email = $this->input->post('email');
+        $content = $messageEntity->content;
+
+        if ($result != NULL && $result >= 0) {
+            // call function send message
+            $emailParams = [
+                "email" => $email,
+                'content' => $content,
+            ];
+            $this->send($emailParams);
+
+            // return status success or failure
+            echo(json_encode(array(
+                'result' => true,
+            )));
+        } else {
+            echo(json_encode(array(
+                'result' => false,
+            )));
+        }
+    }
+
+    function send($emailParams)
+    {
+        $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . http_build_query($emailParams);
+
+        $ch = curl_init();
+        // set url
+        curl_setopt($ch, CURLOPT_URL, $emailFullURL);
+        //return the transfer as a string
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // $output contains the output string
+        $response = curl_exec($ch);
+        // close curl resource to free up system resources
+        curl_close($ch);
+    }
 }
 

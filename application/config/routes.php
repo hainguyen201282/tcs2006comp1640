@@ -95,6 +95,12 @@ $route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF
 $route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF] ];
 $route['unassignTutor'] = ["student/unassignTutor", [AUTHORISED_STAFF, STAFF] ];
 $route['getAllStudentByTutorId'] = ["student/getAllStudentByTutorId", [AUTHORISED_STAFF, STAFF] ];
+/* -------------------------------------------------------------------- */
+
+/* MESSAGE MANAGEMENT */
+$route['sendMessage'] = ["message/sendMessage", [TUTOR, STUDENT] ];
+/* -------------------------------------------------------------------- */
+
 
 /* CONFERENCE MANAGEMENT */
 $route['conferenceListing'] = ["conference/conferenceListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];

@@ -80,7 +80,7 @@ class Message_model extends CI_Model
 
 
     //Update 18-03-2020
-    function  getMessageSentByTutor($tutorId)
+    function getMessageSentByTutor($tutorId)
     {
         $this->db->select('BaseTbl.id, BaseTbl.senderByUserId, BaseTbl.senderByStudentId, BaseTbl.receiverByUserId, BaseTbl.receiverByStudentId, 
                             BaseTbl.subject, BaseTbl.messageContent, TutorTbl.name, BaseTbl.createdDtm, StudentTbl.name as studentName');
@@ -94,7 +94,7 @@ class Message_model extends CI_Model
         return $result;
     }
 
-    function  getMessageReceivedByTutor($tutorId)
+    function getMessageReceivedByTutor($tutorId)
     {
         $this->db->select('BaseTbl.id, BaseTbl.senderByUserId, BaseTbl.senderByStudentId, BaseTbl.receiverByUserId, BaseTbl.receiverByStudentId, 
                             BaseTbl.subject, BaseTbl.messageContent, TutorTbl.name, BaseTbl.createdDtm, StudentTbl.name as studentName');
@@ -110,7 +110,8 @@ class Message_model extends CI_Model
         return $result;
     }
 
-    function  getAllMessage(){
+    function getAllMessage()
+    {
         $this->db->select('BaseTbl.id, BaseTbl.senderByUserId, BaseTbl.senderByStudentId, BaseTbl.receiverByUserId, BaseTbl.receiverByStudentId, BaseTbl.subject, BaseTbl.messageContent, BaseTbl.createdDtm,');
         $this->db->from('tbl_message as BaseTbl');
         $query = $this->db->get();
@@ -119,7 +120,7 @@ class Message_model extends CI_Model
         return $result;
     }
 
-    function  getMessageSentByStudent($studentId)
+    function getMessageSentByStudent($studentId)
     {
         $this->db->select('BaseTbl.id, BaseTbl.senderByUserId, BaseTbl.senderByStudentId, BaseTbl.receiverByUserId, BaseTbl.receiverByStudentId, BaseTbl.subject, BaseTbl.messageContent, BaseTbl.createdDtm,');
         $this->db->from('tbl_message as BaseTbl');
@@ -131,7 +132,7 @@ class Message_model extends CI_Model
         return $result;
     }
 
-    function  getMessageReceivedByStudent($studentId)
+    function getMessageReceivedByStudent($studentId)
     {
         $this->db->select('BaseTbl.id, BaseTbl.senderByUserId, BaseTbl.senderByStudentId, BaseTbl.receiverByUserId, BaseTbl.receiverByStudentId, BaseTbl.subject, BaseTbl.messageContent, BaseTbl.createdDtm,');
         $this->db->from('tbl_message as BaseTbl');
@@ -172,6 +173,28 @@ class Message_model extends CI_Model
 
         return $query->result();
     }
+
     //End of Update 19-03-2020
+
+    function saveMessage($messageEntity, $messageAttr)
+    {
+
+        // save message
+        $this->db->trans_start();
+
+        $this->db->insert('tbl_message', $messageEntity);
+        $message_id = $this->db->insert_id();
+
+        // create message attr entity with message id
+        $messageAttrEntity = (object) array_merge($messageAttr, array('messageId' => $message_id));
+
+        // save message attr
+        $this->db->insert('tbl_message_attr', $messageAttrEntity);
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
 }
 

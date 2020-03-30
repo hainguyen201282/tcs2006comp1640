@@ -275,8 +275,8 @@ class Student_model extends CI_Model
     function getAllStudentsByTutorId($tutorId)
     {
         $this->db->select(
-            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.tutorId, StudentTbl.createdDtm,
-            TutorTbl.name as tutorName '
+            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.createdDtm,
+            StudentTbl.tutorId, StudentTbl.roleId, TutorTbl.name as tutorName'
         );
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId', 'left');
