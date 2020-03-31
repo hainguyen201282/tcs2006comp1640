@@ -20,7 +20,6 @@ class User extends BaseController
         if ($this->role == STUDENT) {
             $this->load->model('student_model');
             $studentNotificationLogsInfo = $this->student_model->getStudentLogs($this->vendorId);
-            // echo "<PRE>" . print_r($studentNotificationLogsInfo, true) . "</PRE>";
 
             $this->global ['notifficationLogs'] = $studentNotificationLogsInfo;
         }
@@ -29,7 +28,6 @@ class User extends BaseController
             $tutorNotificationLogsInfo = $this->user_model->getTutorLogs($this->vendorId);
             $this->global ['notifficationLogs'] = $tutorNotificationLogsInfo;
         }
-
     }
 
     /**
@@ -37,8 +35,40 @@ class User extends BaseController
      */
     public function index()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Dashboard';
-        $this->loadViews("dashboard", $this->global, NULL, NULL);
+        $this->global['pageTitle'] = 'Dashboard';
+
+        $viewData = [];
+        if (isset($this->role)) {
+            switch ($this->role) {
+                case AUTHORISED_STAFF:
+                    $this->roleText = "AUTHORISED STAFF";
+                    $numberOfMessageIn7Days = $this->user_model->getLastMessagesIn7Days();
+                    $this->load->model('student_model');
+                    $numberOfStudentWithoutTutor = $this->student_model->getStudentWithoutTutor();
+                    $viewData['numberOfMessageIn7Days'] = $numberOfMessageIn7Days;
+                    $viewData['numberOfStudentWithoutTutor'] = $numberOfStudentWithoutTutor;
+                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
+                    break;
+                
+                case STAFF:
+                    $this->roleText = "STAFF";
+                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
+                    break;
+                
+                case TUTOR:
+                    $this->roleText = "TUTOR";
+                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
+                    break;
+                
+                case STUDENT:
+                    $this->roleText = "STUDENT";
+                    $this->loadViews("dashboard2", $this->global, $viewData, NULL);
+                    break;
+                default:
+                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);   
+            }
+        }
+        
     }
 
     /**
@@ -419,5 +449,4 @@ class User extends BaseController
         return $return;
     }
 }
-
 ?>
