@@ -315,5 +315,15 @@ class Student_model extends CI_Model
         $result = $query->result();
         return $result;
     }
+
+    function getStudentWithoutTutor(){
+        $this->db->select("StudentTbl.*");
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId', 'left');
+        $this->db->where("(TutorTbl.userId IS NULL OR StudentTbl.tutorId = 0)");
+        $query = $this->db->get();
+        // echo "<PRE>" . print_r($this->db->last_query(), true) . "</PRE>";
+        return $query->num_rows();
+    }
 }
 
