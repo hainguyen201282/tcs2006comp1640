@@ -13,11 +13,6 @@ namespace Symfony\Component\HttpKernel\Profiler;
 
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
-/**
- * Profile.
- *
- * @author Fabien Potencier <fabien@symfony.com>
- */
 class Profile
 {
     private $token;

@@ -5,9 +5,6 @@ require APPPATH . '/libraries/BaseController.php';
 /**
  * Class : User (UserController)
  * User Class to control all user related operations.
- * @author : Kishor Mali
- * @version : 1.1
- * @since : 15 November 2016
  */
 class User extends BaseController
 {
@@ -32,7 +29,7 @@ class User extends BaseController
             $tutorNotificationLogsInfo = $this->user_model->getTutorLogs($this->vendorId);
             $this->global ['notifficationLogs'] = $tutorNotificationLogsInfo;
         }
-        
+
     }
 
     /**
@@ -275,46 +272,37 @@ class User extends BaseController
      */
     function profile($active = "details")
     {
-        if ($this->session->userdata ( 'role' ) == STUDENT) {
+        if ($this->session->userdata('role') == STUDENT) {
             $this->load->model('student_model');
             $data["userInfo"] = $this->student_model->getStudentProfile($this->vendorId);
             $data["userInfo"]->role = STUDENT;
+        } else {
+            $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);
         }
-        else {
-            $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);    
-        }
-
-        $data['roles'] = $this->user_model->getAllRoles();
 
         $data["userInfo"]->roleText = '';
-        
         if (isset($data["userInfo"]->role)) {
 
             switch ($data["userInfo"]->role) {
                 case AUTHORISED_STAFF:
                     $data["userInfo"]->roleText = "AUTHORISED STAFF";
                     break;
-                
                 case STAFF:
                     $data["userInfo"]->roleText = "STAFF";
                     break;
-                
                 case TUTOR:
                     $data["userInfo"]->roleText = "TUTOR";
                     break;
-                
                 case STUDENT:
                     $data["userInfo"]->roleText = "STUDENT";
                     break;
             }
         }
-        
         $data["active"] = $active;
 
         $this->global['pageTitle'] = $active == "details" ? 'CodeInsect : My Profile' : 'CodeInsect : Change Password';
-        
         $this->loadViews("profile", $this->global, $data, NULL);
-        
+
     }
 
     /**
@@ -324,13 +312,12 @@ class User extends BaseController
     function profileUpdate($active = "details")
     {
         $this->load->library('form_validation');
-            
-        $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
-        $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
-        $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]|callback_emailExists');     
-        
-        if($this->form_validation->run() == FALSE)
-        {
+
+        $this->form_validation->set_rules('fname', 'Full Name', 'trim|required|max_length[128]');
+        $this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[10]');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]|callback_emailExists');
+
+        if ($this->form_validation->run() == FALSE) {
             $this->profile($active);
         } else {
             $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
@@ -339,13 +326,13 @@ class User extends BaseController
 
             $userInfo = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
 
-            if ($this->session->userdata ( 'role' ) == STUDENT) {
+            if ($this->session->userdata('role') == STUDENT) {
                 $this->load->model('student_model');
                 $result = $this->student_model->editStudent($userInfo, $this->vendorId);
             } else {
                 $result = $this->user_model->editUser($userInfo, $this->vendorId);
             }
-            
+
 
             if ($result == true) {
                 $this->session->set_userdata('name', $name);
@@ -376,7 +363,7 @@ class User extends BaseController
             $oldPassword = $this->input->post('oldPassword');
             $newPassword = $this->input->post('newPassword');
 
-            if ($this->session->userdata ( 'role' ) == STUDENT) {
+            if ($this->session->userdata('role') == STUDENT) {
                 $this->load->model('student_model');
                 $resultPas = $this->student_model->matchOldPassword($this->vendorId, $oldPassword);
             } else {
@@ -390,7 +377,7 @@ class User extends BaseController
                 $usersData = array('password' => getHashedPassword($newPassword), 'updatedBy' => $this->vendorId,
                     'updatedDtm' => date('Y-m-d H:i:s'));
 
-                if ($this->session->userdata ( 'role' ) == STUDENT) {
+                if ($this->session->userdata('role') == STUDENT) {
                     $result = $this->student_model->changePassword($this->vendorId, $usersData);
                 } else {
                     $result = $this->user_model->changePassword($this->vendorId, $usersData);

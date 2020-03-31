@@ -147,8 +147,9 @@
         padding: 3px 10px;
     }
 </style>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
 
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#tbl-student').DataTable({
@@ -159,74 +160,12 @@
         });
 
         CKEDITOR.replace('content', {
-            filebrowserBrowseUrl: '<?php echo site_url('assets/js/ckfinder/ckfinder.html');?>',
-            filebrowserUploadUrl: '<?php echo site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files');?>',
+            filebrowserBrowseUrl: '<?php echo
+            site_url('assets/js/ckfinder/ckfinder.html')
+            ;?>',
+            filebrowserUploadUrl: '<?php echo
+            site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files')
+            ;?>',
         });
-
-        // get student info when click button
-        let studentInfo;
-        $('.open-mes-modal').click(function () {
-            studentInfo = {
-
-                email: $(this).attr('data-email'),
-
-                senderId: $(this).attr('data-senderId'),
-                senderRole: $(this).attr('data-senderRole'),
-
-                receiverId: $(this).attr('data-receiverId'),
-                receiverRole: $(this).attr('data-receiverRole'),
-            };
-        });
-
-        // display email
-        $('#mes-modal').on('show.bs.modal', function () {
-            $('#receiver').val(studentInfo.email);
-        }).submit(function () {
-            // get value from submit form
-            const email = $('#receiver').val();
-            const subject = $('#subject').val();
-            const content = $('#content').val();
-
-            const senderId = studentInfo.senderId;
-            const senderRole = studentInfo.senderRole;
-
-            const receiverId = studentInfo.receiverId;
-            const receiverRole = studentInfo.receiverRole;
-
-            // message entity
-            const message = {
-                subject: subject,
-                content: content,
-                senderId: senderId,
-                senderRole: senderRole,
-
-            };
-
-            // message_attr entity
-            const messageAttr = {
-                receiverId: receiverId,
-                receiverRole: receiverRole,
-            };
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: baseURL + "sendMessage",
-                data: {
-                    email: email,
-                    message: message,
-                    messageAttr: messageAttr,
-                },
-            }).done(function (data) {
-                alert(data.result);
-                if (data.result === true) {
-                    alert("Send message successfully");
-                } else {
-                    alert("Send message failure");
-                }
-            });
-        })
     });
-
 </script>
-

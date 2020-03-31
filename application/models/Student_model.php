@@ -63,10 +63,17 @@ class Student_model extends CI_Model
      */
     function getStudentProfile($studentId)
     {
-        $this->db->select('*, BaseTbl.studentId userId');
-        $this->db->from('tbl_student as BaseTbl');
-        $this->db->where('BaseTbl.studentId', $studentId);
-        $this->db->where('BaseTbl.isDeleted', 0);
+        $this->db->select(
+            'StudentTbl.studentId as userId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.createdDtm,
+            StudentTbl.roleId, StudentTbl.tutorId, 
+            TutorTbl.roleId as TutorRoleId, TutorTbl.name as tutorName, TutorTbl.email as tutorEmail'
+        );
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->join('tbl_users as TutorTbl', 'StudentTbl.tutorId = TutorTbl.userId', 'left');
+        $this->db->where('StudentTbl.isDeleted', 0);
+        $this->db->where('StudentTbl.studentId', $studentId);
+        $this->db->order_by('StudentTbl.studentId', 'ASC');
+
         $query = $this->db->get();
 
         return $query->row();
@@ -162,46 +169,6 @@ class Student_model extends CI_Model
 
         return $insert_id;
     }
-
-//    function studentListingCount($searchText = '', $vendorId)
-//    {
-//        $this->db->select('BaseTbl.studentId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, Tutor.name as tutorName, BaseTbl.gender, BaseTbl.tutorId, BaseTbl.createdDtm,');
-//        $this->db->from('tbl_student as BaseTbl');
-//        $this->db->join('tbl_users as Tutor', 'Tutor.userId = BaseTbl.tutorId');
-//        if (!empty($searchText)) {
-//            $likeCriteria = "(BaseTbl.email  LIKE '%" . $searchText . "%'
-//                        OR  BaseTbl.name LIKE '%" . $searchText . "%'
-//                        OR  BaseTbl.mobile  LIKE '%" . $searchText . "%')";
-//            $this->db->where($likeCriteria);
-//        }
-//        $this->db->where('BaseTbl.isDeleted', 0);
-//        $this->db->where('Tutor.userId', $vendorId);
-//        $query = $this->db->get();
-//
-//        return $query->num_rows();
-//    }
-
-
-//    function studentListing($searchText = '', $page, $segment, $vendorId)
-//    {
-//        $this->db->select('BaseTbl.studentId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, Tutor.name as tutorName, BaseTbl.gender, BaseTbl.tutorId, BaseTbl.createdDtm,');
-//        $this->db->from('tbl_student as BaseTbl');
-//        $this->db->join('tbl_users as Tutor', 'Tutor.userId = BaseTbl.tutorId', 'left');
-//        if (!empty($searchText)) {
-//            $likeCriteria = "(BaseTbl.email  LIKE '%" . $searchText . "%'
-//                        OR  BaseTbl.name LIKE '%" . $searchText . "%'
-//                        OR  BaseTbl.mobile  LIKE '%" . $searchText . "%')";
-//            $this->db->where($likeCriteria);
-//        }
-//        $this->db->where('Tutor.userId', $vendorId);
-//        $this->db->where('BaseTbl.isDeleted', 0);
-//        $this->db->order_by('BaseTbl.studentId', 'DESC');
-//        $this->db->limit($page, $segment);
-//        $query = $this->db->get();
-//
-//        $result = $query->result();
-//        return $result;
-//    }
 
     function editStudent($studentInfo, $studentId)
     {
