@@ -254,12 +254,6 @@
                             <span>Blogs</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="<?php echo base_url(); ?>messageListing">
-                        <i class="fa fa-comments"></i>
-                        <span>Message</span>
-                        </a>
-                    </li>
                     <?php
                 }
 
@@ -280,12 +274,6 @@
                     <a href="<?php echo base_url(); ?>blogListing">
                             <i class="fa fa-files-o"></i>
                             <span>Blogs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url(); ?>messageViewByStudent">
-                        <i class="fa fa-comments"></i>
-                        <span>Message</span>
                         </a>
                     </li>
                     <?php
