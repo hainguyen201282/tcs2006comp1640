@@ -330,7 +330,7 @@ class User_model extends CI_Model
     function getLastMessagesIn7Days(){
         $now = time();
         $moment7Daysago = $now - (60 * 60 * 24 * 7); 
-        $this->db->select("*, UNIX_TIMESTAMP(str_to_date(`createdDtm`, '%Y-%m-%d %H:%i:%s')) as createdDtmTimestamp");
+        $this->db->select("*, UNIX_TIMESTAMP(str_to_date(`createdDate`, '%Y-%m-%d %H:%i:%s')) as createdDtmTimestamp");
         $this->db->from('tbl_message as BaseTbl');
         $this->db->having(" (createdDtmTimestamp >= $moment7Daysago AND createdDtmTimestamp < $now) ");
         $query = $this->db->get();
