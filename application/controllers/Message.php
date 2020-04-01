@@ -37,7 +37,7 @@ class Message extends BaseController
         $messageAttr = $this->input->post('messageAttr');
 
         // save message entity
-        $result = $this->message_model->saveMessage($message, $messageAttr);
+        $result = $this->message_model->saveMessage($messageEntity, $messageAttr);
 
         // prepare data to send email
         $email = $this->input->post('email');
