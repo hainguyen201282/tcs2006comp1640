@@ -73,6 +73,13 @@ class Login_model extends CI_Model
         }
     }
 
+    function updateResetPasswordUserSentStatus($id, $resetPasswordInfo)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_reset_password', $resetPasswordInfo);
+        return TRUE;
+    }
+
     /**
      * This function is used to get customer information by email-id for forget password email
      * @param string $email : Email id of customer
@@ -87,6 +94,15 @@ class Login_model extends CI_Model
         $query = $this->db->get();
 
         return $query->row();
+    }
+
+    function getUnsentResetPasswordMails(){
+        $this->db->select('*');
+        $this->db->from('tbl_reset_password');
+        $this->db->where(['isDeleted' => 0, 'isMailSent' => 0]);
+        $query = $this->db->get();
+
+        return $query->result();
     }
 
     /**

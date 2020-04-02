@@ -143,34 +143,36 @@ class Login extends CI_Controller
                 $data['agent'] = getBrowserAgent();
                 $data['client_ip'] = $this->input->ip_address();
                 
-                $save = $this->login_model->resetPasswordUser($data);                
+                $save = $this->login_model->resetPasswordUser($data); 
+
+                setFlashData('send', "Reset password link sent successfully, please check mails.");               
                 
-                if($save)
-                {
-                    $data1['reset_link'] = base_url() . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email;
-                    $userInfo = $this->login_model->getCustomerInfoByEmail($email);
+                // if($save)
+                // {
+                //     $data1['reset_link'] = base_url() . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email;
+                //     $userInfo = $this->login_model->getCustomerInfoByEmail($email);
 
-                    if(!empty($userInfo)){
-                        $data1["name"] = $userInfo->name;
-                        $data1["email"] = $userInfo->email;
-                        $data1["message"] = "Reset Your Password";
-                    }
+                //     if(!empty($userInfo)){
+                //         $data1["name"] = $userInfo->name;
+                //         $data1["email"] = $userInfo->email;
+                //         $data1["message"] = "Reset Your Password";
+                //     }
 
-                    $sendStatus = resetPasswordEmail($data1);
+                //     $sendStatus = resetPasswordEmail($data1);
 
-                    if($sendStatus){
-                        $status = "send";
-                        setFlashData($status, "Reset password link sent successfully, please check mails.");
-                    } else {
-                        $status = "notsend";
-                        setFlashData($status, "Email has been failed, try again.");
-                    }
-                }
-                else
-                {
-                    $status = 'unable';
-                    setFlashData($status, "It seems an error while sending your details, try again.");
-                }
+                //     if($sendStatus){
+                //     $status = "send";
+                //     setFlashData($status, "Reset password link sent successfully, please check mails.");
+                //     } else {
+                //         $status = "notsend";
+                //         setFlashData($status, "Email has been failed, try again.");
+                //     }
+                // }
+                // else
+                // {
+                //     $status = 'unable';
+                //     setFlashData($status, "It seems an error while sending your details, try again.");
+                // }
             }
             else
             {
@@ -178,6 +180,25 @@ class Login extends CI_Controller
                 setFlashData($status, "This email is not registered with us.");
             }
             redirect('/forgotPassword');
+        }
+    }
+
+    function sendResetPasswordEmail()
+    {
+        $unSentMail = $this->login_model->getUnsentResetPasswordMails();
+
+        $CI = &get_instance();
+        $data = [];
+
+        foreach ($unSentMail as $key => $mailInfo) {
+            $encoded_email = urlencode($mailInfo->email);
+            $data['data'] = array(
+                'reset_link' => base_url() . "resetPasswordConfirmUser/" . $mailInfo->activation_id . "/" . $encoded_email;
+            );
+            $result = mail($mailInfo->email,"Reset Password",$CI->load->view('email/resetPassword1', $data, TRUE));
+            echo "mail sent at " . time();
+
+            $this->login_model->updateResetPasswordUserSentStatus($mailInfo->id, ['isMailSent' => 1]);
         }
     }
 
