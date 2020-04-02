@@ -193,7 +193,7 @@ class Login extends CI_Controller
         foreach ($unSentMail as $key => $mailInfo) {
             $encoded_email = urlencode($mailInfo->email);
             $data['data'] = array(
-                'reset_link' => base_url() . "resetPasswordConfirmUser/" . $mailInfo->activation_id . "/" . $encoded_email,
+                'reset_link' => $this->config->item( 'base_url' ) . "resetPasswordConfirmUser/" . $mailInfo->activation_id . "/" . $encoded_email,
             );
             $result = mail($mailInfo->email,"Reset Password",$CI->load->view('email/resetPassword1', $data, TRUE));
             echo "mail sent at " . time();
