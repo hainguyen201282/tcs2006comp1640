@@ -143,18 +143,7 @@ class Login extends CI_Controller
                 $data['agent'] = getBrowserAgent();
                 $data['client_ip'] = $this->input->ip_address();
                 
-                $save = $this->login_model->resetPasswordUser($data); 
-
-                $CI = &get_instance();
-                $data = [];
-                
-                $data['data'] = array(
-                    'reset_link' => $this->config->item( 'base_url' ) . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email,
-                );
-                $result = mail($email,"Reset Password",$CI->load->view('email/resetPassword1', $data, TRUE));
-                // echo "mail sent at " . time();            
-
-                setFlashData('send', "Reset password link sent successfully, please check mails.");               
+                $save = $this->login_model->resetPasswordUser($data);           
                 
                 // if($save)
                 // {
