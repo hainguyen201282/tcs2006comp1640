@@ -129,6 +129,7 @@ $route['resetPasswordUser'] = ["login/resetPasswordUser", [AUTHORISED_STAFF, STA
 $route['resetPasswordConfirmUser'] = ["login/resetPasswordConfirmUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['resetPasswordConfirmUser/(:any)'] = ["login/resetPasswordConfirmUser/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = ["login/resetPasswordConfirmUser/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['resetPasswordConfirmUser/(:any)/(:any)/(:any)'] = ["login/resetPasswordConfirmUser/$1/$2/$3", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['createPasswordUser'] = ["login/createPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 /* BLOG MANAGEMENT */
