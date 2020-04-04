@@ -42,12 +42,16 @@ class Login_model extends CI_Model
      * @param {string} $email : This is users email id
      * @return {boolean} $result : TRUE/FALSE
      */
-    function checkEmailExist($email)
+    function checkEmailExist($email, $role)
     {
-        $this->db->select('userId');
+        $this->db->select('*');
         $this->db->where('email', $email);
         $this->db->where('isDeleted', 0);
-        $query = $this->db->get('tbl_users');
+        if ($role == 'student') {
+            $query = $this->db->get('tbl_student');
+        } else {
+            $query = $this->db->get('tbl_users');
+        }
 
         if ($query->num_rows() > 0){
             return true;
@@ -121,12 +125,16 @@ class Login_model extends CI_Model
     }
 
     // This function used to create new password by reset link
-    function createPasswordUser($email, $password)
+    function createPasswordUser($email, $password, $role)
     {
         $this->db->where('email', $email);
         $this->db->where('isDeleted', 0);
-        $this->db->update('tbl_users', array('password'=>getHashedPassword($password)));
-        $this->db->delete('tbl_reset_password', array('email'=>$email));
+        if ($role == 'student') {
+            $this->db->update('tbl_student', array('password'=>getHashedPassword($password)));    
+        } else {
+            $this->db->update('tbl_users', array('password'=>getHashedPassword($password)));
+        }
+        $this->db->delete('tbl_reset_password', array('email'=>$email, 'role' => $role));
     }
 
     /**

@@ -89,14 +89,20 @@
           </div>
           
           <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-5">
+                <select class="form-control" id="role" name="role">
+                    <option value="staff_tutor" selected>Staff/Tutor</option>
+                    <option value="student">Student</option>
+                </select>
+            </div><!-- /.col -->
+            <div class="col-xs-3">
             </div><!-- /.col -->
             <div class="col-xs-4">
               <input type="submit" class="btn btn-primary btn-block btn-flat" value="Submit" />
             </div><!-- /.col -->
           </div>
         </form>
-        <a href="<?php echo base_url() ?>">Login</a><br>
+        <a style="display: inline-block; margin-top: 10px;" href="<?php echo base_url() ?>">Login</a>
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 
