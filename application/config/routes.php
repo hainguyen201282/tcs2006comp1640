@@ -70,6 +70,9 @@ $route['editOld'] = ["user/editOld", [AUTHORISED_STAFF, STAFF] ];
 $route['editOld/(:num)'] = ["user/editOld/$1", [AUTHORISED_STAFF, STAFF] ];
 $route['editUser'] = ["user/editUser", [AUTHORISED_STAFF, STAFF] ];
 $route['deleteUser'] = ["user/deleteUser", [AUTHORISED_STAFF, STAFF] ];
+$route['deleteUser'] = ["user/deleteUser", [AUTHORISED_STAFF, STAFF] ];
+$route['importUsers'] = ["user/importUsers", [AUTHORISED_STAFF, STAFF] ];
+$route['exportUsers'] = ["user/exportUsers", [AUTHORISED_STAFF, STAFF] ];
 /* ---THOSE API ACCEPTABLE FOR AUTHORISED_STAFF AND STAFF--- */
 
 /* PROFILE */
@@ -95,6 +98,8 @@ $route['viewAssignTutor'] = ["student/viewAssignTutor", [AUTHORISED_STAFF, STAFF
 $route['assignTutor'] = ["student/assignTutor", [AUTHORISED_STAFF, STAFF] ];
 $route['unassignTutor'] = ["student/unassignTutor", [AUTHORISED_STAFF, STAFF] ];
 $route['getAllStudentByTutorId'] = ["student/getAllStudentByTutorId", [AUTHORISED_STAFF, STAFF] ];
+$route['importStudents'] = ["student/importStudents", [AUTHORISED_STAFF, STAFF] ];
+$route['exportStudents'] = ["student/exportStudents", [AUTHORISED_STAFF, STAFF] ];
 /* -------------------------------------------------------------------- */
 
 /* MESSAGE MANAGEMENT */

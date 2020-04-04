@@ -55,7 +55,7 @@ class User_model extends CI_Model
 
     function getAllUsers()
     {
-        $this->db->select('UserTbl.userId, UserTbl.email, UserTbl.name, UserTbl.mobile, UserTbl.createdDtm, RoleTbl.role');
+        $this->db->select('UserTbl.*, RoleTbl.role');
         $this->db->from('tbl_users as UserTbl');
         $this->db->join('tbl_roles as RoleTbl', 'UserTbl.roleId = RoleTbl.roleId', 'left');
         $this->db->where('UserTbl.isDeleted = 0 AND RoleTbl.roleId != 1');
@@ -132,6 +132,16 @@ class User_model extends CI_Model
         $this->db->trans_complete();
 
         return $insert_id;
+    }
+
+    function addBatchUser($userData){
+        if ($userData) {
+            $this->db
+                ->insert_batch('tbl_users', $userData);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

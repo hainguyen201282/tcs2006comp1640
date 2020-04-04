@@ -8,14 +8,22 @@
     <section class="content">
         <div <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
                 style="display:block !important;" class="row">
-            <div class="col-xs-6 text-left">
+            <!-- <div class="col-xs-6 text-left">
                 <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor">
                     Allocate / Reallocate Tutor
                 </a>
-            </div>
-            <div class="col-xs-6 text-right">
+            </div> -->
+            <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"><i class="fa fa-plus"></i>
+                    <form action="<?php echo base_url(); ?>importStudents" method="post" class=" text-right" enctype="multipart/form-data">
+                        <button class="btn btn-primary btn-block btn-flat" style="width: fit-content; float: right;border-radius: 3px;margin-left: 10px;margin-top: 3px;" onclick="checkSubmit(event, this);"><i class="fa fa-cloud-upload"></i> Import</button>
+                        <input type="file" id="uploadStudentExcelFile" style="display:none;" name="uploadStudentData" accept=".xls,.xlsx">
+                    </form>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>exportStudents" style="float: right;margin-left: 10px;margin-top: 3px;"><i class="fa fa-cloud-download"></i> Export</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor" style="margin-top: 3px;">
+                        Allocate / Reallocate Tutor
+                    </a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"  style="margin-left: 10px;margin-top: 3px;"><i class="fa fa-plus"></i>
                         Add New
                     </a>
                 </div>
@@ -168,4 +176,14 @@
             ;?>',
         });
     });
+    function checkSubmit(event, thisElement){
+        event.preventDefault();
+        let nextSibling  = $(thisElement).next();
+        nextSibling.trigger('click');
+    }
+
+    $("#uploadStudentExcelFile").change(function (){
+       let uploadForm = $(this).parent();
+       $(uploadForm).submit();
+     });
 </script>
