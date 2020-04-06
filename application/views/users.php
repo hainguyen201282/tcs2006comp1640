@@ -10,7 +10,13 @@
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNew"><i class="fa fa-plus"></i> Add New</a>
+                	<form action="<?php echo base_url(); ?>importUsers" method="post" class=" text-right" enctype="multipart/form-data">
+	                    <button class="btn btn-primary btn-block btn-flat" style="width: fit-content; float: right;border-radius: 3px;" onclick="checkSubmit(event, this);"><i class="fa fa-cloud-upload"></i> Import</button>
+	                    <input type="file" id="uploadUserExcelFile" style="display:none;" name="uploadUserData" accept=".xls,.xlsx">
+	                </form>
+	                <a class="btn btn-primary" href="<?php echo base_url(); ?>exportUsers" style="margin-right: 10px;float: right;"><i class="fa fa-cloud-download"></i> Export</a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNew" style="margin-right: 10px;"><i class="fa fa-plus"></i> Add New</a>
+                  	
                 </div>
             </div>
         </div>
@@ -76,6 +82,16 @@
             'searching': true,
             'paging': true,
             'lengthChange': true,
-        });
+        });        
     })
+    function checkSubmit(event, thisElement){
+    	event.preventDefault();
+	    let nextSibling  = $(thisElement).next();
+	    nextSibling.trigger('click');
+	}
+
+	$("#uploadUserExcelFile").change(function (){
+       let uploadForm = $(this).parent();
+       $(uploadForm).submit();
+     });
 </script>

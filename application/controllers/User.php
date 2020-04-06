@@ -76,6 +76,7 @@ class User extends BaseController
      */
     function userListing()
     {
+
         $this->load->library('pagination');
 
         $data['userRecords'] = $this->user_model->getAllUsers();
@@ -115,6 +116,134 @@ class User extends BaseController
         } else {
             echo("false");
         }
+    }
+
+    function importUsers(){
+        $this->load->helper('string');
+        $excelConfig = [
+            'upload_path' => 'uploads/tmp/excels/',
+            'allowed_types' => 'xlsx|xls',
+            'max_size' => 20480000,
+            'file_name' => random_string('alnum',15) . '_' . time(),
+        ];
+
+        $this->load->library('upload', $excelConfig);
+
+        if ($this->upload->do_upload('uploadUserData')) {
+            $uploadedData = $this->upload->data();
+
+            $excel_file = 'uploads/tmp/excels/' . $uploadedData['file_name'];
+
+            //load the excel library
+            $this->load->library('excel');
+
+            //read file from path
+            $objPHPExcel = PHPExcel_IOFactory::load($excel_file);
+
+            //get only the Cell Collection
+            $objPHPExcel->setActiveSheetIndexByName('User');
+            $cell_collection = $objPHPExcel->getActiveSheet()->getCellCollection();
+
+            //extract to a PHP readable array format
+            foreach ($cell_collection as $cell) {
+                $column = $objPHPExcel->getActiveSheet()->getCell($cell)->getColumn();
+                $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+
+                //header will/should be in row 1 only. of course this can be modified to suit your need.
+                if ($row == 1) {
+                    $header[$row][$column] = $data_value;
+                } else {
+                    $arr_data[$row][$column] = $data_value;
+                }
+            }
+
+            //send the data in an array format
+            $excelData['header'] = array_values($header);
+            $excelData['values'] = array_values($arr_data);
+
+            $userData = $this->user_model->getAllUsers();
+            $emailArr = [];
+            foreach ($userData as $key => $user) {
+                $emailArr[] = $user->email;
+            }
+
+            $recordArr = [];
+            foreach ($excelData['values'] as $data) {
+
+                if (isset($data['A']) && $data['A'] != '' && !in_array($data['A'], $emailArr)) {
+                    $recordArr[] = [
+                        'email' => isset($data['A']) ? $data['A'] : '',
+                        'password' => getHashedPassword('12345'), 
+                        'name' => isset($data['B']) ? $data['B'] : '', 
+                        'mobile' => isset($data['C']) ? $data['C'] : '', 
+                        'address' => isset($data['D']) ? $data['D'] : '', 
+                        'roleId' => isset($data['E']) ? $data['E'] : '', 
+                        'createdBy' => $this->vendorId, 
+                        'createdDtm' => date('Y-m-d H:i:s')
+                    ];
+                }
+            }
+
+            $this->user_model->addBatchUser($recordArr);
+
+            redirect('userListing');
+
+        }
+    }
+
+    function exportUsers()
+    {
+        //load the excel library
+        $this->load->library('excel');
+
+        //read file from path
+        $objPHPExcel = new PHPExcel();
+
+        //get only the Cell Collection
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->getActiveSheet()->setTitle("User");
+        // $cell_collection = $objPHPExcel->getActiveSheet()->getCellCollection();
+
+        $tableColumns = [
+            'User Id',
+            'Email',
+            'Name',
+            'Mobile',
+            'Address',
+            'Role',
+        ];
+
+        $column = 0;
+
+        foreach ($tableColumns as $key => $field) {
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
+            $column++;
+        }
+
+        $userData = $this->user_model->getAllUsers();
+
+        $excelRow = 2;
+
+        foreach ($userData as $key => $user) {
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $excelRow, $user->userId);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $excelRow, $user->email);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, $excelRow, $user->name);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $excelRow, $user->mobile);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $excelRow, $user->address);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $excelRow, $user->role);
+
+            $excelRow++;
+        }
+
+        $objectWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="user_list.xlsx"');
+        header("Cache-Control: no-cache, no-store, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        $objectWriter->save('php://output');
     }
 
     /**
@@ -456,5 +585,4 @@ class User extends BaseController
         redirect('profile');
     }
 }
-
 ?>

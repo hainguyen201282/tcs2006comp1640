@@ -132,45 +132,49 @@ class Login extends CI_Controller
         {
             $email = strtolower($this->security->xss_clean($this->input->post('login_email')));
             
-            if($this->login_model->checkEmailExist($email))
+            $role = $this->input->post('role');
+            if($this->login_model->checkEmailExist($email, $role))
             {
                 $encoded_email = urlencode($email);
                 
                 $this->load->helper('string');
                 $data['email'] = $email;
+                $data['role'] = $role;
                 $data['activation_id'] = random_string('alnum',15);
                 $data['createdDtm'] = date('Y-m-d H:i:s');
                 $data['agent'] = getBrowserAgent();
                 $data['client_ip'] = $this->input->ip_address();
                 
-                $save = $this->login_model->resetPasswordUser($data);                
+                $save = $this->login_model->resetPasswordUser($data); 
+
+                setFlashData('send', "Reset password link sent successfully, please check mails.");               
                 
-                if($save)
-                {
-                    $data1['reset_link'] = base_url() . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email;
-                    $userInfo = $this->login_model->getCustomerInfoByEmail($email);
+                // if($save)
+                // {
+                //     $data1['reset_link'] = base_url() . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email;
+                //     $userInfo = $this->login_model->getCustomerInfoByEmail($email);
 
-                    if(!empty($userInfo)){
-                        $data1["name"] = $userInfo->name;
-                        $data1["email"] = $userInfo->email;
-                        $data1["message"] = "Reset Your Password";
-                    }
+                //     if(!empty($userInfo)){
+                //         $data1["name"] = $userInfo->name;
+                //         $data1["email"] = $userInfo->email;
+                //         $data1["message"] = "Reset Your Password";
+                //     }
 
-                    $sendStatus = resetPasswordEmail($data1);
+                //     $sendStatus = resetPasswordEmail($data1);
 
-                    if($sendStatus){
-                        $status = "send";
-                        setFlashData($status, "Reset password link sent successfully, please check mails.");
-                    } else {
-                        $status = "notsend";
-                        setFlashData($status, "Email has been failed, try again.");
-                    }
-                }
-                else
-                {
-                    $status = 'unable';
-                    setFlashData($status, "It seems an error while sending your details, try again.");
-                }
+                //     if($sendStatus){
+                //     $status = "send";
+                //     setFlashData($status, "Reset password link sent successfully, please check mails.");
+                //     } else {
+                //         $status = "notsend";
+                //         setFlashData($status, "Email has been failed, try again.");
+                //     }
+                // }
+                // else
+                // {
+                //     $status = 'unable';
+                //     setFlashData($status, "It seems an error while sending your details, try again.");
+                // }
             }
             else
             {
@@ -181,12 +185,31 @@ class Login extends CI_Controller
         }
     }
 
+    function sendResetPasswordEmail()
+    {
+        $unSentMail = $this->login_model->getUnsentResetPasswordMails();
+
+        $CI = &get_instance();
+        $data = [];
+
+        foreach ($unSentMail as $key => $mailInfo) {
+            $encoded_email = urlencode($mailInfo->email);
+            $data['data'] = array(
+                'reset_link' => $this->config->item( 'base_url' ) . "resetPasswordConfirmUser/" . $mailInfo->activation_id . "/" . $encoded_email . "/" . $mailInfo->role,
+            );
+            $result = mail($mailInfo->email,"Reset Password",$CI->load->view('email/resetPassword1', $data, TRUE));
+            echo "mail sent at " . time();
+
+            $this->login_model->updateResetPasswordUserSentStatus($mailInfo->id, ['isMailSent' => 1]);
+        }
+    }
+
     /**
      * This function used to reset the password 
      * @param string $activation_id : This is unique id
      * @param string $email : This is user email
      */
-    function resetPasswordConfirmUser($activation_id, $email)
+    function resetPasswordConfirmUser($activation_id, $email, $role)
     {
         // Get email and activation code from URL values at index 3-4
         $email = urldecode($email);
@@ -196,6 +219,7 @@ class Login extends CI_Controller
         
         $data['email'] = $email;
         $data['activation_code'] = $activation_id;
+        $data['role'] = $role;
         
         if ($is_correct == 1)
         {
@@ -216,6 +240,7 @@ class Login extends CI_Controller
         $message = '';
         $email = strtolower($this->input->post("email"));
         $activation_id = $this->input->post("activation_code");
+        $role = $this->input->post("role");
         
         $this->load->library('form_validation');
         
@@ -224,7 +249,7 @@ class Login extends CI_Controller
         
         if($this->form_validation->run() == FALSE)
         {
-            $this->resetPasswordConfirmUser($activation_id, urlencode($email));
+            $this->resetPasswordConfirmUser($activation_id, urlencode($email), $role);
         }
         else
         {
@@ -236,7 +261,7 @@ class Login extends CI_Controller
             
             if($is_correct == 1)
             {                
-                $this->login_model->createPasswordUser($email, $password);
+                $this->login_model->createPasswordUser($email, $password, $role);
                 
                 $status = 'success';
                 $message = 'Password reset successfully';

@@ -157,6 +157,16 @@ class Student_model extends CI_Model
         return $insert_id;
     }
 
+    function addBatchStudent($studentData){
+        if ($studentData) {
+            $this->db
+                ->insert_batch('tbl_student', $studentData);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function submitAddStudentNotificationLog($logInfo)
     {
         $this->db->trans_start();
@@ -239,7 +249,7 @@ class Student_model extends CI_Model
     function getAllStudents()
     {
         $this->db->select(
-            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.tutorId, StudentTbl.createdDtm,
+            'StudentTbl.*,
             TutorTbl.name as tutorName, '
         );
         $this->db->from('tbl_student as StudentTbl');

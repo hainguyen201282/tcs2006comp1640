@@ -47,6 +47,7 @@
             <input type="email" class="form-control" placeholder="Email" name="email" value="<?php echo $email; ?>" readonly required />
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             <input type="hidden" name="activation_code"  value="<?php echo $activation_code; ?>" required />
+            <input type="hidden" name="role"  value="<?php echo $role; ?>" required />
           </div>
           <hr>
           <div class="form-group has-feedback">

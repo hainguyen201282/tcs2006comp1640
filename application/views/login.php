@@ -80,7 +80,7 @@
           </div>
         </form>
 
-        <!-- <a href="<?php //echo base_url() ?>forgotPassword">Forgot Password?</a><br> -->
+        <a style="margin-top: 10px; display: inline-block;" href="<?php echo base_url() ?>forgotPassword">Forgot Password?</a>
         
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->

@@ -88,15 +88,22 @@
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           
-          <div class="row">
-            <div class="col-xs-8">
+          <div class="row" style="position: relative;">
+            <div class="col-xs-6">
+                <span style="float:left;display:inline-block; margin-top: 6px;">Role:&nbsp;</span>
+                <select class="form-control" id="role" name="role" style="width: fit-content;">
+                    <option value="staff_tutor" selected>Staff/Tutor</option>
+                    <option value="student">Student</option>
+                </select>
             </div><!-- /.col -->
-            <div class="col-xs-4">
+            <div class="col-xs-2">
+            </div><!-- /.col -->
+            <div class="col-xs-4" style="position: absolute;bottom: 0;right: 0;">
               <input type="submit" class="btn btn-primary btn-block btn-flat" value="Submit" />
             </div><!-- /.col -->
           </div>
         </form>
-        <a href="<?php echo base_url() ?>">Login</a><br>
+        <a style="display: inline-block; margin-top: 10px;" href="<?php echo base_url() ?>">Login</a>
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 
