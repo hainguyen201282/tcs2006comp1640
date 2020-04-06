@@ -63,7 +63,6 @@ $route['logout'] = ['user/logout', [AUTHORISED_STAFF, STAFF, TUTOR] ];
 
 /* USER MANAGEMENT */
 $route['userListing'] = ['user/userListing', [AUTHORISED_STAFF, STAFF] ];
-$route['userListing/(:num)'] = ["user/userListing/$1", [AUTHORISED_STAFF, STAFF] ];
 $route['addNew'] = ["user/addNew", [AUTHORISED_STAFF, STAFF] ];
 $route['addNewUser'] = ["user/addNewUser", [AUTHORISED_STAFF, STAFF] ];
 $route['editOld'] = ["user/editOld", [AUTHORISED_STAFF, STAFF] ];
@@ -77,11 +76,11 @@ $route['profile'] = ["user/profile", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ]
 $route['profile/(:any)'] = ["user/profile/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['profileUpdate'] = ["user/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['profileUpdate/(:any)'] = ["user/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['uploadAvatar/(:num)'] = ["user/uploadAvatar/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 /* STUDENT MANAGEMENT */
 $route['studentListing'] = ['student/studentListing', [AUTHORISED_STAFF, STAFF, TUTOR] ];
-$route['studentListing/(:num)'] = ["student/studentListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR] ];
 $route['addNewStudent'] = ["student/addNewStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['submitAddStudent'] = ["student/submitAddStudent", [AUTHORISED_STAFF, STAFF] ];
 $route['editOldStudent'] = ["student/editOldStudent", [AUTHORISED_STAFF, STAFF] ];
@@ -120,9 +119,9 @@ $route['changePassword'] = ["user/changePassword", [AUTHORISED_STAFF, STAFF, TUT
 $route['changePassword/(:any)'] = ["user/changePassword/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['pageNotFound'] = ["user/pageNotFound", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['checkEmailExists'] = ["user/checkEmailExists", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['login-history'] = ["user/loginHistoy", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['login-history/(:num)'] = ["user/loginHistoy/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['login-history/(:num)/(:num)'] = ["user/loginHistoy/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['login-history'] = ["user/loginHistory", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['login-history/(:num)'] = ["user/loginHistory/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['login-history/(:num)/(:num)'] = ["user/loginHistory/$1/$2", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 $route['forgotPassword'] = ["login/forgotPassword", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['resetPasswordUser'] = ["login/resetPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -132,13 +131,14 @@ $route['resetPasswordConfirmUser/(:any)/(:any)'] = ["login/resetPasswordConfirmU
 $route['createPasswordUser'] = ["login/createPasswordUser", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 
 /* BLOG MANAGEMENT */
-$route['blogListing'] = ["blog/blogListing", [TUTOR, STUDENT] ];
-$route['blogListing/(:num)'] = ["blog/blogListing/$1", [TUTOR, STUDENT] ];
 $route['addNewBlog'] = ["blog/addNewBlog", [TUTOR, STUDENT] ];
 $route['submitNewBlog'] = ["blog/submitNewBlog", [TUTOR, STUDENT] ];
+$route['blogListing'] = ["blog/blogListing", [TUTOR, STUDENT] ];
 $route['editViewBlog/(:any)'] = ["blog/editViewBlog/$1", [TUTOR, STUDENT] ];
 $route['editBlog'] = ["blog/editBlog", [TUTOR, STUDENT] ];
 $route['deleteBlog'] = ["blog/deleteBlog", [TUTOR, STUDENT] ];
+$route['blogDetail/(:any)'] = ["blog/blogDetail/$1", [TUTOR, STUDENT] ];
+$route['submitComment'] = ["blog/submitComment", [TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 /* End of file routes.php */

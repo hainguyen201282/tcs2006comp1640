@@ -8,14 +8,15 @@
     </section>
     
     <section class="content">
-    
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <div class="form-group" style="margin-top: 34px"></div>
+            </div>
+        </div>
         <div class="row">
             <!-- left column -->
             <div class="col-md-8">
               <!-- general form elements -->
-                
-                
-                
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Enter User Details</h3>
@@ -81,7 +82,6 @@
                                 </div>    
                             </div>
                         </div><!-- /.box-body -->
-    
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit" />
                             <input type="reset" class="btn btn-default" value="Reset" />
@@ -120,6 +120,6 @@
             </div>
         </div>    
     </section>
-    
 </div>
+
 <script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>

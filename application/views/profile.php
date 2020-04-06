@@ -1,13 +1,14 @@
 <?php
-$userId = $userInfo->userId;
-$name = $userInfo->name;
-$email = $userInfo->email;
-$mobile = $userInfo->mobile;
-$roleId = $userInfo->roleId;
-$roleText = $userInfo->roleText;
-$address = isset($userInfo->address) ? $userInfo->address : '';
-$tutorId = isset($userInfo->tutorId) ? $userInfo->tutorId : '';
-$tutorEmail = isset($userInfo->tutorEmail) ? $userInfo->tutorEmail : '';
+$userId = isset($userInfo) ? $userInfo->userId : -1;
+$name = isset($userInfo) ? $userInfo->name : 'N/A';
+$email = isset($userInfo) ? $userInfo->email : 'N/A';
+$mobile = isset($userInfo) ? $userInfo->mobile : 'N/A';
+$roleId = isset($userInfo) ? $userInfo->roleId : 'N/A';
+$roleText = isset($userInfo) ? $userInfo->roleText : 'N/A';
+$address = isset($userInfo) ? $userInfo->address : 'N/A';
+$imgAvatar = isset($userInfo->imgAvatar) ? $userInfo->imgAvatar : 'avatar.png';
+$tutorId = isset($userInfo->tutorId) ? $userInfo->tutorId : -1;
+$tutorEmail = isset($userInfo->tutorEmail) ? $userInfo->tutorEmail : 'N/A';
 $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
 ?>
 
@@ -27,7 +28,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                 <div class="box box-warning">
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle"
-                             src="<?php echo base_url(); ?>assets/dist/img/avatar.png" alt="User profile picture">
+                             src="<?php echo base_url() . 'assets/dist/img/' . $imgAvatar; ?>"
+                             alt="User profile picture">
                         <h3 class="profile-username text-center"><?= $name ?></h3>
                         <p class="text-muted text-center"><?= $roleText ?></p>
                         <ul class="list-group list-group-unbordered">
@@ -39,19 +41,28 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                                 <b>Mobile</b>
                                 <a class="pull-right"><?= $mobile ?></a>
                             </li>
-                            <li class="list-group-item" <?php if ($role == STUDENT): ?>
+                            <li class="list-group-item" <?php if (!empty($role) && $role == STUDENT): ?>
                                 style="display:block !important;">
                                 <b>Tutor</b>
                                 <a id="tutor-email" class="pull-right open-mes-modal" href="#mes-modal"
                                    data-toggle="modal"
-                                   data-senderId="<?php echo $userId; ?>"
-                                   data-senderRole="<?php echo $roleId; ?>"
-                                   data-receiverId="<?php echo $tutorId; ?>"
-                                   data-receiverRole="<?php echo $tutorRoleId; ?>"
-                                   data-email="<?php echo $tutorEmail; ?>">
-                                    <?php echo $tutorEmail; ?>
+                                   data-senderId="<?= $userId; ?>"
+                                   data-senderRole="<?= $roleId; ?>"
+                                   data-receiverId="<?= $tutorId; ?>"
+                                   data-receiverRole="<?= $tutorRoleId; ?>"
+                                   data-email="<?= $tutorEmail; ?>">
+                                    <?= $tutorEmail; ?>
                                 </a>
                             </li><?php endif; ?>
+                            <li class="list-group-item">
+                                <b>Upload Avatar</b>
+                                <form action="<?= base_url() . 'uploadAvatar/' . $userId; ?>" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="file" name="userfile" size="20" style="margin-top: 5px"/>
+                                    <br/>
+                                    <input class="btn btn-primary" type="submit" value="Upload"/>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -76,12 +87,11 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="fname">Full Name</label>
-                                                <input type="text" class="form-control" id="fname" name="fname"
-                                                       placeholder="<?php echo $name; ?>"
-                                                       value="<?php echo set_value('fname', $name); ?>"
-                                                       maxlength="128"/>
-                                                <input type="hidden" value="<?php echo $userId; ?>" name="userId"
-                                                       id="userId"/>
+                                                <input id="fname" class="form-control" name="fname" type="text"
+                                                       placeholder="Full Name" maxlength="128"
+                                                       value="<?= set_value('fname', $name); ?>"/>
+                                                <input id="userId" name="userId" type="hidden"
+                                                       value="<?php echo $userId; ?>"/>
                                             </div>
                                         </div>
                                     </div>
@@ -90,8 +100,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                                             <div class="form-group">
                                                 <label for="mobile">Mobile Number</label>
                                                 <input type="text" class="form-control" id="mobile" name="mobile"
-                                                       placeholder="<?php echo $mobile; ?>"
-                                                       value="<?php echo set_value('mobile', $mobile); ?>"
+                                                       placeholder="Mobile"
+                                                       value="<?= set_value('mobile', $mobile); ?>"
                                                        maxlength="10">
                                             </div>
                                         </div>
@@ -101,8 +111,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                                             <div class="form-group">
                                                 <label for="email">Email</label>
                                                 <input type="text" class="form-control" id="email" name="email"
-                                                       placeholder="<?php echo $email; ?>"
-                                                       value="<?php echo set_value('email', $email); ?>">
+                                                       placeholder="Email"
+                                                       value="<?= set_value('email', $email); ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -112,8 +122,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
 
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" id="address" name="address"
-                                                       placeholder="<?php echo $address; ?>"
-                                                       value="<?php echo set_value('address', $address); ?>">
+                                                       placeholder="Address"
+                                                       value="<?= set_value('address', $address); ?>">
                                             </div>
                                         </div>
                                     </div>
