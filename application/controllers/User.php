@@ -579,8 +579,8 @@ class User extends BaseController
     {
         $result = $this->upload();
 
-        $result = $this->user_model->uploadAvatar($result['filename'], $userId);
-        if ($result > 0 && !empty($result['filename'])) {
+        $result1 = $this->user_model->uploadAvatar($result['filename'], $userId);
+        if ($result1 > 0 && !empty($result['filename'])) {
             $this->session->set_flashdata('success', 'Upload image successfully');
         } else {
             $error = empty($result['error']) ? 'Upload image failure' : $result['error'];
