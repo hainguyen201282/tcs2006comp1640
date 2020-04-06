@@ -28,7 +28,7 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                 <div class="box box-warning">
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle"
-                             src="<?php echo base_url() . 'assets/dist/img/' . $imgAvatar; ?>"
+                             src="<?php echo base_url() . 'uploads/user_avatar/' . $imgAvatar; ?>"
                              alt="User profile picture">
                         <h3 class="profile-username text-center"><?= $name ?></h3>
                         <p class="text-muted text-center"><?= $roleText ?></p>
