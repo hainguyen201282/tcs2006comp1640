@@ -8,8 +8,13 @@
     </section>
     <section class="content">
         <div class="row">
+            <div class="col-xs-12 text-right">
+                <div class="form-group" style="margin-top: 34px"></div>
+            </div>
+        </div>
+        <div class="row">
             <!-- left column -->
-            <div class="col-md-8">
+            <div class="col-xs-12">
               <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
@@ -19,37 +24,42 @@
                     <?php $this->load->helper("form"); ?>
                     <form role="form" id="addBlog" action="<?php echo base_url() ?>submitNewBlog" method="post" enctype="multipart/form-data">
                         <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-6">                                
-                                    <div class="form-group">
-                                        <label for="title">Title</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('title'); ?>" id="title" name="title" maxlength="128">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="topic">Topic</label>
-                                        <input type="text" class="form-control required topic" id="topic" value="<?php echo set_value('topic'); ?>" name="topic" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="content">Content</label>
-                                        <textarea id="content" style="width:100%" value="<?php echo set_value('content'); ?>" name="content" maxlength="65000"></textarea>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- Upload -->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="file" name="userfile" size="20"/>
-                                    </div>   
+                                        <label for="title">Upload Cover Image</label>
+                                        <input type="file" name="userfile"/>
+                                    </div>
                                 </div>
                             </div>
                             <!--  -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title">Title *</label>
+                                        <input id="title" class="form-control" type="text"
+                                               name="title" value="<?php echo set_value('title'); ?>"
+                                               maxlength="128" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="topic">Topic *</label>
+                                        <input id="topic" class="form-control topic" type="text"
+                                               name="topic" value="<?php echo set_value('topic'); ?>"
+                                               maxlength="128" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="content">Content *</label>
+                                        <textarea id="content" name="content" maxlength="65000" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit"/>
@@ -67,10 +77,10 @@
                 ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <?php echo $this->session->flashdata('error'); ?>                    
+                        <?php echo $this->session->flashdata('error'); ?>
                     </div>
                 <?php } ?>
-                <?php  
+                <?php
                     $success = $this->session->flashdata('success');
                     if($success)
                     {
@@ -86,6 +96,20 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </section>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        CKEDITOR.replace('content', {
+            filebrowserBrowseUrl: '<?php echo
+            site_url('assets/js/ckfinder/ckfinder.html')
+            ;?>',
+            filebrowserUploadUrl: '<?php echo
+            site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files')
+            ;?>',
+        });
+    });
+</script>

@@ -2,57 +2,6 @@
 
 class User_model extends CI_Model
 {
-//    /**
-//     * This function is used to get the user listing count
-//     * @param string $searchText : This is optional search text
-//     * @return number $count : This is row count
-//     */
-//    function userListingCount($searchText = '')
-//    {
-//        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.createdDtm, Role.role');
-//        $this->db->from('tbl_users as BaseTbl');
-//        $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
-//        if (!empty($searchText)) {
-//            $likeCriteria = "(BaseTbl.email  LIKE '%" . $searchText . "%'
-//                            OR  BaseTbl.name  LIKE '%" . $searchText . "%'
-//                            OR  BaseTbl.mobile  LIKE '%" . $searchText . "%')";
-//            $this->db->where($likeCriteria);
-//        }
-//        $this->db->where('BaseTbl.isDeleted', 0);
-//        $this->db->where('BaseTbl.roleId !=', 1);
-//        $query = $this->db->get();
-//
-//        return $query->num_rows();
-//    }
-
-//    /**
-//     * This function is used to get the user listing count
-//     * @param string $searchText : This is optional search text
-//     * @param number $page : This is pagination offset
-//     * @param number $segment : This is pagination limit
-//     * @return array $result : This is result
-//     */
-//    function userListing($searchText = '', $page, $segment)
-//    {
-//        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.createdDtm, Role.role');
-//        $this->db->from('tbl_users as BaseTbl');
-//        $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
-//        if (!empty($searchText)) {
-//            $likeCriteria = "(BaseTbl.email  LIKE '%" . $searchText . "%'
-//                            OR  BaseTbl.name  LIKE '%" . $searchText . "%'
-//                            OR  BaseTbl.mobile  LIKE '%" . $searchText . "%')";
-//            $this->db->where($likeCriteria);
-//        }
-//        $this->db->where('BaseTbl.isDeleted', 0);
-//        $this->db->where('BaseTbl.roleId !=', 1);
-//        $this->db->order_by('BaseTbl.userId', 'DESC');
-//        $this->db->limit($page, $segment);
-//        $query = $this->db->get();
-//
-//        $result = $query->result();
-//        return $result;
-//    }
-
     function getAllUsers()
     {
         $this->db->select('UserTbl.*, RoleTbl.role');
@@ -159,7 +108,7 @@ class User_model extends CI_Model
         $this->db->where('userId', $userId);
         $query = $this->db->get();
 
-        return $query->row();
+        return $this->db->get()->row();
     }
 
 
@@ -315,14 +264,21 @@ class User_model extends CI_Model
      */
     function getUserInfoWithRole($userId)
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.roleId, Roles.role, BaseTbl.address');
-        $this->db->from('tbl_users as BaseTbl');
-        $this->db->join('tbl_roles as Roles', 'Roles.roleId = BaseTbl.roleId');
-        $this->db->where('BaseTbl.userId', $userId);
-        $this->db->where('BaseTbl.isDeleted', 0);
-        $query = $this->db->get();
+        $this->db->select('UserTbl.userId, 
+            UserTbl.email, 
+            UserTbl.name, 
+            UserTbl.mobile, 
+            UserTbl.roleId, 
+            UserTbl.address,
+            UserTbl.imgAvatar,
+            RoleTbl.role'
+        );
+        $this->db->from('tbl_users as UserTbl');
+        $this->db->join('tbl_roles as RoleTbl', 'RoleTbl.roleId = UserTbl.roleId');
+        $this->db->where('UserTbl.userId', $userId);
+        $this->db->where('UserTbl.isDeleted', 0);
 
-        return $query->row();
+        return $this->db->get()->row();
     }
 
     /**
@@ -338,8 +294,10 @@ class User_model extends CI_Model
         return $query->result();
     }
 
-    function getLastMessagesIn7Days(){
+    function getLastMessagesIn7Days()
+    {
         $now = time();
+
         $moment7Daysago = $now - (60 * 60 * 24 * 7); 
         $this->db->select("*, UNIX_TIMESTAMP(str_to_date(`createdDate`, '%Y-%m-%d %H:%i:%s')) as createdDtmTimestamp");
         $this->db->from('tbl_message as BaseTbl');
@@ -347,6 +305,22 @@ class User_model extends CI_Model
         $query = $this->db->get();
         // echo "<PRE>" . print_r($this->db->last_query(), true) . "</PRE>";
         return $query->num_rows();
+    }
+
+    function uploadAvatar($filename, $userId)
+    {
+        if ($filename == NULL) {
+            return -1;
+        }
+
+        $userEntity = array(
+            'imgAvatar' => $filename,
+        );
+
+        $this->db->where('userId', $userId);
+        $this->db->update('tbl_users', $userEntity);
+
+        return $this->db->affected_rows();
     }
 }
 

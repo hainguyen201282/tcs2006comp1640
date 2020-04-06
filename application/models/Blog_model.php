@@ -1,28 +1,31 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Blog_model extends CI_Model
 {
-    
+
     function addNewBlog($blogInfo)
     {
         $this->db->trans_start();
         $this->db->insert('tbl_blog', $blogInfo);
-        
+
         $insert_id = $this->db->insert_id();
-        
+
         $this->db->trans_complete();
-        
+
         return $insert_id;
     }
-    
-    // /**
-    //  * This function is used to edit blog information
-    //  */
+
+    /**
+     * This function is used to edit blog information
+     * @param $blogInfo
+     * @param $id
+     * @return bool
+     */
     function editBlog($blogInfo, $id)
     {
         $this->db->where('id', $id);
         $this->db->update('tbl_blog', $blogInfo);
-        
+
         return TRUE;
     }
 
@@ -30,68 +33,91 @@ class Blog_model extends CI_Model
     {
         $this->db->where('id', $id);
         $this->db->update('tbl_blog', $blogInfo);
-        
+
         return $this->db->affected_rows();
     }
 
-    function blogListingCount($searchText = '')
+    function getAllBlog()
     {
-        $this->db->select('Basetbl.id, Basetbl.title, Basetbl.topic, Basetbl.content, Basetbl.authorId, Basetbl.createdDate, Basetbl.updatedDate');
-        $this->db->from('tbl_blog as Basetbl');
+        $this->db->select('BlogTbl.id,
+            BlogTbl.title,
+            BlogTbl.topic,
+            BlogTbl.content,
+            BlogTbl.status,
+            BlogTbl.author,
+            BlogTbl.role, 
+            BlogTbl.coverImg,
+            BlogTbl.updatedDate,
+            BlogTbl.createdDate'
+        );
+        $this->db->from('tbl_blog AS BlogTbl');
+//        $this->db->where('BlogTbl.status', 'PUBLISH');
 
-        if(!empty($searchText)) {
-            $likeCriteria = "(Basetbl.title  LIKE '%".$searchText."%' OR  Basetbl.topic  LIKE '%".$searchText."%')";
-            $this->db->where($likeCriteria);
-        }
-        $this->db->where('Basetbl.status', 'PUBLISH'); 
-        $query = $this->db->get();
-        return $query->num_rows();
-    }
-
-    /**
-     * This function is blog to get the blog listing count
-     * @param string $searchText : This is optional search text
-     * @param number $page : This is pagination offset
-     * @param number $segment : This is pagination limit
-     * @return array $result : This is result
-     */
-    function blogListing($searchText = '', $page, $segment)
-    {
-        $this->db->select('Basetbl.id, Basetbl.title, Basetbl.topic, Basetbl.content, Basetbl.authorId, Basetbl.createdDate, Basetbl.updatedDate');
-        $this->db->from('tbl_blog as Basetbl');
-
-        if(!empty($searchText)) {
-            $likeCriteria = "(Basetbl.title  LIKE '%".$searchText."%' OR  Basetbl.topic  LIKE '%".$searchText."%')";
-            $this->db->where($likeCriteria);
-        }
-        $this->db->where('Basetbl.status', 'PUBLISH');
-        $this->db->order_by('Basetbl.id', 'DESC');
-        $this->db->limit($page, $segment);
-        $query = $this->db->get();
-        
-        $result = $query->result();        
-        return $result;
+        return $this->db->get()->result();
     }
 
     function getBlogInfoById($id)
     {
-        $this->db->select('id, title, topic, content, authorId, status, createdDate, updatedDate, cover');
-        $this->db->from('tbl_blog');
-        $this->db->where('status', 'PUBLISH');
-        $this->db->where('id', $id);
-        $query = $this->db->get();
+        $this->db->select('BlogTbl.id,
+            BlogTbl.title,
+            BlogTbl.topic,
+            BlogTbl.content,
+            BlogTbl.status,
+            BlogTbl.author,
+            BlogTbl.role, 
+            BlogTbl.coverImg,
+            BlogTbl.updatedDate,
+            BlogTbl.createdDate'
+        );
+        $this->db->from('tbl_blog as BlogTbl');
+//        $this->db->where('BlogTbl.status', 'PUBLISH');
+        $this->db->where('BlogTbl.id', $id);
 
-        return $query->row();
+        return $this->db->get()->row();
+    }
+
+    function getAllTopic()
+    {
+        $this->db->select('BlogTbl.topic');
+        $this->db->from('tbl_blog AS BlogTbl');
+        $this->db->group_by('BlogTbl.topic');
+
+        return $this->db->get()->result();
+    }
+
+    function getAllCommentByBlogId($blogId)
+    {
+        $this->db->select(
+            'CommentTbl.id, CommentTbl.content, CommentTbl.status, CommentTbl.userId, CommentTbl.userRole, 
+            CommentTbl.updatedDate, CommentTbl.createdDate'
+        );
+        $this->db->from('tbl_comment as CommentTbl');
+        $this->db->where('CommentTbl.status', 'ACTIVATE');
+        $this->db->where('CommentTbl.blogId', $blogId);
+
+        return $this->db->get()->result();
     }
 
     function editCoverBlog($cover, $blogId)
     {
-        $value=array(
+        $value = array(
             'cover' => $cover
         );
         $this->db->where('id', $blogId);
         $this->db->update('tbl_blog', $value);
-        
+
         return TRUE;
+    }
+
+    function addComment($commentInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('tbl_comment', $commentInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
     }
 }

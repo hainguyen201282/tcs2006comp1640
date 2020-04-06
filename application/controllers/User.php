@@ -49,26 +49,26 @@ class User extends BaseController
                     $viewData['numberOfStudentWithoutTutor'] = $numberOfStudentWithoutTutor;
                     $this->loadViews("dashboard1", $this->global, $viewData, NULL);
                     break;
-                
+
                 case STAFF:
                     $this->roleText = "STAFF";
                     $this->loadViews("dashboard1", $this->global, $viewData, NULL);
                     break;
-                
+
                 case TUTOR:
                     $this->roleText = "TUTOR";
                     $this->loadViews("dashboard1", $this->global, $viewData, NULL);
                     break;
-                
+
                 case STUDENT:
                     $this->roleText = "STUDENT";
                     $this->loadViews("dashboard2", $this->global, $viewData, NULL);
                     break;
                 default:
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);   
+                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
             }
         }
-        
+
     }
 
     /**
@@ -76,17 +76,12 @@ class User extends BaseController
      */
     function userListing()
     {
-       $searchText = $this->security->xss_clean($this->input->post('searchText'));
-       $data['searchText'] = $searchText;
-       // $count = $this->user_model->userListingCount($searchText);
-       // $returns = $this->paginationCompress("userListing/", $count, 10);
-       // $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
 
-        $this->global['pageTitle'] = 'CodeInsect : User Listing';
         $this->load->library('pagination');
 
         $data['userRecords'] = $this->user_model->getAllUsers();
 
+        $this->global['pageTitle'] = 'CodeInsect : User Listing';
         $this->loadViews("users", $this->global, $data, NULL);
     }
 
@@ -99,7 +94,6 @@ class User extends BaseController
         $data['roles'] = $this->user_model->getUserRoles();
 
         $this->global['pageTitle'] = 'CodeInsect : Add New User';
-
         $this->loadViews("addNew", $this->global, $data, NULL);
     }
 
@@ -402,7 +396,7 @@ class User extends BaseController
      * This function used to show login history
      * @param number $userId : This is user id
      */
-    function loginHistoy($userId = NULL)
+    function loginHistory($userId = NULL)
     {
         $userId = ($userId == NULL ? 0 : $userId);
 
@@ -579,6 +573,20 @@ class User extends BaseController
         }
 
         return $return;
+    }
+
+    function uploadAvatar($userId)
+    {
+        $result = $this->upload();
+
+        $result = $this->user_model->uploadAvatar($result['filename'], $userId);
+        if ($result > 0 && !empty($result['filename'])) {
+            $this->session->set_flashdata('success', 'Upload image successfully');
+        } else {
+            $error = empty($result['error']) ? 'Upload image failure' : $result['error'];
+            $this->session->set_flashdata('error', $error);
+        }
+        redirect('profile');
     }
 }
 ?>

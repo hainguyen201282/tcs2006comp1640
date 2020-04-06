@@ -221,16 +221,21 @@ class Student extends BaseController
         $this->loadViews("addNewStudent", $this->global, $data, NULL);
     }
 
-    function submitAddStudent()
+    public function validateForm()
     {
-        $this->load->library('form_validation');
-
         $this->form_validation->set_rules('name', 'Full Name', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]');
         $this->form_validation->set_rules('password', 'Password', 'matches[cpassword]|max_length[20]');
         $this->form_validation->set_rules('cpassword', 'Confirm Password', 'matches[password]|max_length[20]');
         $this->form_validation->set_rules('mobile', 'Mobile Number', 'required|max_length[10]');
         $this->form_validation->set_rules('gender', 'Gender', 'trim|required|max_length[10]');
+    }
+
+    function submitAddStudent()
+    {
+        $this->load->library('form_validation');
+
+        $this->validateForm();
 
         if ($this->form_validation->run() == FALSE) {
             $this->addNewStudent();
@@ -260,10 +265,10 @@ class Student extends BaseController
             } else {
                 $this->session->set_flashdata('error', 'Student creation failed');
             }
-
             redirect('addNewStudent');
         }
     }
+
 
     function studentListing()
     {
@@ -311,13 +316,8 @@ class Student extends BaseController
         $this->load->library('form_validation');
 
         $studentId = $this->input->post('studentId');
-
-        $this->form_validation->set_rules('name', 'Full Name', 'trim|required|max_length[128]');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]');
-        $this->form_validation->set_rules('password', 'Password', 'matches[cpassword]|max_length[20]');
-        $this->form_validation->set_rules('cpassword', 'Confirm Password', 'matches[password]|max_length[20]');
-        $this->form_validation->set_rules('mobile', 'Mobile Number', 'required|max_length[10]');
-        $this->form_validation->set_rules('gender', 'Gender', 'trim|required|max_length[10]');
+        
+        $this->validateForm();
 
         if ($this->form_validation->run() == FALSE) {
             $this->editOldStudent($studentId);
@@ -373,7 +373,7 @@ class Student extends BaseController
 
                 $logTutorInfo = array(
                     'tutorId' => $tutorId,
-                    'notification_text' => 'Students (' . $studentId .') are assigned to you',
+                    'notification_text' => 'Students (' . $studentId . ') are assigned to you',
                     'createdBy' => $this->vendorId,
                     'createdDtm' => date('Y-m-d H:i:s')
                 );
@@ -402,7 +402,7 @@ class Student extends BaseController
                     ],
                     [
                         "email" => $tutorInfo->email,
-                        'content' => 'Students (' . $studentId .') are assigned to you',
+                        'content' => 'Students (' . $studentId . ') are assigned to you',
                     ],
                 ];
 
@@ -418,9 +418,9 @@ class Student extends BaseController
                     $response = curl_exec($ch);
                     // close curl resource to free up system resources
                     curl_close($ch);
-                } 
+                }
             }
-            
+
             if ($result == true) {
                 $this->session->set_flashdata('success', 'Student updated successfully');
             } else {
@@ -559,7 +559,7 @@ class Student extends BaseController
 
         $logTutorInfo = array(
             'tutorId' => $tutorId,
-            'notification_text' => 'Students (' . implode(",", $studentIds) .') are assigned to you',
+            'notification_text' => 'Students (' . implode(",", $studentIds) . ') are assigned to you',
             'createdBy' => $this->vendorId,
             'createdDtm' => date('Y-m-d H:i:s')
         );
@@ -568,7 +568,7 @@ class Student extends BaseController
 
         $emailParams = [
             "email" => $tutorInfo->email,
-            'content' => 'Students (' . implode(",", $studentIds) .') are assigned to you',
+            'content' => 'Students (' . implode(",", $studentIds) . ') are assigned to you',
         ];
 
         $emailFullURL = FIREBASE_NOTIFICATION_EMAIL_URL . http_build_query($emailParams);
@@ -582,7 +582,7 @@ class Student extends BaseController
         $response = curl_exec($ch);
         // close curl resource to free up system resources
         curl_close($ch);
-        
+
         require APPPATH . '../vendor/autoload.php';
 
         $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));

@@ -63,10 +63,21 @@ class Student_model extends CI_Model
      */
     function getStudentProfile($studentId)
     {
-        $this->db->select(
-            'StudentTbl.studentId as userId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.createdDtm,
-            StudentTbl.roleId, StudentTbl.tutorId, 
-            TutorTbl.roleId as TutorRoleId, TutorTbl.name as tutorName, TutorTbl.email as tutorEmail'
+        $this->db->select('StudentTbl.studentId as userId, 
+            StudentTbl.email, 
+            StudentTbl.name, 
+            StudentTbl.gender, 
+            StudentTbl.address, 
+            StudentTbl.mobile, 
+            StudentTbl.description, 
+            StudentTbl.imgAvatar, 
+            StudentTbl.roleId, 
+            StudentTbl.tutorId, 
+            StudentTbl.updatedDtm,
+            StudentTbl.createdDtm,
+            TutorTbl.roleId as TutorRoleId, 
+            TutorTbl.name as tutorName, 
+            TutorTbl.email as tutorEmail'
         );
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_users as TutorTbl', 'StudentTbl.tutorId = TutorTbl.userId', 'left');
@@ -192,10 +203,12 @@ class Student_model extends CI_Model
         $this->db->select('StudentTbl.studentId, 
             StudentTbl.email, 
             StudentTbl.name,
-            StudentTbl.mobile, 
-            StudentTbl.roleId, 
             StudentTbl.gender, 
+            StudentTbl.mobile, 
+            StudentTbl.address, 
+            StudentTbl.roleId, 
             StudentTbl.tutorId, 
+            StudentTbl.updatedDtm, 
             StudentTbl.createdDtm, 
             TutorTbl.name as tutorName,'
         );
