@@ -50,10 +50,8 @@
                                     <div class="form-group">
                                         <label for="gender">Gender</label>
                                         <select class="form-control" id="gender" name="gender">
+                                             <option value="Male">Male</option>
                                              <option value="Female">Female</option>
-                                            <?php if (isset($_POST["gender"])) {
-                                                echo $_POST["gender"];
-                                            } ?>
                                         </select>
                                     </div>
                                 </div>

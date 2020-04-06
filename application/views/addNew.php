@@ -42,6 +42,24 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="password">Mobile Number</label>
+                                        <input type="text" class="form-control required digits" value="<?php echo set_value('mobile'); ?>"
+                                        id="mobile" name="mobile" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="gender">Gender</label>
+                                        <select class="form-control" id="gender" name="gender">
+                                             <option value="Male">Male</option>
+                                             <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control required" id="password" name="password" maxlength="20">
                                     </div>
@@ -54,12 +72,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mobile">Mobile Number</label>
-                                        <input type="text" class="form-control required digits" id="mobile" value="<?php echo set_value('mobile'); ?>" name="mobile" maxlength="10">
+                                        <input type="text" class="form-control required digits" id="mobile" value="<?php //echo set_value('mobile'); ?>" name="mobile" maxlength="10">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="role">Role</label>

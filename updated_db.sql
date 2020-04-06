@@ -14,3 +14,5 @@ UPDATE `tbl_student` SET `password` = '$2y$10$cCiK6U8d89BeWFoNwocK/u1hUqPgbz8wF1
 
 ALTER TABLE `tbl_reset_password` ADD `isMailSent` TINYINT(4) NOT NULL DEFAULT '0' AFTER `client_ip`;
 ALTER TABLE `tbl_reset_password` ADD `role` ENUM('staff_tutor','student') NOT NULL AFTER `email`;
+
+ALTER TABLE `tbl_users` ADD `gender` VARCHAR(20) NOT NULL DEFAULT 'Male' AFTER `name`;

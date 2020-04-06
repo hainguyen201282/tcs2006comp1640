@@ -2,6 +2,7 @@
 $userId = $userInfo->userId;
 $name = $userInfo->name;
 $email = $userInfo->email;
+$gender = $userInfo->gender;
 $mobile = $userInfo->mobile;
 $roleId = $userInfo->roleId;
 ?>
@@ -51,6 +52,29 @@ $roleId = $userInfo->roleId;
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="mobile">Mobile Number</label>
+                                        <input type="text" class="form-control" id="mobile" placeholder="Mobile Number" name="mobile" value="<?php echo $mobile; ?>" maxlength="10">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="gender">Gender</label>
+                                        <select class="form-control" id="gender" name="gender">
+                                            <option value="Male" <?php if ($gender == "Male") echo "SELECTED"; ?>>Male
+                                            </option>
+                                            <option value="Female" <?php if ($gender == "Female") echo "SELECTED"; ?>>
+                                                Female
+                                            </option>
+                                            <?php if (isset($_POST["gender"])) {
+                                                echo $_POST["gender"];
+                                            } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control" id="password" placeholder="Password" name="password" maxlength="20">
                                     </div>
@@ -63,12 +87,6 @@ $roleId = $userInfo->roleId;
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="mobile">Mobile Number</label>
-                                        <input type="text" class="form-control" id="mobile" placeholder="Mobile Number" name="mobile" value="<?php echo $mobile; ?>" maxlength="10">
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="role">Role</label>
