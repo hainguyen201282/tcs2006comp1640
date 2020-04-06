@@ -188,7 +188,7 @@ class BaseController extends CI_Controller
     function upload()
     {
         // set preference
-        $config['upload_path'] = './assets/dist/img/';
+        $config['upload_path'] = 'uploads/user_avatar';
         $config['allowed_types'] = 'gif|jpg|png';
         $config['max_size'] = 1024;
         $config['max_width'] = 1920;
