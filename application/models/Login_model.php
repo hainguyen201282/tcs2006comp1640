@@ -1,15 +1,15 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Class : Login_model (Login Model)
- * Login model class to get to authenticate user credentials 
+ * Login model class to get to authenticate user credentials
  * @author : Kishor Mali
  * @version : 1.1
  * @since : 15 November 2016
  */
 class Login_model extends CI_Model
 {
-    
+
     /**
      * This function used to check the login credentials of the user
      * @param string $email : This is email of the user
@@ -17,17 +17,23 @@ class Login_model extends CI_Model
      */
     function loginMe($email, $password)
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.password, BaseTbl.name, BaseTbl.roleId, Roles.role');
+        $this->db->select('BaseTbl.userId, 
+            BaseTbl.password, 
+            BaseTbl.name,
+            BaseTbl.imgAvatar, 
+            BaseTbl.roleId, 
+            Roles.role'
+        );
         $this->db->from('tbl_users as BaseTbl');
-        $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
+        $this->db->join('tbl_roles as Roles', 'Roles.roleId = BaseTbl.roleId');
         $this->db->where('BaseTbl.email', $email);
         $this->db->where('BaseTbl.isDeleted', 0);
         $query = $this->db->get();
-        
+
         $user = $query->row();
-        
-        if(!empty($user)){
-            if(verifyHashedPassword($password, $user->password)){
+
+        if (!empty($user)) {
+            if (verifyHashedPassword($password, $user->password)) {
                 return $user;
             } else {
                 return array();
@@ -53,7 +59,7 @@ class Login_model extends CI_Model
             $query = $this->db->get('tbl_users');
         }
 
-        if ($query->num_rows() > 0){
+        if ($query->num_rows() > 0) {
             return true;
         } else {
             return false;
@@ -70,7 +76,7 @@ class Login_model extends CI_Model
     {
         $result = $this->db->insert('tbl_reset_password', $data);
 
-        if($result) {
+        if ($result) {
             return TRUE;
         } else {
             return FALSE;
@@ -100,7 +106,8 @@ class Login_model extends CI_Model
         return $query->row();
     }
 
-    function getUnsentResetPasswordMails(){
+    function getUnsentResetPasswordMails()
+    {
         $this->db->select('*');
         $this->db->from('tbl_reset_password');
         $this->db->where(['isDeleted' => 0, 'isMailSent' => 0]);
@@ -130,11 +137,11 @@ class Login_model extends CI_Model
         $this->db->where('email', $email);
         $this->db->where('isDeleted', 0);
         if ($role == 'student') {
-            $this->db->update('tbl_student', array('password'=>getHashedPassword($password)));    
+            $this->db->update('tbl_student', array('password' => getHashedPassword($password)));
         } else {
-            $this->db->update('tbl_users', array('password'=>getHashedPassword($password)));
+            $this->db->update('tbl_users', array('password' => getHashedPassword($password)));
         }
-        $this->db->delete('tbl_reset_password', array('email'=>$email, 'role' => $role));
+        $this->db->delete('tbl_reset_password', array('email' => $email, 'role' => $role));
     }
 
     /**

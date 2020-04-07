@@ -10,6 +10,7 @@ class BaseController extends CI_Controller
     protected $role = '';
     protected $vendorId = '';
     protected $name = '';
+    protected $imgAvatar = '';
     protected $roleText = '';
     protected $global = array();
     protected $lastLogin = '';
@@ -69,10 +70,12 @@ class BaseController extends CI_Controller
         $this->role = $this->session->userdata('role');
         $this->vendorId = $this->session->userdata('userId');
         $this->name = $this->session->userdata('name');
+        $this->imgAvatar = $this->session->userdata('imgAvatar');
         $this->roleText = $this->session->userdata('roleText');
         $this->lastLogin = $this->session->userdata('lastLogin');
 
         $this->global ['name'] = $this->name;
+        $this->global ['imgAvatar'] = $this->imgAvatar == NULL ? 'avatar.png' : $this->imgAvatar;
         $this->global ['vendorId'] = $this->vendorId;
         $this->global ['role'] = $this->role;
         $this->global ['role_text'] = $this->roleText;
@@ -185,10 +188,10 @@ class BaseController extends CI_Controller
         );
     }
 
-    function upload()
+    function upload($path)
     {
         // set preference
-        $config['upload_path'] = 'uploads/user_avatar';
+        $config['upload_path'] = $path;
         $config['allowed_types'] = 'gif|jpg|png';
         $config['max_size'] = 1024;
         $config['max_width'] = 1920;

@@ -16,7 +16,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
 <div class="content-wrapper">
     <section class="hero-wrap hero-wrap-2 js-fullheight" data-stellar-background-ratio="0.5">
         <div class="overlay"
-             style="background-image: url('<?php echo base_url() . 'assets/dist/img/' . $coverImg; ?>');"></div>
+             style="background-image: url('<?php echo base_url() . COVER_PATH . $coverImg; ?>');"></div>
     </section>
 
     <section class="ftco-section ftco-degree-bg">
@@ -40,7 +40,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                     <div class="about-author d-flex p-4 bg-light">
                         <div class="bio mr-5 col-lg-4">
                             <img class="img-fluid mb-4 img-responsive img-circle" alt="Author picture"
-                                 src="<?php echo base_url() . 'assets/dist/img/' . $imgAvatar; ?>">
+                                 src="<?php echo base_url() . AVATAR_PATH . $imgAvatar; ?>">
                         </div>
                         <div class="desc">
                             <h3><?= $author ?></h3>
@@ -57,7 +57,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                                     <li class="comment">
                                         <div class="vcard bio">
                                             <img alt="Comment user image"
-                                                 src="<?php echo base_url() . 'assets/dist/img/' . $record->imgAvatar; ?>">
+                                                 src="<?php echo base_url() . AVATAR_PATH . $record->imgAvatar; ?>">
                                         </div>
                                         <div class="comment-body">
                                             <h3><?= $record->name ?></h3>
@@ -78,7 +78,8 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                     <div class="comment-form-wrap pt-5">
                         <h3 class="mb-5">Leave a comment</h3>
                         <?php $this->load->helper("form"); ?>
-                        <form class="p-5 bg-light" action="<?php echo base_url();?>submitComment" method="post" role="form">
+                        <form class="p-5 bg-light" action="<?php echo base_url(); ?>submitComment" method="post"
+                              role="form">
                             <div class="form-group">
                                 <label for="name">Name *</label>
                                 <input id="blogId" class="form-control" type="hidden"
@@ -101,8 +102,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                     <?php
                     $this->load->helper('form');
                     $error = $this->session->flashdata('error');
-                    if($this->session->flashdata('error') !== null)
-                    {
+                    if ($this->session->flashdata('error') !== null) {
                         ?>
                         <div class="alert alert-danger alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -111,8 +111,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                     <?php } ?>
                     <?php
                     $success = $this->session->flashdata('success');
-                    if($success)
-                    {
+                    if ($success) {
                         ?>
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

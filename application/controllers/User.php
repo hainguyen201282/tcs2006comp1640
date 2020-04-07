@@ -220,7 +220,6 @@ class User extends BaseController
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
             $column++;
         }
-
         $userData = $this->user_model->getAllUsers();
 
         $excelRow = 2;
@@ -366,7 +365,7 @@ class User extends BaseController
 
     /**
      * This function is used to delete the user using userId
-     * @return boolean $result : TRUE / FALSE
+     * @return void $result : TRUE / FALSE
      */
     function deleteUser()
     {
@@ -425,6 +424,7 @@ class User extends BaseController
 
     /**
      * This function is used to show users profile
+     * @param string $active
      */
     function profile($active = "details")
     {
@@ -463,7 +463,7 @@ class User extends BaseController
 
     /**
      * This function is used to update the user details
-     * @param text $active : This is flag to set the active tab
+     * @param string $active : This is flag to set the active tab
      */
     function profileUpdate($active = "details")
     {
@@ -503,7 +503,7 @@ class User extends BaseController
 
     /**
      * This function is used to change the password of the user
-     * @param text $active : This is flag to set the active tab
+     * @param string $active : This is flag to set the active tab
      */
     function changePassword($active = "changepass")
     {
@@ -553,6 +553,7 @@ class User extends BaseController
     /**
      * This function is used to check whether email already exist or not
      * @param {string} $email : This is users email
+     * @return bool
      */
     function emailExists($email)
     {
@@ -571,19 +572,18 @@ class User extends BaseController
             $this->form_validation->set_message('emailExists', 'The {field} already taken');
             $return = false;
         }
-
         return $return;
     }
 
     function uploadAvatar($userId)
     {
-        $result = $this->upload();
+        $uploadResult = $this->upload(AVATAR_PATH);
 
-        $result1 = $this->user_model->uploadAvatar($result['filename'], $userId);
-        if ($result1 > 0 && !empty($result['filename'])) {
+        $result = $this->user_model->uploadAvatar($uploadResult['filename'], $userId);
+        if ($result > 0 && !empty($uploadResult['filename'])) {
             $this->session->set_flashdata('success', 'Upload image successfully');
         } else {
-            $error = empty($result['error']) ? 'Upload image failure' : $result['error'];
+            $error = empty($uploadResult['error']) ? 'Upload image failure' : $uploadResult['error'];
             $this->session->set_flashdata('error', $error);
         }
         redirect('profile');

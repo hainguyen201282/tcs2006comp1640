@@ -6,8 +6,8 @@ class Blog_model extends CI_Model
     function addNewBlog($blogInfo)
     {
         $this->db->trans_start();
-        $this->db->insert('tbl_blog', $blogInfo);
 
+        $this->db->insert('tbl_blog', $blogInfo);
         $insert_id = $this->db->insert_id();
 
         $this->db->trans_complete();
@@ -19,21 +19,19 @@ class Blog_model extends CI_Model
      * This function is used to edit blog information
      * @param $blogInfo
      * @param $id
-     * @return bool
+     * @return
      */
-    function editBlog($blogInfo, $id)
+    function editBlog($id, $blogInfo)
     {
         $this->db->where('id', $id);
         $this->db->update('tbl_blog', $blogInfo);
-
-        return TRUE;
+        return $this->db->affected_rows();
     }
 
     function deleteBlog($id, $blogInfo)
     {
         $this->db->where('id', $id);
         $this->db->update('tbl_blog', $blogInfo);
-
         return $this->db->affected_rows();
     }
 

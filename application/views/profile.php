@@ -56,9 +56,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                             </li><?php endif; ?>
                             <li class="list-group-item">
                                 <b>Upload Avatar</b>
-                                <form action="<?= base_url() . 'uploadAvatar/' . $userId; ?>" method="post"
-                                      enctype="multipart/form-data">
-                                    <input type="file" name="userfile" size="20" style="margin-top: 5px"/>
+                                <form action="<?= base_url() . 'uploadAvatar/' . $userId; ?>" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="userfile" style="margin-top: 5px"/>
                                     <br/>
                                     <input class="btn btn-primary" type="submit" value="Upload"/>
                                 </form>

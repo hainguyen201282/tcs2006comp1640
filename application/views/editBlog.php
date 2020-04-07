@@ -30,7 +30,7 @@ $coverImg = $blogInfo->coverImg;
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addBlog" action="<?php echo base_url() ?>editBlog" method="post">
+                    <form role="form" id="addBlog" action="<?php echo base_url() ?>editBlog" method="post" enctype="multipart/form-data">
                         <div class="box-body">
                             <!-- Upload -->
                             <div class="row">

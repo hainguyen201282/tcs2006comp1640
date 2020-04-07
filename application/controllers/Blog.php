@@ -67,10 +67,9 @@ class Blog extends BaseController
             $this->addNewBlog();
         } else {
 
-            $result = $this->uploadCover();
-            if (!empty($result['error'])) {
-                $this->session->set_flashdata('error', $result['error']);
-                return;
+            $uploadResult = array();
+            if (!empty($_FILES['userfile']['name'])) {
+                $uploadResult = $this->upload(COVER_PATH);
             }
 
             $title = $this->input->post('title');
@@ -84,7 +83,7 @@ class Blog extends BaseController
                 'status' => PUBLISH,
                 'author' => $this->vendorId,
                 'role' => $this->role,
-                'coverImg' => $result['filename'] == NULL ? 'cover.png' : $result['filename'],
+                'coverImg' => $uploadResult['filename'] == NULL ? 'cover.png' : $uploadResult['filename'],
                 'updatedDate' => date('Y-m-d H:i:s'),
                 'createdDate' => date('Y-m-d H:i:s'));
 
@@ -128,11 +127,7 @@ class Blog extends BaseController
             $this->editViewBlog($id);
         } else {
 
-            $result = $this->uploadCover();
-            if (!empty($result['error'])) {
-                $this->session->set_flashdata('error', $result['error']);
-                redirect(array('editViewBlog', 'id' => $id));
-            }
+            $uploadResult = $this->upload(COVER_PATH);
 
             $title = $this->input->post('title');
             $content = $this->input->post('content');
@@ -141,28 +136,20 @@ class Blog extends BaseController
             $blogInfo = array(
                 'title' => $title,
                 'content' => $content,
-                'coverImg' => $result['filename'] == NULL ? $coverImg : $result['filename'],
+                'coverImg' => $uploadResult['filename'] == NULL ? $coverImg : $uploadResult['filename'],
                 'updatedDate' => date('Y-m-d H:i:s')
             );
 
-            $result = $this->blog_model->editBlog($blogInfo, $id);
+            $result = $this->blog_model->editBlog($id, $blogInfo);
 
-            if ($result == true) {
+            if ($result > 0) {
                 $this->session->set_flashdata('success', 'Blog update successfully');
-            } else {
-                $this->session->set_flashdata('error', 'Blog update failed');
+            } else if ($uploadResult['filename'] == NULL) {
+                $error = empty($uploadResult['error']) ? 'Blog update failed' : $uploadResult['error'];
+                $this->session->set_flashdata('error', $error);
             }
             redirect(array('editViewBlog', 'id' => $id));
         }
-    }
-
-    function uploadCover()
-    {
-        $result = array();
-        if (!empty($_FILES['userfile']['name'])) {
-            $result = $this->upload();
-        }
-        return $result;
     }
 
     function deleteBlog()

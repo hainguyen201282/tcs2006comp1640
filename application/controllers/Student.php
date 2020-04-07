@@ -58,6 +58,7 @@ class Student extends BaseController
                 $lastLogin = $this->student_model->lastLoginInfo($result->studentId);
 
                 $sessionArray = array('userId' => $result->studentId,
+                    'imgAvatar' => $result->imgAvatar,
                     'role' => STUDENT,
                     'roleText' => 'Student',
                     'name' => $result->name,
@@ -76,7 +77,6 @@ class Student extends BaseController
                 redirect('/dashboard');
             } else {
                 $this->session->set_flashdata('error', 'Email or password mismatch');
-
                 redirect('loginMe');
             }
         }
