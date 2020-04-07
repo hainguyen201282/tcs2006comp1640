@@ -125,14 +125,14 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?php echo base_url() . 'uploads/user_avatar/' . $imgAvatar; ?>"
+                            <img src="<?php echo base_url() . AVATAR_PATH . $imgAvatar; ?>"
                                  class="user-image" alt="User Image"/>
                             <span class="hidden-xs"><?= $name; ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="<?php echo base_url() . 'uploads/user_avatar/' . $imgAvatar; ?>"
+                                <img src="<?php echo base_url() . AVATAR_PATH . $imgAvatar; ?>"
                                      class="img-circle" alt="User Image"/>
                                 <p>
                                     <?= $name; ?>
