@@ -322,5 +322,25 @@ class User_model extends CI_Model
 
         return $this->db->affected_rows();
     }
+
+    function getAverageNumberMessageSentByPerTutor(){
+        $query = <<<EOT
+SELECT * FROM (
+    SELECT AVG(count_group_by_day.day_count) avg_day_count, count_group_by_day.senderId, count_group_by_day.fullname FROM (
+        SELECT COUNT(DISTINCT(msg.id)) as day_count, DAY(createdDate) as day_group, senderId, `users`.`name` as fullname FROM `tbl_message` as msg 
+        LEFT JOIN `tbl_message_attr` as msg_attr on (`msg`.`id`=`msg_attr`.`messageId`)
+        LEFT JOIN `tbl_users` as users on (`msg`.`senderId`=`users`.`userId`)
+        WHERE senderRole = 3 AND receiverRole = 4 AND DAY(createdDate) > 0
+        GROUP BY senderId, DAY(createdDate)
+    ) AS count_group_by_day
+    GROUP BY count_group_by_day.senderId
+    ) as list_avg_message_by_tutor
+ORDER BY list_avg_message_by_tutor.fullname ASC
+EOT;
+        $queryResult = $this->db
+            ->query($query);
+
+        return $queryResult->result();
+    }
 }
 

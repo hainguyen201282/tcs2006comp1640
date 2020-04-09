@@ -43,11 +43,12 @@ class User extends BaseController
                 case AUTHORISED_STAFF:
                     $this->roleText = "AUTHORISED STAFF";
                     $numberOfMessageIn7Days = $this->user_model->getLastMessagesIn7Days();
+                    $averageMessagesSentByTutor = $this->user_model->getAverageNumberMessageSentByPerTutor();
                     $this->load->model('student_model');
                     $numberOfStudentWithoutTutor = $this->student_model->getStudentWithoutTutor();
                     $viewData['numberOfMessageIn7Days'] = $numberOfMessageIn7Days;
                     $viewData['numberOfStudentWithoutTutor'] = $numberOfStudentWithoutTutor;
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
+                    $this->loadViews("dashboardChiefStaff", $this->global, $viewData, NULL);
                     break;
 
                 case STAFF:

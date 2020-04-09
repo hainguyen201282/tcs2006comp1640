@@ -13,6 +13,7 @@
       </h1>
     </section>
 
+    <!-- Main content -->
     <section class="content">
       <!-- Info boxes -->
       <div class="row">
@@ -108,7 +109,7 @@
 
                   <div class="chart">
                     <!-- Sales Chart Canvas -->
-                    <canvas id="salesChart" style="height: 180px; width: 482px;" height="180" width="482"></canvas>
+                    <canvas id="salesChart" style="height: 180px;"></canvas>
                   </div>
                   <!-- /.chart-responsive -->
                 </div>
@@ -236,19 +237,19 @@
                 <div class="col-md-3 col-sm-4">
                   <div class="pad box-pane-right bg-green" style="min-height: 280px">
                     <div class="description-block margin-bottom">
-                      <div class="sparkbar pad" data-color="#fff"><canvas width="34" height="30" style="display: inline-block; width: 34px; height: 30px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar pad" data-color="#fff">90,70,90,70,75,80,70</div>
                       <h5 class="description-header">8390</h5>
                       <span class="description-text">Visits</span>
                     </div>
                     <!-- /.description-block -->
                     <div class="description-block margin-bottom">
-                      <div class="sparkbar pad" data-color="#fff"><canvas width="34" height="30" style="display: inline-block; width: 34px; height: 30px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
                       <h5 class="description-header">30%</h5>
                       <span class="description-text">Referrals</span>
                     </div>
                     <!-- /.description-block -->
                     <div class="description-block">
-                      <div class="sparkbar pad" data-color="#fff"><canvas width="34" height="30" style="display: inline-block; width: 34px; height: 30px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
                       <h5 class="description-header">70%</h5>
                       <span class="description-text">Organic</span>
                     </div>
@@ -270,10 +271,11 @@
                   <h3 class="box-title">Direct Chat</h3>
 
                   <div class="box-tools pull-right">
-                    <span data-toggle="tooltip" title="" class="badge bg-yellow" data-original-title="3 New Messages">3</span>
+                    <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
-                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle" data-original-title="Contacts">
+                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
+                            data-widget="chat-pane-toggle">
                       <i class="fa fa-comments"></i></button>
                     <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
                     </button>
@@ -566,7 +568,7 @@
                     <td>Call of Duty IV</td>
                     <td><span class="label label-success">Shipped</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
                     </td>
                   </tr>
                   <tr>
@@ -574,7 +576,7 @@
                     <td>Samsung Smart TV</td>
                     <td><span class="label label-warning">Pending</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
                     </td>
                   </tr>
                   <tr>
@@ -582,7 +584,7 @@
                     <td>iPhone 6 Plus</td>
                     <td><span class="label label-danger">Delivered</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
                     </td>
                   </tr>
                   <tr>
@@ -590,7 +592,7 @@
                     <td>Samsung Smart TV</td>
                     <td><span class="label label-info">Processing</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#00c0ef" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
                     </td>
                   </tr>
                   <tr>
@@ -598,7 +600,7 @@
                     <td>Samsung Smart TV</td>
                     <td><span class="label label-warning">Pending</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
                     </td>
                   </tr>
                   <tr>
@@ -606,7 +608,7 @@
                     <td>iPhone 6 Plus</td>
                     <td><span class="label label-danger">Delivered</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
                     </td>
                   </tr>
                   <tr>
@@ -614,7 +616,7 @@
                     <td>Call of Duty IV</td>
                     <td><span class="label label-success">Shipped</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                      <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
                     </td>
                   </tr>
                   </tbody>
@@ -719,7 +721,7 @@
               <div class="row">
                 <div class="col-md-8">
                   <div class="chart-responsive">
-                    <canvas id="pieChart" height="155" width="482" style="width: 482px; height: 155px;"></canvas>
+                    <canvas id="pieChart" height="150"></canvas>
                   </div>
                   <!-- ./chart-responsive -->
                 </div>
@@ -798,7 +800,8 @@
                     <img src="dist/img/default-50x50.gif" alt="Product Image">
                   </div>
                   <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
+                    <a href="javascript:void(0)" class="product-title">Xbox One <span
+                        class="label label-danger pull-right">$350</span></a>
                     <span class="product-description">
                           Xbox One Console Bundle with Halo Master Chief Collection.
                         </span>
@@ -832,6 +835,7 @@
       </div>
       <!-- /.row -->
     </section>
+    <!-- /.content -->
     <style type="text/css">
       .small-box .inner p {
         max-width: 140px;
