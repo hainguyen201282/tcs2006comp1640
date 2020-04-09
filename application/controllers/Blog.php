@@ -244,7 +244,7 @@ class Blog extends BaseController
                 $this->session->set_flashdata('error', 'Comment failed');
             }
         }
-        redirect(array('blog/blogDetail', 'blogId' => $blogId));
+        redirect(array('blogDetail', 'blogId' => $blogId));
     }
 }
 
