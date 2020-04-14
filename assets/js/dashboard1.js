@@ -28,6 +28,13 @@ $(function () {
     zIndex              : 999999
   });
 
+  // $('#todo-list').DataTable({
+  //     'info': true,
+  //     'searching': true,
+  //     'paging': true,
+  //     'lengthChange': true,
+  // });
+
   // bootstrap WYSIHTML5 - text editor
   $('.textarea').wysihtml5();
 

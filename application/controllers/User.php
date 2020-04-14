@@ -41,13 +41,24 @@ class User extends BaseController
         if (isset($this->role)) {
             switch ($this->role) {
                 case AUTHORISED_STAFF:
+
                     $this->roleText = "AUTHORISED STAFF";
+                    $averageMessagesSentByTutor = $this->user_model->getAverageNumberMessageSentByTutor(null, null);
+                    $averageMessagesSentToTutor = $this->user_model->getAverageNumberMessageSentToTutor(null, null);
+                    foreach ($averageMessagesSentByTutor as $key => &$tutorMessageInfo) {
+                        $tutorMessageInfo->avg_message_count_sent_to_tutor = $averageMessagesSentToTutor[$key]->avg_message_count_sent_to_tutor;
+                    }
+                    
                     $numberOfMessageIn7Days = $this->user_model->getLastMessagesIn7Days();
-                    $averageMessagesSentByTutor = $this->user_model->getAverageNumberMessageSentByPerTutor();
+                    
                     $this->load->model('student_model');
                     $numberOfStudentWithoutTutor = $this->student_model->getStudentWithoutTutor();
+
+
                     $viewData['numberOfMessageIn7Days'] = $numberOfMessageIn7Days;
                     $viewData['numberOfStudentWithoutTutor'] = $numberOfStudentWithoutTutor;
+                    $viewData['averageMessagesSentByTutor'] = $averageMessagesSentByTutor;
+
                     $this->loadViews("dashboardChiefStaff", $this->global, $viewData, NULL);
                     break;
 
