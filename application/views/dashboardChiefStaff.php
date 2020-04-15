@@ -50,14 +50,15 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+          <!-- small box -->         
           <div class="small-box bg-red">
+            <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="" data-original-title="Date range">
+              <i class="fa fa-calendar"></i>
+            </button>
             <div class="inner">
-              <h3>65</h3>
+              <h3 id="noInteractionStudentNumber"><?= $studentWithoutInteractionIn7Days;?></h3>
               <p>
-                Students with no interaction for 7 days and 28 days
-                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="" data-original-title="Date range">
-              <i class="fa fa-calendar"></i></button>
+                Students with no interaction for <span id="day_range">7 days</span>
               </p>
             </div>
             <div class="icon">
@@ -125,6 +126,15 @@
       }
       .pagination>li>a {
         cursor: pointer;
+      }
+      .daterange {
+        position: relative;
+        z-index: 1000;
+        background-color: cornflowerblue;
+        border-color: cornflowerblue;
+      }
+      .daterange:hover{
+        background-color: cornflowerblue;
       }
     </style>
     
@@ -231,10 +241,14 @@
         autoApply: true
       }, function (start, end) {
         if (start.format('D') == moment().subtract(7, 'days').format('D')) {
-          window.alert('You chose: 7 days');
+          // window.alert('You chose: 7 days');
+          $('#day_range').text('7 days');
+          $('#noInteractionStudentNumber').text('<?= $studentWithoutInteractionIn7Days;?>');
         }
         if (start.format('D') == moment().subtract(28, 'days').format('D')) {
-          window.alert('You chose: 28 days');
+          // window.alert('You chose: 28 days');
+          $('#day_range').text('28 days');
+          $('#noInteractionStudentNumber').text('<?= $studentWithoutInteractionIn28Days;?>');
         }
         // window.alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
       });

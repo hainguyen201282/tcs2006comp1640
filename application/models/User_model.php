@@ -329,9 +329,9 @@ SELECT * FROM (
     SELECT count_group_by_day.tutorId, count_group_by_day.fullname, AVG(count_group_by_day.day_count) avg_message_count_sent_by_tutor FROM (
             SELECT `users`.`userId` as tutorId, `users`.`name` as fullname, DAY(`msg`.`createdDate`) as day_group, IFNULL(COUNT(DISTINCT(msg.id)), 0) as day_count
             FROM `tbl_users` as users 
-            LEFT JOIN `tbl_message` as msg on (`msg`.`senderId`=`users`.`userId`)
+            LEFT JOIN `tbl_message` as msg on (`msg`.`senderId`=`users`.`userId` AND `msg`.`senderRole` = 3)
             LEFT JOIN `tbl_message_attr` as msg_attr on (`msg`.`id`=`msg_attr`.`messageId`)
-            WHERE `users`.`roleId` = 3 AND ((`msg`.`id` IS NOT NULL AND DAY(`msg`.`createdDate`) > 0) OR (`msg`.`id` IS NULL))
+            WHERE `users`.`isDeleted` = 0 AND `users`.`roleId` = 3 AND ((`msg`.`id` IS NOT NULL AND DAY(`msg`.`createdDate`) > 0) OR (`msg`.`id` IS NULL))
             GROUP BY `users`.`userId`, DAY(`msg`.`createdDate`)
     ) AS count_group_by_day
     GROUP BY count_group_by_day.tutorId
@@ -355,8 +355,8 @@ SELECT * FROM (
             SELECT `users`.`userId` as tutorId, `users`.`name` as fullname, DAY(`msg`.`createdDate`) as day_group, IFNULL(COUNT(DISTINCT(msg.id)), 0) as day_count
             FROM `tbl_users` as users 
             LEFT JOIN `tbl_message_attr` as msg_attr on (`msg_attr`.`receiverId`=`users`.`userId`)
-            LEFT JOIN `tbl_message` as msg on (`msg`.`id`=`msg_attr`.`messageId`)
-            WHERE `users`.`roleId` = 3 AND ((`msg`.`id` IS NOT NULL AND DAY(`msg`.`createdDate`) > 0) OR (`msg`.`id` IS NULL))
+            LEFT JOIN `tbl_message` as msg on (`msg`.`id`=`msg_attr`.`messageId` AND `msg_attr`.`receiverRole` = 3)
+            WHERE `users`.`isDeleted` = 0 AND `users`.`roleId` = 3 AND ((`msg`.`id` IS NOT NULL AND DAY(`msg`.`createdDate`) > 0) OR (`msg`.`id` IS NULL))
             GROUP BY `users`.`userId`, DAY(`msg`.`createdDate`)
     ) AS count_group_by_day
     GROUP BY count_group_by_day.tutorId
@@ -366,6 +366,23 @@ EOT;
         if ($limit) {
             $query .= " LIMIT $offset, $limit";
         }
+
+        $queryResult = $this->db
+            ->query($query);
+            
+        return $queryResult->result();
+    }
+
+    function getStudentsWithoutInteraction($dateRange = 1){
+                $query = <<<EOT
+SELECT `students`.`studentId` as studentId, `students`.`name` as fullname, IFNULL(COUNT(DISTINCT(msg.id)), 0) as day_count
+FROM `tbl_student` as students 
+LEFT JOIN `tbl_message` as msg on (`msg`.`senderId`=`students`.`studentId` AND `msg`.`senderRole` = 4 AND DATEDIFF(CURRENT_DATE(), `msg`.`createdDate`) <= {$dateRange} )
+LEFT JOIN `tbl_message_attr` as msg_attr on (`msg`.`id`=`msg_attr`.`messageId`)
+WHERE `students`.`isDeleted` = 0
+GROUP BY `students`.`studentId`
+HAVING day_count = 0
+EOT;
 
         $queryResult = $this->db
             ->query($query);

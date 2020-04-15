@@ -50,6 +50,9 @@ class User extends BaseController
                     }
                     
                     $numberOfMessageIn7Days = $this->user_model->getLastMessagesIn7Days();
+
+                    $studentWithoutInteractionIn7Days = $this->user_model->getStudentsWithoutInteraction(7);
+                    $studentWithoutInteractionIn28Days = $this->user_model->getStudentsWithoutInteraction(28);
                     
                     $this->load->model('student_model');
                     $numberOfStudentWithoutTutor = $this->student_model->getStudentWithoutTutor();
@@ -58,6 +61,8 @@ class User extends BaseController
                     $viewData['numberOfMessageIn7Days'] = $numberOfMessageIn7Days;
                     $viewData['numberOfStudentWithoutTutor'] = $numberOfStudentWithoutTutor;
                     $viewData['averageMessagesSentByTutor'] = $averageMessagesSentByTutor;
+                    $viewData['studentWithoutInteractionIn7Days'] = count($studentWithoutInteractionIn7Days);
+                    $viewData['studentWithoutInteractionIn28Days'] = count($studentWithoutInteractionIn28Days);
 
                     $this->loadViews("dashboardChiefStaff", $this->global, $viewData, NULL);
                     break;
