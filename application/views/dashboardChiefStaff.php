@@ -18,7 +18,6 @@
       </h1>
     </section>
     
-    <?php if ($role == AUTHORISED_STAFF) { ?>
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -27,44 +26,26 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
-
-              <p>New Orders</p>
+              <h3><?= $numberOfMessageIn7Days; ?></h3>
+              <p>Number of messages in last 7 days</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-chatbubbles"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
           </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Bounce Rate</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+        </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
-
-              <p>User Registrations</p>
+              <h3><?= $numberOfStudentWithoutTutor; ?></h3>
+              <p>Student without personal tutor</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-android-people"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <!-- <a href="<?php //echo base_url(); ?>userListing" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
           </div>
         </div>
         <!-- ./col -->
@@ -73,16 +54,18 @@
           <div class="small-box bg-red">
             <div class="inner">
               <h3>65</h3>
-
-              <p>Unique Visitors</p>
+              <p>
+                Students with no interaction for 7 days and 28 days
+                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="" data-original-title="Date range">
+              <i class="fa fa-calendar"></i></button>
+              </p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-sad"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
           </div>
-        </div>
-        <!-- ./col -->
+        </div><!-- ./col -->
       </div>
       <!-- /.row -->
       <!-- Main row -->
@@ -96,16 +79,9 @@
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
 
-              <h3 class="box-title">Average Message Number of Tutor</h3>
+              <h3 class="box-title">Average Message Number Per Tutor</h3>
 
               <div class="box-tools pull-right">
-                <!-- <ul class="pagination pagination-sm inline">
-                  <li><a href="#">&laquo;</a></li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">&raquo;</a></li>
-                </ul> -->
               </div>
             </div>
             <!-- /.box-header -->
@@ -113,17 +89,22 @@
               <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
               <ul class="todo-list" id="todo-list">
                 <?php foreach($averageMessagesSentByTutor as $key => $tutorMessage) {?>
-                <li style="height: 60px; <?= ($key > 0) ? 'display: none;' : '';?>">
+                <li style="<?= ($key > 0) ? 'display: none;' : '';?>">
+
                   <!-- drag handle -->
-                  <span class="handle">
+                  <span class="handle" style="font-weight: bold;">
                         <i class="fa fa-ellipsis-v"></i>
                         <?= 'Tutor ID: ' . $tutorMessage->tutorId;?>
                       </span>
                   <!-- todo text -->
-                  <span class="text"><?= 'Tutor Name: ' . $tutorMessage->fullname;?></span>
-                  <!-- Emphasis label -->
-                  <small class="label label-info" style="font-size: 13px; float:right;"> sent <?= round($tutorMessage->avg_message_count_sent_by_tutor, 2);?> messages</small> <br/>
-                  <small class="label label-info" style="font-size: 13px; float:right;">received <?= round($tutorMessage->avg_message_count_sent_to_tutor, 2);?> messages</small>
+                  <br/>
+
+                  <span class="text">
+                    <?= 'Tutor Name: ' . $tutorMessage->fullname;?>
+                  </span>
+                                    <!-- Emphasis label -->
+                  <small class="label label-info" style="font-size: 13px; float:right; margin-top: -20px;"> Sent <font color="red" size="3"><?= round($tutorMessage->avg_message_count_sent_by_tutor, 2);?></font> messages</small> <br/>
+                  <small class="label label-info" style="font-size: 13px; float:right; margin-top: -20px;">Received <font color="red" size="3"><?= round($tutorMessage->avg_message_count_sent_to_tutor, 2);?></font> messages</small>
                 </li>
                 <?php } ?>
               </ul>
@@ -138,7 +119,6 @@
 
     </section>
     <!-- /.content -->
-    <?php } ?>
     <style type="text/css">
       .small-box .inner p {
         max-width: 140px;
@@ -166,7 +146,7 @@
     <script type="text/javascript">
       var number_of_pages = 0;
       $(document).ready(function() {
-          var show_per_page = 1;
+          var show_per_page = 3;
           var number_of_items = $('#todo-list').children('li').length;
           number_of_pages = Math.ceil(number_of_items / show_per_page);
 
@@ -238,5 +218,25 @@
           }
 
       }
+    </script>
+    <script type="text/javascript">
+      $('.daterange').daterangepicker({
+        ranges   : {
+          'Last 7 Days' : [moment().subtract(7, 'days'), moment()],
+          'Last 28 Days': [moment().subtract(28, 'days'), moment()]
+        },
+        startDate: moment().subtract(7, 'days'),
+        endDate  : moment(),
+        showCustomRangeLabel: false,
+        autoApply: true
+      }, function (start, end) {
+        if (start.format('D') == moment().subtract(7, 'days').format('D')) {
+          window.alert('You chose: 7 days');
+        }
+        if (start.format('D') == moment().subtract(28, 'days').format('D')) {
+          window.alert('You chose: 28 days');
+        }
+        // window.alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      });
     </script>
 </div>

@@ -87,9 +87,11 @@
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-bell-o"></i>
+                            <?php if (isset($notifficationLogs) && $notifficationLogs &&count($notifficationLogs) > 0) {?>
                             <span class="label label-warning">
                                 <?= (isset($notifficationLogs) && $notifficationLogs && count($notifficationLogs) > 0) ? count($notifficationLogs) : "" ?>
                             </span>
+                            <?php } ?>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
