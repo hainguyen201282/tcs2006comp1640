@@ -41,8 +41,11 @@ class User extends BaseController
         if (isset($this->role)) {
             switch ($this->role) {
                 case AUTHORISED_STAFF:
-
+                case STAFF:
                     $this->roleText = "AUTHORISED STAFF";
+                    if ($this->role == STAFF) {
+                        $this->roleText = "STAFF";
+                    }
                     $averageMessagesSentByTutor = $this->user_model->getAverageNumberMessageSentByTutor(null, null);
                     $averageMessagesSentToTutor = $this->user_model->getAverageNumberMessageSentToTutor(null, null);
                     foreach ($averageMessagesSentByTutor as $key => &$tutorMessageInfo) {
@@ -67,14 +70,18 @@ class User extends BaseController
                     $this->loadViews("dashboardChiefStaff", $this->global, $viewData, NULL);
                     break;
 
-                case STAFF:
-                    $this->roleText = "STAFF";
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
-                    break;
-
                 case TUTOR:
                     $this->roleText = "TUTOR";
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
+                    $numberMessageStudentSentToTutor = $this->user_model->getNumberMessageStudentSentToTutor($this->vendorId);
+                    $numberMessageStudentReceivedFromTutor = $this->user_model->getNumberMessageStudentReceivedFromTutor($this->vendorId);
+
+                    foreach ($numberMessageStudentSentToTutor as $key => &$studentMessageInfo) {
+                        $studentMessageInfo->received_msg_count = $numberMessageStudentReceivedFromTutor[$key]->received_msg_count;
+                    }
+
+                    $viewData['numberMessageStudentSentToTutor'] = $numberMessageStudentSentToTutor;
+
+                    $this->loadViews("dashboardTutor", $this->global, $viewData, NULL);
                     break;
 
                 case STUDENT:

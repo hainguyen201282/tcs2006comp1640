@@ -390,6 +390,41 @@ EOT;
         return $queryResult->result();
     }
 
+    function getNumberMessageStudentSentToTutor($tutorId = 1){
+                $query = <<<EOT
+SELECT `student`.`studentId`, `student`.`name` as fullname, IFNULL(COUNT(DISTINCT(msg.id)), 0) as sent_msg_count FROM 
+`tbl_student` as student
+LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3)
+LEFT JOIN `tbl_message` as msg ON (`student`.`studentId` = `msg`.`senderId` AND `msg`.`senderRole` = 4)
+LEFT JOIN `tbl_message_attr` as msg_attr ON (`msg_attr`.`receiverId` = {$tutorId} AND `msg_attr`.`receiverRole` = 3 AND `msg_attr`.`messageId` = `msg`.`id`)
+WHERE `student`.`isDeleted` = 0 AND `user`.`userId` = {$tutorId}
+GROUP BY `student`.`studentId`
+ORDER BY `student`.`name` ASC
+EOT;
+
+        $queryResult = $this->db
+            ->query($query);
+            
+        return $queryResult->result();
+    }
+
+    function getNumberMessageStudentReceivedFromTutor($tutorId = 1){
+                $query = <<<EOT
+SELECT `student`.`studentId`, `student`.`name` as fullname , IFNULL(COUNT(DISTINCT(`msg`.`id`)), 0) as received_msg_count 
+FROM `tbl_student` as student 
+LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3) 
+LEFT JOIN `tbl_message_attr` as msg_attr ON (`msg_attr`.`receiverId` = `student`.`studentId` AND `msg_attr`.`receiverRole` = 4) 
+LEFT JOIN `tbl_message` as msg ON (`msg`.`senderId` = {$tutorId} AND `msg`.`senderRole` = 3  AND `msg_attr`.`messageId` = `msg`.`id`) 
+WHERE `student`.`isDeleted` = 0 AND `user`.`userId` = {$tutorId}
+GROUP BY `student`.`studentId`
+ORDER BY `student`.`name` ASC
+EOT;
+        $queryResult = $this->db
+            ->query($query);
+            
+        return $queryResult->result();
+    }
+
     function getTutorList()
     {
         $this->db->select('UserTbl.*, RoleTbl.role');
