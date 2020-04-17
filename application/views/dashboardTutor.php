@@ -39,7 +39,7 @@
                 <?php foreach($numberMessageStudentSentToTutor as $key => $studentMessage) {?>
                 <li style="<?= ($key > 0) ? 'display: none;' : '';?>">
 
-                  <img src="https://adminlte.io/themes/AdminLTE/dist/img/user7-128x128.jpg" alt="Student Image"> 
+                  <img src="<?= base_url() . 'uploads/user_avatar/' . ($studentMessage->imgAvatar ? $studentMessage->imgAvatar : 'avatar.png');?>" alt="Student Image"> imgAvatar
                   <!-- drag handle -->
                   <div>
                     <span class="handle" style="font-weight: bold;">

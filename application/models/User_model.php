@@ -392,7 +392,7 @@ EOT;
 
     function getNumberMessageStudentSentToTutor($tutorId = 1){
                 $query = <<<EOT
-SELECT `student`.`studentId`, `student`.`name` as fullname, IFNULL(COUNT(DISTINCT(msg.id)), 0) as sent_msg_count FROM 
+SELECT `student`.`studentId`, `student`.`name` as fullname, `student`.`imgAvatar`, IFNULL(COUNT(DISTINCT(msg.id)), 0) as sent_msg_count FROM 
 `tbl_student` as student
 LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3)
 LEFT JOIN `tbl_message` as msg ON (`student`.`studentId` = `msg`.`senderId` AND `msg`.`senderRole` = 4)
@@ -410,7 +410,7 @@ EOT;
 
     function getNumberMessageStudentReceivedFromTutor($tutorId = 1){
                 $query = <<<EOT
-SELECT `student`.`studentId`, `student`.`name` as fullname , IFNULL(COUNT(DISTINCT(`msg`.`id`)), 0) as received_msg_count 
+SELECT `student`.`studentId`, `student`.`name` as fullname , `student`.`imgAvatar`, IFNULL(COUNT(DISTINCT(`msg`.`id`)), 0) as received_msg_count 
 FROM `tbl_student` as student 
 LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3) 
 LEFT JOIN `tbl_message_attr` as msg_attr ON (`msg_attr`.`receiverId` = `student`.`studentId` AND `msg_attr`.`receiverRole` = 4) 
