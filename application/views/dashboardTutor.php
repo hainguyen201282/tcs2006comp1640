@@ -39,7 +39,7 @@
                 <?php foreach($numberMessageStudentSentToTutor as $key => $studentMessage) {?>
                 <li style="<?= ($key > 0) ? 'display: none;' : '';?>">
 
-                  <img src="<?= base_url() . 'uploads/user_avatar/' . ($studentMessage->imgAvatar ? $studentMessage->imgAvatar : 'avatar.png');?>" alt="Student Image"> imgAvatar
+                  <img src="<?= base_url() . 'uploads/user_avatar/' . ($studentMessage->imgAvatar ? $studentMessage->imgAvatar : 'avatar.png');?>" alt="Student Image">
                   <!-- drag handle -->
                   <div>
                     <span class="handle" style="font-weight: bold;">
