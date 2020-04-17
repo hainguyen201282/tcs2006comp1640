@@ -315,5 +315,36 @@ class Student_model extends CI_Model
         // echo "<PRE>" . print_r($this->db->last_query(), true) . "</PRE>";
         return $query->num_rows();
     }
+
+    function getMessagesYouReceivedFromTutor($studentId = 1){
+                $query = <<<EOT
+SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, 0 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
+`tbl_student` as student
+LEFT JOIN `tbl_users` as user ON (`user`.`userId` = `student`.`tutorId` AND `user`.`roleId` = 3)
+LEFT JOIN `tbl_message_attr` as msg_attr ON (`student`.`studentId` = `msg_attr`.`receiverId` AND `msg_attr`.`receiverRole` = 4)
+LEFT JOIN `tbl_message` as msg ON (`msg`.`id` = `msg_attr`.`messageId` AND `msg`.`senderId` = `user`.`userId` AND `msg`.`senderRole` = 3)
+WHERE `student`.`isDeleted` = 0 AND `student`.`studentId` = {$studentId}
+ORDER BY `msg`.`createdDate` ASC
+EOT;
+        $queryResult = $this->db
+            ->query($query);
+            
+        return $queryResult->result();
+    }
+
+    function getMessagesYouSentToTutor($studentId = 1){
+                $query = <<<EOT
+SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, 1 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
+`tbl_student` as student
+LEFT JOIN `tbl_users` as user ON (`user`.`userId` = `student`.`tutorId` AND `user`.`roleId` = 3)
+LEFT JOIN `tbl_message` as msg ON (`student`.`studentId` = `msg`.`senderId` AND `msg`.`senderRole` = 4)
+WHERE `student`.`isDeleted` = 0 AND  `student`.`studentId` = {$studentId}
+ORDER BY `msg`.`createdDate` ASC
+EOT;
+        $queryResult = $this->db
+            ->query($query);
+            
+        return $queryResult->result();
+    }
 }
 

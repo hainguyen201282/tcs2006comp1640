@@ -86,10 +86,22 @@ class User extends BaseController
 
                 case STUDENT:
                     $this->roleText = "STUDENT";
-                    $this->loadViews("dashboard2", $this->global, $viewData, NULL);
+
+                    $this->load->model('student_model');
+                    $getMessagesYouReceivedFromTutor = $this->student_model->getMessagesYouReceivedFromTutor($this->vendorId);
+                    $getMessagesYouSentToTutor = $this->student_model->getMessagesYouSentToTutor($this->vendorId);
+
+                    // echo "<PRE>" . print_r($getMessagesYouSentToTutor, true) . "</PRE>";
+                    // echo "<PRE>" . print_r($getMessagesYouReceivedFromTutor, true) . "</PRE>";
+                    $studentTutorMessages = array_merge($getMessagesYouReceivedFromTutor, $getMessagesYouSentToTutor);
+
+                    usort($studentTutorMessages, function($a, $b) {return strcmp($a->createdDate, $b->createdDate);});
+                    $viewData['studentTutorMessages'] = $studentTutorMessages;
+                    // echo "<PRE>" . print_r($studentTutorMessages, true) . "</PRE>";
+                    // exit;
+
+                    $this->loadViews("dashboardStudent", $this->global, $viewData, NULL);
                     break;
-                default:
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
             }
         }
 
