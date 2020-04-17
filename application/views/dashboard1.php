@@ -17,8 +17,7 @@
         <small>Control panel</small>
       </h1>
     </section>
-    
-    <?php if ($role == AUTHORISED_STAFF) { ?>
+ 
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -523,7 +522,6 @@
 
     </section>
     <!-- /.content -->
-    <?php } ?>
     <style type="text/css">
       .small-box .inner p {
         max-width: 140px;

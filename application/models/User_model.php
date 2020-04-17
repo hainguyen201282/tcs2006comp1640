@@ -324,20 +324,106 @@ class User_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    function getAverageNumberMessageSentByPerTutor()
+    function getAverageNumberMessageSentByTutor($limit = null, $offset = null)
     {
         $query = <<<EOT
 SELECT * FROM (
-    SELECT AVG(count_group_by_day.day_count) avg_day_count, count_group_by_day.senderId, count_group_by_day.fullname FROM (
-        SELECT COUNT(DISTINCT(msg.id)) as day_count, DAY(createdDate) as day_group, senderId, `users`.`name` as fullname FROM `tbl_message` as msg 
-        LEFT JOIN `tbl_message_attr` as msg_attr on (`msg`.`id`=`msg_attr`.`messageId`)
-        LEFT JOIN `tbl_users` as users on (`msg`.`senderId`=`users`.`userId`)
-        WHERE senderRole = 3 AND receiverRole = 4 AND DAY(createdDate) > 0
-        GROUP BY senderId, DAY(createdDate)
+    SELECT count_group_by_day.tutorId, count_group_by_day.fullname, AVG(count_group_by_day.day_count) avg_message_count_sent_by_tutor FROM (
+            SELECT `users`.`userId` as tutorId, `users`.`name` as fullname, DAY(`msg`.`createdDate`) as day_group, IFNULL(COUNT(DISTINCT(msg.id)), 0) as day_count
+            FROM `tbl_users` as users 
+            LEFT JOIN `tbl_message` as msg on (`msg`.`senderId`=`users`.`userId` AND `msg`.`senderRole` = 3)
+            LEFT JOIN `tbl_message_attr` as msg_attr on (`msg`.`id`=`msg_attr`.`messageId`)
+            WHERE `users`.`isDeleted` = 0 AND `users`.`roleId` = 3 AND ((`msg`.`id` IS NOT NULL AND DAY(`msg`.`createdDate`) > 0) OR (`msg`.`id` IS NULL))
+            GROUP BY `users`.`userId`, DAY(`msg`.`createdDate`)
     ) AS count_group_by_day
-    GROUP BY count_group_by_day.senderId
-    ) as list_avg_message_by_tutor
+    GROUP BY count_group_by_day.tutorId
+) as list_avg_message_by_tutor
 ORDER BY list_avg_message_by_tutor.fullname ASC
+EOT;
+        if ($limit) {
+            $query .= " LIMIT $offset, $limit";
+        }
+
+        $queryResult = $this->db
+            ->query($query);
+
+        return $queryResult->result();
+    }
+
+    function getAverageNumberMessageSentToTutor($limit = null, $offset = null)
+    {
+        $query = <<<EOT
+SELECT * FROM (
+    SELECT count_group_by_day.tutorId, count_group_by_day.fullname, AVG(count_group_by_day.day_count) avg_message_count_sent_to_tutor FROM (
+            SELECT `users`.`userId` as tutorId, `users`.`name` as fullname, DAY(`msg`.`createdDate`) as day_group, IFNULL(COUNT(DISTINCT(msg.id)), 0) as day_count
+            FROM `tbl_users` as users 
+            LEFT JOIN `tbl_message_attr` as msg_attr on (`msg_attr`.`receiverId`=`users`.`userId`)
+            LEFT JOIN `tbl_message` as msg on (`msg`.`id`=`msg_attr`.`messageId` AND `msg_attr`.`receiverRole` = 3)
+            WHERE `users`.`isDeleted` = 0 AND `users`.`roleId` = 3 AND ((`msg`.`id` IS NOT NULL AND DAY(`msg`.`createdDate`) > 0) OR (`msg`.`id` IS NULL))
+            GROUP BY `users`.`userId`, DAY(`msg`.`createdDate`)
+    ) AS count_group_by_day
+    GROUP BY count_group_by_day.tutorId
+) as list_avg_message_by_tutor
+ORDER BY list_avg_message_by_tutor.fullname ASC
+EOT;
+        if ($limit) {
+            $query .= " LIMIT $offset, $limit";
+        }
+
+        $queryResult = $this->db
+            ->query($query);
+
+        return $queryResult->result();
+    }
+
+    function getStudentsWithoutInteraction($dateRange = 1)
+    {
+        $query = <<<EOT
+SELECT `students`.`studentId` as studentId, `students`.`name` as fullname, IFNULL(COUNT(DISTINCT(msg.id)), 0) as day_count
+FROM `tbl_student` as students 
+LEFT JOIN `tbl_message` as msg on (`msg`.`senderId`=`students`.`studentId` AND `msg`.`senderRole` = 4 AND DATEDIFF(CURRENT_DATE(), `msg`.`createdDate`) <= {$dateRange} )
+LEFT JOIN `tbl_message_attr` as msg_attr on (`msg`.`id`=`msg_attr`.`messageId`)
+WHERE `students`.`isDeleted` = 0
+GROUP BY `students`.`studentId`
+HAVING day_count = 0
+EOT;
+
+        $queryResult = $this->db
+            ->query($query);
+
+        return $queryResult->result();
+    }
+
+    function getNumberMessageStudentSentToTutor($tutorId = 1)
+    {
+        $query = <<<EOT
+SELECT `student`.`studentId`, `student`.`name` as fullname, IFNULL(COUNT(DISTINCT(msg.id)), 0) as sent_msg_count FROM 
+`tbl_student` as student
+LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3)
+LEFT JOIN `tbl_message` as msg ON (`student`.`studentId` = `msg`.`senderId` AND `msg`.`senderRole` = 4)
+LEFT JOIN `tbl_message_attr` as msg_attr ON (`msg_attr`.`receiverId` = {$tutorId} AND `msg_attr`.`receiverRole` = 3 AND `msg_attr`.`messageId` = `msg`.`id`)
+WHERE `student`.`isDeleted` = 0 AND `user`.`userId` = {$tutorId}
+GROUP BY `student`.`studentId`
+ORDER BY `student`.`name` ASC
+EOT;
+
+        $queryResult = $this->db
+            ->query($query);
+
+        return $queryResult->result();
+    }
+
+    function getNumberMessageStudentReceivedFromTutor($tutorId = 1)
+    {
+        $query = <<<EOT
+SELECT `student`.`studentId`, `student`.`name` as fullname , IFNULL(COUNT(DISTINCT(`msg`.`id`)), 0) as received_msg_count 
+FROM `tbl_student` as student 
+LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3)
+LEFT JOIN `tbl_message_attr` as msg_attr ON (`msg_attr`.`receiverId` = `student`.`studentId` AND `msg_attr`.`receiverRole` = 4) 
+LEFT JOIN `tbl_message` as msg ON (`msg`.`senderId` = {$tutorId} AND `msg`.`senderRole` = 3  AND `msg_attr`.`messageId` = `msg`.`id`)
+WHERE `student`.`isDeleted` = 0 AND `user`.`userId` = {$tutorId}
+GROUP BY `student`.`studentId`
+ORDER BY `student`.`name` ASC
 EOT;
         $queryResult = $this->db
             ->query($query);
@@ -347,9 +433,9 @@ EOT;
 
     function getTutorUserByName($name)
     {
-        $this->db->select('UserTbl.userId, 
-            UserTbl.email, 
-            UserTbl.name, 
+        $this->db->select('UserTbl.userId,
+            UserTbl.email,
+            UserTbl.name,
             UserTbl.roleId'
         );
         $this->db->from('tbl_users as UserTbl');
@@ -360,5 +446,17 @@ EOT;
 
         return $this->db->get()->result();
     }
-}
 
+    function getTutorList()
+    {
+        $this->db->select('UserTbl.*, RoleTbl.role');
+        $this->db->from('tbl_users as UserTbl');
+        $this->db->join('tbl_roles as RoleTbl', 'UserTbl.roleId = RoleTbl.roleId', 'left');
+        $this->db->where('UserTbl.isDeleted = 0 AND RoleTbl.roleId = ' . TUTOR);
+        $this->db->order_by('UserTbl.fullname', 'ASC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+}

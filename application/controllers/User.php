@@ -41,24 +41,47 @@ class User extends BaseController
         if (isset($this->role)) {
             switch ($this->role) {
                 case AUTHORISED_STAFF:
+                case STAFF:
                     $this->roleText = "AUTHORISED STAFF";
+                    if ($this->role == STAFF) {
+                        $this->roleText = "STAFF";
+                    }
+                    $averageMessagesSentByTutor = $this->user_model->getAverageNumberMessageSentByTutor(null, null);
+                    $averageMessagesSentToTutor = $this->user_model->getAverageNumberMessageSentToTutor(null, null);
+                    foreach ($averageMessagesSentByTutor as $key => &$tutorMessageInfo) {
+                        $tutorMessageInfo->avg_message_count_sent_to_tutor = $averageMessagesSentToTutor[$key]->avg_message_count_sent_to_tutor;
+                    }
+                    
                     $numberOfMessageIn7Days = $this->user_model->getLastMessagesIn7Days();
-                    $averageMessagesSentByTutor = $this->user_model->getAverageNumberMessageSentByPerTutor();
+
+                    $studentWithoutInteractionIn7Days = $this->user_model->getStudentsWithoutInteraction(7);
+                    $studentWithoutInteractionIn28Days = $this->user_model->getStudentsWithoutInteraction(28);
+                    
                     $this->load->model('student_model');
                     $numberOfStudentWithoutTutor = $this->student_model->getStudentWithoutTutor();
+
+
                     $viewData['numberOfMessageIn7Days'] = $numberOfMessageIn7Days;
                     $viewData['numberOfStudentWithoutTutor'] = $numberOfStudentWithoutTutor;
-                    $this->loadViews("dashboardChiefStaff", $this->global, $viewData, NULL);
-                    break;
+                    $viewData['averageMessagesSentByTutor'] = $averageMessagesSentByTutor;
+                    $viewData['studentWithoutInteractionIn7Days'] = count($studentWithoutInteractionIn7Days);
+                    $viewData['studentWithoutInteractionIn28Days'] = count($studentWithoutInteractionIn28Days);
 
-                case STAFF:
-                    $this->roleText = "STAFF";
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
+                    $this->loadViews("dashboardChiefStaff", $this->global, $viewData, NULL);
                     break;
 
                 case TUTOR:
                     $this->roleText = "TUTOR";
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
+                    $numberMessageStudentSentToTutor = $this->user_model->getNumberMessageStudentSentToTutor($this->vendorId);
+                    $numberMessageStudentReceivedFromTutor = $this->user_model->getNumberMessageStudentReceivedFromTutor($this->vendorId);
+
+                    foreach ($numberMessageStudentSentToTutor as $key => &$studentMessageInfo) {
+                        $studentMessageInfo->received_msg_count = $numberMessageStudentReceivedFromTutor[$key]->received_msg_count;
+                    }
+
+                    $viewData['numberMessageStudentSentToTutor'] = $numberMessageStudentSentToTutor;
+
+                    $this->loadViews("dashboardTutor", $this->global, $viewData, NULL);
                     break;
 
                 case STUDENT:
