@@ -1,12 +1,12 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Conference_model extends CI_Model
 {
-    function submitAddConference($conferenceInfo)
+    function addConference($conferenceInfo)
     {
         $this->db->trans_start();
-        $this->db->insert('tbl_conference', $conferenceInfo);
 
+        $this->db->insert('tbl_conference', $conferenceInfo);
         $insert_id = $this->db->insert_id();
 
         $this->db->trans_complete();
@@ -14,68 +14,31 @@ class Conference_model extends CI_Model
         return $insert_id;
     }
 
-    function conferenceListingCount($searchText = '')
+    function conferenceListing()
     {
-        $this->db->select('BaseTbl.id, BaseTbl.appointmentTime, BaseTbl.location, BaseTbl.topic, BaseTbl.type, BaseTbl.cstatus, BaseTbl.description, BaseTbl.createdDtm,');
-        $this->db->from('tbl_conference as BaseTbl');
-        if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.location  LIKE '%".$searchText."%'
-                        OR  BaseTbl.type LIKE '%".$searchText."%'
-                        OR  BaseTbl.description  LIKE '%".$searchText."%')";
-            $this->db->where($likeCriteria);
-        }
-        $query = $this->db->get();
+        $this->db->select('ConfTbl.id, 
+            ConfTbl.appTime, 
+            ConfTbl.location, 
+            ConfTbl.title, 
+            ConfTbl.topic, 
+            ConfTbl.type, 
+            ConfTbl.description, 
+            ConfTbl.host, 
+            ConfTbl.role, 
+            ConfTbl.status, 
+            ConfTbl.updatedDate,
+            ConfTbl.createdDate');
+        $this->db->from('tbl_conference as ConfTbl');
 
-        return $query->num_rows();
+        return $this->db->get()->result();
     }
 
-
-    function conferenceListing($searchText = '', $page, $segment)
-    {
-        $this->db->select('BaseTbl.id, BaseTbl.appointmentTime, BaseTbl.location, BaseTbl.topic, BaseTbl.type, BaseTbl.cstatus, BaseTbl.description, BaseTbl.createdDtm,');
-        $this->db->from('tbl_conference as BaseTbl');
-        if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.location  LIKE '%".$searchText."%'
-                        OR  BaseTbl.type LIKE '%".$searchText."%'
-                        OR  BaseTbl.description  LIKE '%".$searchText."%')";
-            $this->db->where($likeCriteria);
-        }
-        $this->db->order_by('BaseTbl.id', 'DESC');
-        $this->db->limit($page, $segment);
-        $query = $this->db->get();
-
-        $result = $query->result();
-        return $result;
-    }
-
-    function editConference($conferenceInfo, $id)
+    function updateConference($id, $conferenceInfo)
     {
         $this->db->where('id', $id);
         $this->db->update('tbl_conference', $conferenceInfo);
 
-        return TRUE;
-    }
-
-    function getConferenceInfo($id)
-    {
-        $this->db->select('BaseTbl.id, BaseTbl.appointmentTime, BaseTbl.location, BaseTbl.topic, BaseTbl.type, BaseTbl.cstatus, BaseTbl.description, BaseTbl.createdDtm,');
-        $this->db->from('tbl_conference as BaseTbl');
-        $this->db->where('BaseTbl.id', $id);
-        $query = $this->db->get();
-
-        return $query->row();
-    }
-
-
-
-    function getConferenceInfoById($id)
-    {
-        $this->db->select('BaseTbl.id, BaseTbl.appointmentTime, BaseTbl.location, BaseTbl.topic, BaseTbl.type, BaseTbl.cstatus, BaseTbl.description, BaseTbl.createdDtm,');
-        $this->db->from('tbl_conference as BaseTbl');
-        $this->db->where('BaseTbl.id', $id);
-        $query = $this->db->get();
-
-        return $query->row();
+        return $this->db->affected_rows();
     }
 
     function deleteConference($id, $conferenceInfo)
@@ -83,20 +46,77 @@ class Conference_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('tbl_conference', $conferenceInfo);
 
-        return TRUE;
+        return $this->db->affected_rows();
     }
 
-    //Update 19-3-2020
-
-    function getCStudent($id)
+    function getConferenceInfoById($id)
     {
-        $this->db->select('BaseTbl.conferenceId, BaseTbl.studentId, StudentTbl.name as studentName');
-        $this->db->from('tbl_conference_student as BaseTbl');
-        $this->db->join('tbl_student as StudentTbl', 'BaseTbl.studentId = StudentTbl.studentId');
-        $this->db->where('BaseTbl.conferenceId', $id);
-        $query = $this->db->get();
+        $this->db->select('ConfTbl.id, 
+            ConfTbl.appTime, 
+            ConfTbl.location, 
+            ConfTbl.title, 
+            ConfTbl.topic, 
+            ConfTbl.type, 
+            ConfTbl.description, 
+            ConfTbl.host, 
+            ConfTbl.role, 
+            ConfTbl.status, 
+            ConfTbl.updatedDate,
+            ConfTbl.createdDate');
+        $this->db->from('tbl_conference as ConfTbl');
+        $this->db->where('ConfTbl.id', $id);
 
-        return $query->row();
+        return $this->db->get()->row();
     }
-    //End of update 19-3-2020
+
+    function getAvailableTimeByDate($appDate)
+    {
+        $this->db->select('ConfTbl.id, ConfTbl.appTime');
+        $this->db->from('tbl_conference as ConfTbl');
+
+        $likeCriteria = "(ConfTbl.appTime LIKE '" . $appDate . "%')";
+        $this->db->where($likeCriteria);
+
+        return $this->db->get()->result();
+    }
+
+    function getAllAttenderByConferenceId($conferenceId)
+    {
+        $this->db->select('AttendTbl.id,
+            StudentTbl.name'
+        );
+        $this->db->from('tbl_attend as AttendTbl');
+
+        $this->db->join('tbl_student as StudentTbl', 'AttendTbl.userId = StudentTbl.studentId');
+        $this->db->where('AttendTbl.conferenceId', $conferenceId);
+
+        return $this->db->get()->result();
+    }
+
+    function addAttender($attenderInfo)
+    {
+        $this->db->select('AttendTbl.id');
+        $this->db->from('tbl_attend as AttendTbl');
+        $this->db->where('AttendTbl.userId', $attenderInfo['userId']);
+        $this->db->where('AttendTbl.conferenceId', $attenderInfo['conferenceId']);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return -1;
+        }
+
+        $this->db->trans_start();
+
+        $this->db->insert('tbl_attend', $attenderInfo);
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    function deleteAttender($attendId)
+    {
+        $this->db->where('id', $attendId);
+        $this->db->delete('tbl_attend');
+    }
 }

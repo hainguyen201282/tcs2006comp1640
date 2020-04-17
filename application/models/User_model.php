@@ -84,7 +84,8 @@ class User_model extends CI_Model
         return $insert_id;
     }
 
-    function addBatchUser($userData){
+    function addBatchUser($userData)
+    {
         if ($userData) {
             $this->db
                 ->insert_batch('tbl_users', $userData);
@@ -298,7 +299,7 @@ class User_model extends CI_Model
     {
         $now = time();
 
-        $moment7Daysago = $now - (60 * 60 * 24 * 7); 
+        $moment7Daysago = $now - (60 * 60 * 24 * 7);
         $this->db->select("*, UNIX_TIMESTAMP(str_to_date(`createdDate`, '%Y-%m-%d %H:%i:%s')) as createdDtmTimestamp");
         $this->db->from('tbl_message as BaseTbl');
         $this->db->having(" (createdDtmTimestamp >= $moment7Daysago AND createdDtmTimestamp < $now) ");
@@ -323,7 +324,8 @@ class User_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    function getAverageNumberMessageSentByPerTutor(){
+    function getAverageNumberMessageSentByPerTutor()
+    {
         $query = <<<EOT
 SELECT * FROM (
     SELECT AVG(count_group_by_day.day_count) avg_day_count, count_group_by_day.senderId, count_group_by_day.fullname FROM (
@@ -341,6 +343,22 @@ EOT;
             ->query($query);
 
         return $queryResult->result();
+    }
+
+    function getTutorUserByName($name)
+    {
+        $this->db->select('UserTbl.userId, 
+            UserTbl.email, 
+            UserTbl.name, 
+            UserTbl.roleId'
+        );
+        $this->db->from('tbl_users as UserTbl');
+        $this->db->where('UserTbl.roleId', TUTOR);
+        $this->db->where('UserTbl.isDeleted', 0);
+        $this->db->where("(UserTbl.name LIKE '%" . $name . "%')");
+        $this->db->group_by('UserTbl.name');
+
+        return $this->db->get()->result();
     }
 }
 

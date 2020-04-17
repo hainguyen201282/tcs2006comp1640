@@ -106,17 +106,16 @@ $route['sendMessage'] = ["message/sendMessage", [TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 /* CONFERENCE MANAGEMENT */
-$route['conferenceListing'] = ["conference/conferenceListing", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['conferenceListing/(:num)'] = ["conference/conferenceListing/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['addNewConference'] = ["conference/addNewConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['submitAddConference'] = ["conference/submitAddConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['deleteConference'] = ["conference/deleteConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['editConference'] = ["conference/editConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['editOldConference'] = ["conference/editOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['editOldConference/(:num)'] = ["conference/editOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['conferenceUpload'] = ["conference/upload_ckeditor", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['deleteOldConference'] = ["conference/deleteOldConference", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['deleteOldConference/(:num)'] = ["conference/deleteOldConference/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['conferenceListing'] = ["conference/conferenceListing", [TUTOR, STUDENT] ];
+$route['addNewConference'] = ["conference/addNewConference", [TUTOR] ];
+$route['getAvailableTime'] = ["conference/getAvailableTime", [TUTOR] ];
+$route['submitNewConference'] = ["conference/submitNewConference", [TUTOR] ];
+$route['editConferenceView/(:num)'] = ["conference/editConferenceView/$1", [TUTOR] ];
+$route['editConference'] = ["conference/editConference", [TUTOR] ];
+$route['searchUser'] = ["conference/searchUser", [TUTOR] ];
+$route['addAttender'] = ["conference/addAttender", [TUTOR] ];
+$route['deleteConference'] = ["conference/deleteConference", [TUTOR] ];
+$route['deleteAttender'] = ["conference/deleteAttender", [TUTOR] ];
 /* -------------------------------------------------------------------- */
 
 $route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];

@@ -6,102 +6,91 @@
             <small>Add / Edit Conference</small>
         </h1>
     </section>
-
     <section class="content">
-
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <div class="form-group" style="margin-top: 34px"></div>
+            </div>
+        </div>
         <div class="row">
             <!-- left column -->
-            <div class="col-md-8">
+            <div class="col-xs-12">
                 <!-- general form elements -->
-
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Enter Conference Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addConference" action="<?php echo base_url() ?>submitAddConference"
-                          method="post" role="form">
+                    <form role="form" id="addConference" action="<?php echo base_url() ?>submitNewConference"
+                          method="post">
                         <div class="box-body">
-                            <!--                            Update 15-03-2020-->
                             <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" />
-                                    <label for="email">Time Picker</label>
-                                    <input type="text" id="picker" class="form-control" name="appointmentTime"
-                                           value="<?php echo set_value('appointmentTime'); ?>"/>
-                                </div>
-                                <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-                                <script>
-                                    $('#picker').datetimepicker({
-                                        timepicker: true,
-                                        datepicker: true,
-                                        format: 'Y-m-d H:i',
-                                        step: 60
-                                    })
-                                </script>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="location">Location</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('location'); ?>"
-                                               id="location" name="location" maxlength="200">
+                                        <label for="app-date">Appointment Date *</label>
+                                        <input id="app-date" class="form-control" type="text" name="appDate" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="app-time">Time *</label>
+                                    <select class="form-control" id="app-time" name="appTime">
+                                        <option value="0" selected="selected">---Select Time---</option>
+                                        <option value="08:00:00">08:00</option>
+                                        <option value="10:00:00">10:00</option>
+                                        <option value="12:00:00">12:00</option>
+                                        <option value="14:00:00">14:00</option>
+                                        <option value="16:00:00">16:00</option>
+                                        <option value="18:00:00">18:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title">Title *</label>
+                                        <input id="title" class="form-control" type="text"
+                                               name="title" value="<?php echo set_value('title'); ?>"
+                                               maxlength="128" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="topic">Topic *</label>
+                                        <input id="topic" class="form-control topic" type="text"
+                                               name="topic" value="<?php echo set_value('topic'); ?>"
+                                               maxlength="128" required>
                                     </div>
                                 </div>
                             </div>
-                            <!--                        End of Update 15-03-2020-->
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="topic">Topic</label>
-                                        <input type="text" class="form-control required"
-                                               value="<?php echo set_value('topic'); ?>"
-                                               id="topic" name="topic" maxlength="50">
+                                        <label for="location">Location *</label>
+                                        <input id="location" class="form-control" type="text"
+                                               name="location" value="<?php echo set_value('location'); ?>"
+                                               maxlength="128" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="type">Type</label>
+                                        <label for="type">Type *</label>
                                         <select class="form-control" id="type" name="type">
-                                            <option value="0">Select Type</option>
-                                            <option value="Real">Real</option>
-                                            <option value="Virtual">Virtual</option>
-                                            <?php if (isset($_POST["type"])) {
-                                                echo $_POST["type"];
-                                            } ?>
+                                            <option value="<?= VIRTUAL ?>">Virtual</option>
+                                            <option value="<?= REAL ?>">Real</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="mobile">Status</label>
-                                        <select class="form-control" id="cstatus" name="cstatus">
-                                            <option value="0">Select Status</option>
-                                            <option value="Activated">Activated</option>
-                                            <option value="Deactivated">Deactivated</option>
-                                            <?php if (isset($_POST["status"])) {
-                                                echo $_POST["status"];
-                                            } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="mobile">Description</label>
-                                        <textarea class="form-control" aria-label="With textarea"
-                                                  id="description" name="description"
-                                                  maxlength="200"><?php echo set_value('description'); ?></textarea>
+                                        <label for="desc">Description</label>
+                                        <textarea id="desc" name="desc" maxlength="65000"></textarea>
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- /.box-body -->
-
+                        </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit"/>
                             <input type="reset" class="btn btn-default" value="Reset"/>
@@ -138,10 +127,68 @@
             </div>
         </div>
     </section>
-
 </div>
-<script src="<?php echo base_url(); ?>assets/js/addNewConference.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!--//Update 15-03-2020-->
 
-//End of Update 15-03-2020
+<link rel="stylesheet" type="text/css"
+      href="<?php echo base_url(); ?>assets/bootstrap-datepicker-1.9.0/css/bootstrap-datepicker.css"/>
+
+<script rel="stylesheet" type="text/javascript"
+        src="<?php echo base_url(); ?>assets/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        CKEDITOR.replace('desc', {
+            filebrowserBrowseUrl: '<?php echo
+            site_url('assets/js/ckfinder/ckfinder.html');?>',
+            filebrowserUploadUrl: '<?php echo
+            site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files');?>',
+        });
+
+
+        const appDate = $('#app-date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayBtn: true,
+            minDate: new Date(),
+        }).on('change', function () {
+            // event listen change on datepicker
+            let selDate = $(this).val();
+        });
+
+        const sleAppTime = document.getElementById('app-time');
+        sleAppTime.addEventListener('change', function () {
+            // get time from dropdown list
+            const appTime = sleAppTime.options[sleAppTime.selectedIndex].value;
+
+            // get all available time by date
+            const promise = getAvailableTime(appDate.val());
+            promise.then(data => {
+                const availableTimes = data.result;
+                availableTimes.forEach(item => {
+                    if (item === appTime) {
+                        alert("The schedule you choose already has in the system.");
+                        location.reload();
+                    }
+                });
+            });
+        });
+    });
+
+    async function getAvailableTime(appDate) {
+        let result;
+        try {
+            result = await $.ajax({
+                type: "POST",
+                url: baseURL + "getAvailableTime",
+                data: {
+                    appDate: appDate
+                },
+                dataType: "json"
+            });
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>

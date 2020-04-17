@@ -315,5 +315,21 @@ class Student_model extends CI_Model
         // echo "<PRE>" . print_r($this->db->last_query(), true) . "</PRE>";
         return $query->num_rows();
     }
+
+    function getStudentUserByName($name)
+    {
+        $this->db->select('StudentTbl.studentId as userId, 
+            StudentTbl.email, 
+            StudentTbl.name, 
+            StudentTbl.roleId'
+        );
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->where('StudentTbl.isDeleted', 0);
+        $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
+        $this->db->limit(5);
+        $this->db->group_by('StudentTbl.name');
+
+        return $this->db->get()->result();
+    }
 }
 
