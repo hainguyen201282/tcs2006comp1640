@@ -2,6 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version2X;
+
 class Message extends BaseController
 {
     /**
@@ -44,11 +47,64 @@ class Message extends BaseController
         $content = $messageEntity->content;
 
         if ($result != NULL && $result >= 0) {
+
+            $this->load->model('user_model');
+            $this->load->model('student_model');
+            $studentId = 0;
+            $tutorId = 0;
+            if ($message['senderRole'] == 4) {
+                $studentId = $message['senderId'];
+                $tutorId = $messageAttr['receiverId'];
+            } else {
+                $studentId = $messageAttr['receiverId'];
+                $tutorId = $message['senderId'];
+            }
+
+            $tutorInfo = $this->user_model->getUserInfoWithRole($tutorId);
+            $studentInfo = $this->student_model->getStudentProfile($studentId);
+
+            $logStudentInfo = array(
+                'studentId' => $studentId,
+                'notification_text' => ($message['senderRole'] == 4) ? "You've just sent message to tutor " . $tutorInfo->name : "You've just received message from tutor " . $tutorInfo->name,
+                'createdBy' => ($message['senderRole'] == 4) ? $studentId : $tutorId,
+                'createdDtm' => date('Y-m-d H:i:s')
+            );
+
+            $result = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
+
+            $logTutorInfo = array(
+                'tutorId' => $tutorId,
+                'notification_text' => ($message['senderRole'] == 4) ? "You've just received message from tutor " . $studentInfo->name : "You've just sent message to student " . $studentInfo->name,
+                'createdBy' => ($message['senderRole'] == 4) ? $tutorId : $studentId,
+                'createdDtm' => date('Y-m-d H:i:s')
+            );
+
+            $result1 = $this->student_model->submitAddTutorNotificationLog($logTutorInfo);
+
+            require APPPATH . '../vendor/autoload.php';
+
+            $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));
+
+            $client->initialize();
+            // send message to connected clients
+            $messagePayload = [
+                'eventName' => 'send_message',
+                'student_ids' => $studentId,
+                'student_name' => $studentInfo->name,
+                'tutor_id' => $tutorId,
+                'tutor_name' => $tutorInfo->name,
+                'sent_by_student' => ($message['senderRole'] == 4) ? 1 : 0
+            ];
+
+            $client->emit('send_notification', $messagePayload);
+            $client->close();
+
             // call function send message
             $emailParams = [
                 "email" => $email,
                 'content' => $content,
             ];
+
             $this->send($emailParams);
 
             // return status success or failure

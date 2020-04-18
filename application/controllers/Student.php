@@ -373,7 +373,7 @@ class Student extends BaseController
 
                 $logTutorInfo = array(
                     'tutorId' => $tutorId,
-                    'notification_text' => 'Students (' . $studentId . ') are assigned to you',
+                    'notification_text' => 'Students with IDs: ' . $studentId . ' are assigned to you',
                     'createdBy' => $this->vendorId,
                     'createdDtm' => date('Y-m-d H:i:s')
                 );
@@ -402,7 +402,7 @@ class Student extends BaseController
                     ],
                     [
                         "email" => $tutorInfo->email,
-                        'content' => 'Students (' . $studentId . ') are assigned to you',
+                        'content' => 'Students with IDs: ' . $studentId . ' are assigned to you',
                     ],
                 ];
 
