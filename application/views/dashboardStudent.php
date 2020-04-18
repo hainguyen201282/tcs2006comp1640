@@ -53,6 +53,7 @@
                       <img class="direct-chat-img" src="<?= base_url() . 'uploads/user_avatar/' . $avatar;?>" alt="message user image">
                       <!-- /.direct-chat-img -->
                       <div class="direct-chat-text">
+                        <i>Subject: <?= $studentTutorMessage->subject;?></i> <br/>
                         <?= $studentTutorMessage->content;?>
                       </div>
                       <!-- /.direct-chat-text -->

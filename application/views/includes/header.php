@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?= isset($pageTitle) ? $pageTitle : 'eTutoring'; ?></title>
+    <title><?= isset($pageTitle) ? $pageTitle : 'Academic Portal'; ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css?<?php echo time(); ?>"
@@ -72,9 +72,9 @@
         <!-- Logo -->
         <a href="<?php echo base_url(); ?>" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>CI</b>AS</span>
+            <span class="logo-mini"><b>ACA</b>P</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>CodeInsect</b>AS</span>
+            <span class="logo-lg"><b>Academic</b>Portal</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">

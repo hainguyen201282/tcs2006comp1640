@@ -71,40 +71,45 @@ class User extends BaseController
                     break;
 
                 case TUTOR:
-                    $this->roleText = "TUTOR";
-                    $numberMessageStudentSentToTutor = $this->user_model->getNumberMessageStudentSentToTutor($this->vendorId);
-                    $numberMessageStudentReceivedFromTutor = $this->user_model->getNumberMessageStudentReceivedFromTutor($this->vendorId);
-
-                    foreach ($numberMessageStudentSentToTutor as $key => &$studentMessageInfo) {
-                        $studentMessageInfo->received_msg_count = $numberMessageStudentReceivedFromTutor[$key]->received_msg_count;
-                    }
-
-                    $viewData['numberMessageStudentSentToTutor'] = $numberMessageStudentSentToTutor;
-
-                    $this->loadViews("dashboardTutor", $this->global, $viewData, NULL);
+                    $this->tutorDashboard($this->vendorId);
                     break;
 
                 case STUDENT:
-                    $this->roleText = "STUDENT";
-
-                    $this->load->model('student_model');
-                    $getMessagesYouReceivedFromTutor = $this->student_model->getMessagesYouReceivedFromTutor($this->vendorId);
-                    $getMessagesYouSentToTutor = $this->student_model->getMessagesYouSentToTutor($this->vendorId);
-
-                    // echo "<PRE>" . print_r($getMessagesYouSentToTutor, true) . "</PRE>";
-                    // echo "<PRE>" . print_r($getMessagesYouReceivedFromTutor, true) . "</PRE>";
-                    $studentTutorMessages = array_merge($getMessagesYouReceivedFromTutor, $getMessagesYouSentToTutor);
-
-                    usort($studentTutorMessages, function($a, $b) {return strcmp($a->createdDate, $b->createdDate);});
-                    $viewData['studentTutorMessages'] = $studentTutorMessages;
-                    // echo "<PRE>" . print_r($studentTutorMessages, true) . "</PRE>";
-                    // exit;
-
-                    $this->loadViews("dashboardStudent", $this->global, $viewData, NULL);
+                    $this->studentDashboard($this->vendorId);
                     break;
             }
         }
 
+    }
+
+    function tutorDashboard($tutorId){
+        $this->roleText = "TUTOR";
+        $numberMessageStudentSentToTutor = $this->user_model->getNumberMessageStudentSentToTutor($tutorId);
+        $numberMessageStudentReceivedFromTutor = $this->user_model->getNumberMessageStudentReceivedFromTutor($tutorId);
+
+        foreach ($numberMessageStudentSentToTutor as $key => &$studentMessageInfo) {
+            $studentMessageInfo->received_msg_count = $numberMessageStudentReceivedFromTutor[$key]->received_msg_count;
+        }
+
+        $viewData['numberMessageStudentSentToTutor'] = $numberMessageStudentSentToTutor;
+
+        $this->loadViews("dashboardTutor", $this->global, $viewData, NULL);
+    }
+
+    function studentDashboard($studentId){
+        
+        $this->roleText = "STUDENT";
+
+        $this->load->model('student_model');
+        $getMessagesYouReceivedFromTutor = $this->student_model->getMessagesYouReceivedFromTutor($studentId);
+        $getMessagesYouSentToTutor = $this->student_model->getMessagesYouSentToTutor($studentId);
+
+        $studentTutorMessages = array_merge($getMessagesYouReceivedFromTutor, $getMessagesYouSentToTutor);
+        usort($studentTutorMessages, function($a, $b) {return strcmp($a->createdDate, $b->createdDate);});
+
+        $viewData['studentTutorMessages'] = $studentTutorMessages;
+
+        $this->loadViews("dashboardStudent", $this->global, $viewData, NULL);
     }
 
     /**

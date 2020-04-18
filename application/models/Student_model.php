@@ -318,7 +318,7 @@ class Student_model extends CI_Model
 
     function getMessagesYouReceivedFromTutor($studentId = 1){
                 $query = <<<EOT
-SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, 0 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
+SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, `msg`.`subject`, 0 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
 `tbl_student` as student
 LEFT JOIN `tbl_users` as user ON (`user`.`userId` = `student`.`tutorId` AND `user`.`roleId` = 3)
 LEFT JOIN `tbl_message_attr` as msg_attr ON (`student`.`studentId` = `msg_attr`.`receiverId` AND `msg_attr`.`receiverRole` = 4)
@@ -334,7 +334,7 @@ EOT;
 
     function getMessagesYouSentToTutor($studentId = 1){
                 $query = <<<EOT
-SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, 1 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
+SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, `msg`.`subject`, 1 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
 `tbl_student` as student
 LEFT JOIN `tbl_users` as user ON (`user`.`userId` = `student`.`tutorId` AND `user`.`roleId` = 3)
 LEFT JOIN `tbl_message` as msg ON (`student`.`studentId` = `msg`.`senderId` AND `msg`.`senderRole` = 4)

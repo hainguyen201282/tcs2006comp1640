@@ -59,6 +59,9 @@
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
                                                 style="display:block !important;" class="text-center">
+                                            <a class="btn btn-sm btn-primary"
+                                               href="<?= base_url() . 'studentDashboard/' . $record->studentId; ?>"
+                                               title="Login history"><i class="fa fa-dashboard"></i></a>
                                             <a class="btn btn-sm btn-info"
                                                href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
                                                title="Edit">

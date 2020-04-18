@@ -72,6 +72,8 @@ $route['deleteUser'] = ["user/deleteUser", [AUTHORISED_STAFF, STAFF] ];
 $route['deleteUser'] = ["user/deleteUser", [AUTHORISED_STAFF, STAFF] ];
 $route['importUsers'] = ["user/importUsers", [AUTHORISED_STAFF, STAFF] ];
 $route['exportUsers'] = ["user/exportUsers", [AUTHORISED_STAFF, STAFF] ];
+$route['tutorDashboard/(:num)'] = ["user/tutorDashboard/$1", [AUTHORISED_STAFF, STAFF] ];
+$route['studentDashboard/(:num)'] = ["user/studentDashboard/$1", [AUTHORISED_STAFF, STAFF] ];
 /* ---THOSE API ACCEPTABLE FOR AUTHORISED_STAFF AND STAFF--- */
 
 /* PROFILE */
