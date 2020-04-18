@@ -75,7 +75,7 @@ class Message extends BaseController
             $logTutorInfo = array(
                 'tutorId' => $tutorId,
                 'notification_text' => ($message['senderRole'] == 4) ? "You've just received message from student " . $studentInfo->name : "You've just sent message to student " . $studentInfo->name,
-                'createdBy' => ($message['senderRole'] == 4) ? $tutorId : $studentId,
+                'createdBy' => ($message['senderRole'] == 4) ? $studentId : $tutorId ,
                 'createdDtm' => date('Y-m-d H:i:s')
             );
 
