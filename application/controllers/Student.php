@@ -135,14 +135,14 @@ class Student extends BaseController
             $recordArr = [];
             foreach ($excelData['values'] as $data) {
 
-                if (isset($data['A']) && $data['A'] != '' && !in_array($data['A'], $emailArr)) {
+                if (isset($data['B']) && $data['B'] != '' && !in_array($data['B'], $emailArr)) {
                     $recordArr[] = [
-                        'email' => isset($data['A']) ? $data['A'] : '',
+                        'email' => isset($data['B']) ? $data['B'] : '',
                         'password' => getHashedPassword('12345'), 
-                        'name' => isset($data['B']) ? $data['B'] : '', 
-                        'mobile' => isset($data['C']) ? $data['C'] : '', 
-                        'address' => isset($data['D']) ? $data['D'] : '', 
-                        'gender' => isset($data['E']) ? $data['E'] : '', 
+                        'name' => isset($data['C']) ? $data['C'] : '', 
+                        'mobile' => isset($data['D']) ? $data['D'] : '', 
+                        'address' => isset($data['E']) ? $data['E'] : '', 
+                        'gender' => isset($data['F']) ? $data['F'] : '', 
                         'roleId' => STUDENT, 
                         'createdBy' => $this->vendorId, 
                         'createdDtm' => date('Y-m-d H:i:s')

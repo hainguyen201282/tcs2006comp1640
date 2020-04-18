@@ -212,14 +212,33 @@ class User extends BaseController
             $recordArr = [];
             foreach ($excelData['values'] as $data) {
 
-                if (isset($data['A']) && $data['A'] != '' && !in_array($data['A'], $emailArr)) {
+                if (isset($data['B']) && $data['B'] != '' && !in_array($data['B'], $emailArr)) {
+
+                    $roleId = 3;
+                    switch ($data['F']) {
+                        case 'Authorised Staff':
+                            $roleId = 1;
+                            break;
+                        
+                        case 'Staff':
+                            $roleId = 2;
+                            break;
+                        
+                        case 'Tutor':
+                            $roleId = 3;
+                            break;
+                        
+                        case 'Student':
+                            $roleId = 4;
+                            break;
+                    }
                     $recordArr[] = [
-                        'email' => isset($data['A']) ? $data['A'] : '',
+                        'email' => isset($data['B']) ? $data['B'] : '',
                         'password' => getHashedPassword('12345'), 
-                        'name' => isset($data['B']) ? $data['B'] : '', 
-                        'mobile' => isset($data['C']) ? $data['C'] : '', 
-                        'address' => isset($data['D']) ? $data['D'] : '', 
-                        'roleId' => isset($data['E']) ? $data['E'] : '', 
+                        'name' => isset($data['C']) ? $data['C'] : '', 
+                        'mobile' => isset($data['D']) ? $data['D'] : '', 
+                        'address' => isset($data['E']) ? $data['E'] : '', 
+                        'roleId' => $roleId, 
                         'createdBy' => $this->vendorId, 
                         'createdDtm' => date('Y-m-d H:i:s')
                     ];
