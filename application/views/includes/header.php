@@ -297,6 +297,11 @@
                 ?>
             </ul>
         </section>
+        <style type="text/css">
+            .navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a, .navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a, .navbar-nav>.tasks-menu>.dropdown-menu>li .menu>li>a {
+                white-space: initial;
+            }
+        </style>
         <!-- /.sidebar -->
 
         <!-- Socket.IO -->
