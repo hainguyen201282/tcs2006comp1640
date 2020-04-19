@@ -147,9 +147,9 @@ class User extends BaseController
         $email = $this->input->post("email");
 
         if (empty($userId)) {
-            $result = $this->user_model->checkEmailExists($email);
+            $result = $this->user_model->checkEmailExistsNew($email);
         } else {
-            $result = $this->user_model->checkEmailExists($email, $userId);
+            $result = $this->user_model->checkEmailExistsNew($email, $userId);
         }
 
         if (empty($result)) {
@@ -621,9 +621,9 @@ class User extends BaseController
         $return = false;
 
         if (empty($userId)) {
-            $result = $this->user_model->checkEmailExists($email);
+            $result = $this->user_model->checkEmailExistsNew($email);
         } else {
-            $result = $this->user_model->checkEmailExists($email, $userId);
+            $result = $this->user_model->checkEmailExistsNew($email, $userId);
         }
 
         if (empty($result)) {

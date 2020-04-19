@@ -67,6 +67,30 @@ class User_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * This function is used to check whether email id is already exist or not
+     * @param {string} $email : This is email id
+     * @param {number} $userId : This is user id
+     * @return {mixed} $result : This is searched result
+     */
+    function checkEmailExistsNew($email, $userId = 0)
+    {
+        $query = <<<EOT
+SELECT * FROM (
+SELECT `tbl_student`.`studentId` as studentId, NULL as userId, `tbl_student`.`email` AS email FROM `tbl_student` UNION SELECT NULL as studentId, `tbl_users`.`userId` as userId, `tbl_users`.`email` AS email FROM `tbl_users`
+) as studentUserUnion
+WHERE `studentUserUnion`.`email` = '{$email}'
+EOT;
+        if ($userId != 0) {
+            $query .= " AND `studentUserUnion`.`userId` = '{$userId}'";
+        }
+
+        $queryResult = $this->db
+            ->query($query);
+            
+        return $queryResult->result();
+    }
+
 
     /**
      * This function is used to add new user to system

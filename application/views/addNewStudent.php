@@ -16,7 +16,7 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="addstudent" action="<?php echo base_url() ?>submitAddStudent" method="post"
+                    <form role="form" id="addUser" action="<?php echo base_url() ?>submitAddStudent" method="post"
                           role="form">
                         <div class="box-body">
                             <div class="row">
@@ -33,7 +33,7 @@
                                         <label for="name">Student Name</label>
                                         <input type="text" class="form-control required"
                                                value="<?php echo set_value('name'); ?>"
-                                               id="name" name="name" maxlength="200">
+                                               id="fname" name="name" maxlength="200">
                                     </div>
                                 </div>
                             </div>

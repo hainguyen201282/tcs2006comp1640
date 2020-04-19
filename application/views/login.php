@@ -50,7 +50,7 @@
                 <?php echo $success; ?>                    
             </div>
         <?php } ?>
-        <form action="<?php echo base_url(); ?>loginMe" method="post" onsubmit="return checkSubmitRoles(event, this);">
+        <form action="<?php echo base_url(); ?>loginMe" method="post">
           <div class="form-group has-feedback">
             <input type="email" class="form-control" placeholder="Email" name="email" required />
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -60,27 +60,12 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
-            <div class="col-xs-6">
-              <input type="hidden" id="loginRole" name="loginRole" />
-              <input type="submit" onclick="switchLoginRole('loginMe');" class="btn btn-primary btn-block btn-flat" value="Log In for Staff/Tutor" />
-              
-            </div><!-- /.col -->
-            <!-- <div class="col-xs-4">    
-              <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox"> Remember Me
-                </label>
-              </div>                       
-            </div> --><!-- /.col -->
-            <div class="col-xs-6" style="text-align: center;">
-              <input type="submit" onclick="switchLoginRole('loginStudent');" class="btn btn-primary btn-block btn-flat" value="Log In for Student" />
-
-            </div>
-            
+            <div class="col-xs-12">
+              <input type="submit" class="btn btn-primary btn-block btn-flat" value="Log In" />
           </div>
         </form>
 
-        <a style="margin-top: 10px; display: inline-block;" href="<?php echo base_url() ?>forgotPassword">Forgot Password?</a>
+        <a style="margin-top: 10px; margin-left: 15px; display: inline-block;" href="<?php echo base_url() ?>forgotPassword">Forgot Password?</a>
         
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
