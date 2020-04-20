@@ -44,6 +44,55 @@ class Login_model extends CI_Model
     }
 
     /**
+     * This function used to check the login credentials of the user
+     * @param string $email : This is email of the user
+     * @param string $password : This is encrypted password of the user
+     */
+    function loginMeNew($email, $password)
+    {
+        $query = <<<EOT
+SELECT * FROM (
+SELECT 
+`tbl_student`.`studentId` as studentId, 
+NULL as userId, 
+`tbl_student`.`password` as password,
+`tbl_student`.`name` as name,
+`tbl_student`.`imgAvatar` as imgAvatar,
+`tbl_student`.`roleId` as roleId,
+'Student' as role, 
+`tbl_student`.`email` AS email FROM `tbl_student` 
+UNION 
+SELECT 
+NULL as studentId, 
+`tbl_users`.`userId` as userId,
+`tbl_users`.`password` as password,
+`tbl_users`.`name` as name,
+`tbl_users`.`imgAvatar` as imgAvatar,
+`tbl_users`.`roleId` as roleId,
+`roles`.`role` as role, 
+`tbl_users`.`email` AS email FROM `tbl_users`
+LEFT JOIN `tbl_roles` as `roles` ON (`roles`.`roleId`= `tbl_users`.`roleId`)
+) as studentUserUnion
+WHERE `studentUserUnion`.`email` = '{$email}'
+EOT;
+
+        $queryResult = $this->db
+            ->query($query);
+
+        $user = $queryResult->row();
+
+        if (!empty($user)) {
+            if (verifyHashedPassword($password, $user->password)) {
+                return $user;
+            } else {
+                return array();
+            }
+        } else {
+            return array();
+        }
+    }
+
+    /**
      * This function used to check email exists or not
      * @param {string} $email : This is users email id
      * @return {boolean} $result : TRUE/FALSE

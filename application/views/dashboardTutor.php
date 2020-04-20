@@ -22,12 +22,12 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row"><!-- TO DO List -->
-        <section class="col-lg-7 connectedSortable">
+        <section class="col-lg-5 connectedSortable">
           <div class="box box-primary">
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
 
-              <h3 class="box-title">Number of messages sent to / received from you</h3>
+              <h3 class="box-title">Number of messages</h3>
 
               <div class="box-tools pull-right">
               </div>
@@ -39,20 +39,27 @@
                 <?php foreach($numberMessageStudentSentToTutor as $key => $studentMessage) {?>
                 <li style="<?= ($key > 0) ? 'display: none;' : '';?>">
 
+                  <img src="<?= base_url() . 'uploads/user_avatar/' . ($studentMessage->imgAvatar ? $studentMessage->imgAvatar : 'avatar.png');?>" alt="Student Image">
                   <!-- drag handle -->
-                  <span class="handle" style="font-weight: bold;">
+                  <div>
+                    <span class="handle" style="font-weight: bold;">
                         <i class="fa fa-ellipsis-v"></i>
                         <?= 'Student ID: ' . $studentMessage->studentId;?>
                       </span>
-                  <!-- todo text -->
-                  <br/>
-
-                  <span class="text">
-                    <?= 'Student Name: ' . $studentMessage->fullname;?>
-                  </span>
-                                    <!-- Emphasis label -->
-                  <small class="label label-info" style="font-size: 13px; float:right; margin-top: -20px;"> Sent <font color="red" size="3"><?= $studentMessage->sent_msg_count;?></font> messages</small> <br/>
-                  <small class="label label-info" style="font-size: 13px; float:right; margin-top: -20px;">Received <font color="red" size="3"><?= $studentMessage->received_msg_count;?></font> messages</small>
+                    <!-- todo text -->
+                    <br/>
+                    <span class="text">
+                      <?= 'Student Name: ' . $studentMessage->fullname;?>
+                    </span>
+                  </div>
+                  
+                  <div style="margin-top: -20px;">
+                    <!-- Emphasis label -->
+                    <small class="label label-info" style="font-size: 13px; float:right; margin-top: -23px;"> Sent <font color="red" size="3"><?= $studentMessage->sent_msg_count;?></font> messages</small> <br/>
+                    <small class="label label-info" style="font-size: 13px; float:right; margin-top: -23px;">Received <font color="red" size="3"><?= $studentMessage->received_msg_count;?></font> messages</small>
+                  </div>
+                  
+                                    
                 </li>
                 <?php } ?>
               </ul>
@@ -71,6 +78,18 @@
       }
       .pagination>li>a {
         cursor: pointer;
+      }
+
+      .todo-list > li img {
+        border-radius: 50%;
+        max-width: 100%;
+        height: 60px;
+      }
+      .todo-list>li .text {
+          display: inline-block;
+          margin-left: 5px;
+          font-weight: 600;
+          float: initial;
       }
     </style>
     

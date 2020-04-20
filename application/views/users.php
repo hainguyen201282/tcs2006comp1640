@@ -47,6 +47,11 @@
                                         <td><?php echo $record->role ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
+                                            <?php if ($record->role == 'Tutor') {?>
+                                            <a class="btn btn-sm btn-primary"
+                                               href="<?= base_url() . 'tutorDashboard/' . $record->userId; ?>"
+                                               title="Login history"><i class="fa fa-dashboard"></i></a>
+                                            <?php } ?>
                                             <a class="btn btn-sm btn-primary"
                                                href="<?= base_url() . 'login-history/' . $record->userId; ?>"
                                                title="Login history"><i class="fa fa-history"></i></a> |

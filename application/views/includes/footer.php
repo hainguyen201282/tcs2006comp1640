@@ -1,11 +1,11 @@
 
 
-    <footer class="main-footer">
+    <!-- <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <b>CodeInsect</b> Admin System | Version 1.5
         </div>
-        <strong>Copyright &copy; 2014-2015 <a href="<?php echo base_url(); ?>">CodeInsect</a>.</strong> All rights reserved.
-    </footer>
+        <strong>Copyright &copy; 2014-2015 <a href="<?php //echo base_url(); ?>">CodeInsect</a>.</strong> All rights reserved.
+    </footer> -->
     
     <script src="<?php echo base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>

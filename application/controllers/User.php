@@ -71,28 +71,45 @@ class User extends BaseController
                     break;
 
                 case TUTOR:
-                    $this->roleText = "TUTOR";
-                    $numberMessageStudentSentToTutor = $this->user_model->getNumberMessageStudentSentToTutor($this->vendorId);
-                    $numberMessageStudentReceivedFromTutor = $this->user_model->getNumberMessageStudentReceivedFromTutor($this->vendorId);
-
-                    foreach ($numberMessageStudentSentToTutor as $key => &$studentMessageInfo) {
-                        $studentMessageInfo->received_msg_count = $numberMessageStudentReceivedFromTutor[$key]->received_msg_count;
-                    }
-
-                    $viewData['numberMessageStudentSentToTutor'] = $numberMessageStudentSentToTutor;
-
-                    $this->loadViews("dashboardTutor", $this->global, $viewData, NULL);
+                    $this->tutorDashboard($this->vendorId);
                     break;
 
                 case STUDENT:
-                    $this->roleText = "STUDENT";
-                    $this->loadViews("dashboard2", $this->global, $viewData, NULL);
+                    $this->studentDashboard($this->vendorId);
                     break;
-                default:
-                    $this->loadViews("dashboard1", $this->global, $viewData, NULL);
             }
         }
 
+    }
+
+    function tutorDashboard($tutorId){
+        $this->roleText = "TUTOR";
+        $numberMessageStudentSentToTutor = $this->user_model->getNumberMessageStudentSentToTutor($tutorId);
+        $numberMessageStudentReceivedFromTutor = $this->user_model->getNumberMessageStudentReceivedFromTutor($tutorId);
+
+        foreach ($numberMessageStudentSentToTutor as $key => &$studentMessageInfo) {
+            $studentMessageInfo->received_msg_count = $numberMessageStudentReceivedFromTutor[$key]->received_msg_count;
+        }
+
+        $viewData['numberMessageStudentSentToTutor'] = $numberMessageStudentSentToTutor;
+
+        $this->loadViews("dashboardTutor", $this->global, $viewData, NULL);
+    }
+
+    function studentDashboard($studentId){
+        
+        $this->roleText = "STUDENT";
+
+        $this->load->model('student_model');
+        $getMessagesYouReceivedFromTutor = $this->student_model->getMessagesYouReceivedFromTutor($studentId);
+        $getMessagesYouSentToTutor = $this->student_model->getMessagesYouSentToTutor($studentId);
+
+        $studentTutorMessages = array_merge($getMessagesYouReceivedFromTutor, $getMessagesYouSentToTutor);
+        usort($studentTutorMessages, function($a, $b) {return strcmp($a->createdDate, $b->createdDate);});
+
+        $viewData['studentTutorMessages'] = $studentTutorMessages;
+
+        $this->loadViews("dashboardStudent", $this->global, $viewData, NULL);
     }
 
     /**
@@ -130,9 +147,9 @@ class User extends BaseController
         $email = $this->input->post("email");
 
         if (empty($userId)) {
-            $result = $this->user_model->checkEmailExists($email);
+            $result = $this->user_model->checkEmailExistsNew($email);
         } else {
-            $result = $this->user_model->checkEmailExists($email, $userId);
+            $result = $this->user_model->checkEmailExistsNew($email, $userId);
         }
 
         if (empty($result)) {
@@ -195,14 +212,33 @@ class User extends BaseController
             $recordArr = [];
             foreach ($excelData['values'] as $data) {
 
-                if (isset($data['A']) && $data['A'] != '' && !in_array($data['A'], $emailArr)) {
+                if (isset($data['B']) && $data['B'] != '' && !in_array($data['B'], $emailArr)) {
+
+                    $roleId = 3;
+                    switch ($data['F']) {
+                        case 'Authorised Staff':
+                            $roleId = 1;
+                            break;
+                        
+                        case 'Staff':
+                            $roleId = 2;
+                            break;
+                        
+                        case 'Tutor':
+                            $roleId = 3;
+                            break;
+                        
+                        case 'Student':
+                            $roleId = 4;
+                            break;
+                    }
                     $recordArr[] = [
-                        'email' => isset($data['A']) ? $data['A'] : '',
+                        'email' => isset($data['B']) ? $data['B'] : '',
                         'password' => getHashedPassword('12345'), 
-                        'name' => isset($data['B']) ? $data['B'] : '', 
-                        'mobile' => isset($data['C']) ? $data['C'] : '', 
-                        'address' => isset($data['D']) ? $data['D'] : '', 
-                        'roleId' => isset($data['E']) ? $data['E'] : '', 
+                        'name' => isset($data['C']) ? $data['C'] : '', 
+                        'mobile' => isset($data['D']) ? $data['D'] : '', 
+                        'address' => isset($data['E']) ? $data['E'] : '', 
+                        'roleId' => $roleId, 
                         'createdBy' => $this->vendorId, 
                         'createdDtm' => date('Y-m-d H:i:s')
                     ];
@@ -585,9 +621,9 @@ class User extends BaseController
         $return = false;
 
         if (empty($userId)) {
-            $result = $this->user_model->checkEmailExists($email);
+            $result = $this->user_model->checkEmailExistsNew($email);
         } else {
-            $result = $this->user_model->checkEmailExists($email, $userId);
+            $result = $this->user_model->checkEmailExistsNew($email, $userId);
         }
 
         if (empty($result)) {

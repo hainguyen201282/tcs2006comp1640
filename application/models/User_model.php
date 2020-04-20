@@ -67,6 +67,30 @@ class User_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * This function is used to check whether email id is already exist or not
+     * @param {string} $email : This is email id
+     * @param {number} $userId : This is user id
+     * @return {mixed} $result : This is searched result
+     */
+    function checkEmailExistsNew($email, $userId = 0)
+    {
+        $query = <<<EOT
+SELECT * FROM (
+SELECT `tbl_student`.`studentId` as studentId, NULL as userId, `tbl_student`.`email` AS email FROM `tbl_student` UNION SELECT NULL as studentId, `tbl_users`.`userId` as userId, `tbl_users`.`email` AS email FROM `tbl_users`
+) as studentUserUnion
+WHERE `studentUserUnion`.`email` = '{$email}'
+EOT;
+        if ($userId != 0) {
+            $query .= " AND `studentUserUnion`.`userId` = '{$userId}'";
+        }
+
+        $queryResult = $this->db
+            ->query($query);
+            
+        return $queryResult->result();
+    }
+
 
     /**
      * This function is used to add new user to system
@@ -394,10 +418,10 @@ EOT;
         return $queryResult->result();
     }
 
-    function getNumberMessageStudentSentToTutor($tutorId = 1)
-    {
-        $query = <<<EOT
-SELECT `student`.`studentId`, `student`.`name` as fullname, IFNULL(COUNT(DISTINCT(msg.id)), 0) as sent_msg_count FROM 
+
+    function getNumberMessageStudentSentToTutor($tutorId = 1){
+                $query = <<<EOT
+SELECT `student`.`studentId`, `student`.`name` as fullname, `student`.`imgAvatar`, IFNULL(COUNT(DISTINCT(msg.id)), 0) as sent_msg_count FROM 
 `tbl_student` as student
 LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3)
 LEFT JOIN `tbl_message` as msg ON (`student`.`studentId` = `msg`.`senderId` AND `msg`.`senderRole` = 4)
@@ -413,10 +437,11 @@ EOT;
         return $queryResult->result();
     }
 
-    function getNumberMessageStudentReceivedFromTutor($tutorId = 1)
-    {
-        $query = <<<EOT
-SELECT `student`.`studentId`, `student`.`name` as fullname , IFNULL(COUNT(DISTINCT(`msg`.`id`)), 0) as received_msg_count 
+
+    function getNumberMessageStudentReceivedFromTutor($tutorId = 1){
+                $query = <<<EOT
+SELECT `student`.`studentId`, `student`.`name` as fullname , `student`.`imgAvatar`, IFNULL(COUNT(DISTINCT(`msg`.`id`)), 0) as received_msg_count 
+
 FROM `tbl_student` as student 
 LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3)
 LEFT JOIN `tbl_message_attr` as msg_attr ON (`msg_attr`.`receiverId` = `student`.`studentId` AND `msg_attr`.`receiverRole` = 4) 

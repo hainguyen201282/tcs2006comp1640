@@ -55,27 +55,48 @@ class Login extends CI_Controller
             $email = strtolower($this->security->xss_clean($this->input->post('email')));
             $password = $this->input->post('password');
 
-            $result = $this->login_model->loginMe($email, $password);
+            $result = $this->login_model->loginMeNew($email, $password);
 
             if (!empty($result)) {
-                $lastLogin = $this->login_model->lastLoginInfo($result->userId);
 
-                $sessionArray = array('userId' => $result->userId,
-                    'imgAvatar' => $result->imgAvatar,
-                    'role' => $result->roleId,
-                    'roleText' => $result->role,
-                    'name' => $result->name,
-                    'lastLogin' => $lastLogin->createdDtm,
-                    'isLoggedIn' => TRUE
-                );
+                if ($result->userId) {
+                    $lastLogin = $this->login_model->lastLoginInfo($result->userId);
 
-                $this->session->set_userdata($sessionArray);
+                    $sessionArray = array('userId' => $result->userId,
+                        'imgAvatar' => $result->imgAvatar,
+                        'role' => $result->roleId,
+                        'roleText' => $result->role,
+                        'name' => $result->name,
+                        'lastLogin' => $lastLogin->createdDtm,
+                        'isLoggedIn' => TRUE
+                    );
 
-                unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
+                    $this->session->set_userdata($sessionArray);
 
-                $loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
+                    unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
 
-                $this->login_model->lastLogin($loginInfo);
+                    $loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
+
+                    $this->login_model->lastLogin($loginInfo);
+                } else {
+                    $this->load->model('student_model');
+                    $sessionArray = array('userId' => $result->studentId,
+                        'imgAvatar' => $result->imgAvatar,
+                        'role' => STUDENT,
+                        'roleText' => 'Student',
+                        'name' => $result->name,
+                        'lastLogin' => isset($lastLogin->createdDtm) ? $lastLogin->createdDtm : date('Y-m-d H:i:s'),
+                        'isLoggedIn' => TRUE
+                    );
+
+                    $this->session->set_userdata($sessionArray);
+
+                    unset($sessionArray['studentId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
+
+                    $loginInfo = array("userId" => $result->studentId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
+
+                    $this->student_model->lastLogin($loginInfo);
+                }
 
                 redirect('/dashboard');
             } else {

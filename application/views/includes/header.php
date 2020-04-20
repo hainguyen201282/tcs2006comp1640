@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?= isset($pageTitle) ? $pageTitle : 'eTutoring'; ?></title>
+    <title><?= isset($pageTitle) ? $pageTitle : 'Academic Portal'; ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css?<?php echo time(); ?>"
@@ -72,9 +72,9 @@
         <!-- Logo -->
         <a href="<?php echo base_url(); ?>" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>CI</b>AS</span>
+            <span class="logo-mini"><b>ACA</b>P</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>CodeInsect</b>AS</span>
+            <span class="logo-lg"><b>Academic</b>Portal</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -297,6 +297,11 @@
                 ?>
             </ul>
         </section>
+        <style type="text/css">
+            .navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a, .navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a, .navbar-nav>.tasks-menu>.dropdown-menu>li .menu>li>a {
+                white-space: initial;
+            }
+        </style>
         <!-- /.sidebar -->
 
         <!-- Socket.IO -->
@@ -338,6 +343,42 @@
                     if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>Students (' + studentIds + ') are assigned to you</a> </li>');
+
+                        let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
+                        if (notiCountElement.text() == '') {
+                            notiCountElement.text('1');
+                        } else {
+                            notiCountElement.text(parseInt(notiCountElement.text()) + 1);
+                        }
+                    }
+                }
+
+                if (eventName === "send_message") {
+                    studentId = data['student_ids'];
+                    tutorId = data['tutor_id'];
+                    tutorName = data['tutor_name'];
+                    studentName = data['student_name'];
+                    sentByStudent = data['sent_by_student'];
+
+                    if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
+
+                        notifyText = (sentByStudent) ? "You've just sent message to tutor " + tutorName : "You've just received message from tutor " + tutorName;
+                        $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
+                            .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
+
+                        let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
+                        if (notiCountElement.text() == '') {
+                            notiCountElement.text('1');
+                        } else {
+                            notiCountElement.text(parseInt(notiCountElement.text()) + 1);
+                        }
+                    }
+
+                    if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
+
+                        notifyText = (sentByStudent) ? "You've just received message from student " + studentName : "You've just sent message to student " + studentName;
+                        $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
+                            .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
 
                         let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
                         if (notiCountElement.text() == '') {

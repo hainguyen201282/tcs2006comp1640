@@ -157,7 +157,8 @@ class Student_model extends CI_Model
         return $insert_id;
     }
 
-    function addBatchStudent($studentData){
+    function addBatchStudent($studentData)
+    {
         if ($studentData) {
             $this->db
                 ->insert_batch('tbl_student', $studentData);
@@ -293,7 +294,8 @@ class Student_model extends CI_Model
         return $result;
     }
 
-    function getAllStudentByTutorId($tutorId) {
+    function getAllStudentByTutorId($tutorId)
+    {
         $this->db->select(
             'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, '
         );
@@ -306,7 +308,8 @@ class Student_model extends CI_Model
         return $result;
     }
 
-    function getStudentWithoutTutor(){
+    function getStudentWithoutTutor()
+    {
         $this->db->select("StudentTbl.*");
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId', 'left');
@@ -330,6 +333,39 @@ class Student_model extends CI_Model
         $this->db->group_by('StudentTbl.name');
 
         return $this->db->get()->result();
+    }
+
+    function getMessagesYouReceivedFromTutor($studentId = 1)
+    {
+        $query = <<<EOT
+SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, `msg`.`subject`, 0 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
+`tbl_student` as student
+LEFT JOIN `tbl_users` as user ON (`user`.`userId` = `student`.`tutorId` AND `user`.`roleId` = 3)
+LEFT JOIN `tbl_message_attr` as msg_attr ON (`student`.`studentId` = `msg_attr`.`receiverId` AND `msg_attr`.`receiverRole` = 4)
+LEFT JOIN `tbl_message` as msg ON (`msg`.`id` = `msg_attr`.`messageId` AND `msg`.`senderId` = `user`.`userId` AND `msg`.`senderRole` = 3)
+WHERE `student`.`isDeleted` = 0 AND `student`.`studentId` = {$studentId} AND `msg`.`id` IS NOT NULL
+ORDER BY `msg`.`createdDate` ASC
+EOT;
+        $queryResult = $this->db
+            ->query($query);
+
+        return $queryResult->result();
+    }
+
+    function getMessagesYouSentToTutor($studentId = 1)
+    {
+        $query = <<<EOT
+SELECT `student`.`name` as student_name, `user`.`name` as tutor_name, `msg`.`createdDate`, `msg`.`content`, `msg`.`subject`, 1 as studentSender, `student`.`imgAvatar` as studentAvatar, `user`.`imgAvatar` as tutorAvatar FROM
+`tbl_student` as student
+LEFT JOIN `tbl_users` as user ON (`user`.`userId` = `student`.`tutorId` AND `user`.`roleId` = 3)
+LEFT JOIN `tbl_message` as msg ON (`student`.`studentId` = `msg`.`senderId` AND `msg`.`senderRole` = 4)
+WHERE `student`.`isDeleted` = 0 AND  `student`.`studentId` = {$studentId} AND `msg`.`id` IS NOT NULL
+ORDER BY `msg`.`createdDate` ASC
+EOT;
+        $queryResult = $this->db
+            ->query($query);
+
+        return $queryResult->result();
     }
 }
 
