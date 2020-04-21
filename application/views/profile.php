@@ -1,9 +1,9 @@
 <?php
-$userId = isset($userInfo) ? $userInfo->userId : -1;
+$userId = isset($userInfo->userId) ? $userInfo->userId : -1;
 $name = isset($userInfo->name) ? $userInfo->name : 'N/A';
 $email = isset($userInfo->email) ? $userInfo->email : 'N/A';
 $mobile = isset($userInfo->mobile) ? $userInfo->mobile : 'N/A';
-$roleId = isset($userInfo->roleId) ? $userInfo->roleId : 'N/A';
+$roleId = ($userInfo->roleId !== null) ? $userInfo->roleId : 'N/A';
 $roleText = isset($userInfo->roleText) ? $userInfo->roleText : 'N/A';
 $address = isset($userInfo->address) ? $userInfo->address : 'N/A';
 $imgAvatar = isset($userInfo->imgAvatar) ? $userInfo->imgAvatar : 'avatar.png';
