@@ -82,6 +82,9 @@ $route['profile/(:any)'] = ["user/profile/$1", [AUTHORISED_STAFF, STAFF, TUTOR, 
 $route['profileUpdate'] = ["user/profileUpdate", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['profileUpdate/(:any)'] = ["user/profileUpdate/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['uploadAvatar/(:num)'] = ["user/uploadAvatar/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['changePassword'] = ["user/changePassword", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+$route['changePassword/(:any)'] = ["user/changePassword/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 /* STUDENT MANAGEMENT */
@@ -120,9 +123,7 @@ $route['deleteConference'] = ["conference/deleteConference", [TUTOR] ];
 $route['deleteAttender'] = ["conference/deleteAttender", [TUTOR] ];
 /* -------------------------------------------------------------------- */
 
-$route['loadChangePass'] = ["user/loadChangePass", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['changePassword'] = ["user/changePassword", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
-$route['changePassword/(:any)'] = ["user/changePassword/$1", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
+
 $route['pageNotFound'] = ["user/pageNotFound", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['checkEmailExists'] = ["user/checkEmailExists", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
 $route['login-history'] = ["user/loginHistory", [AUTHORISED_STAFF, STAFF, TUTOR, STUDENT] ];
@@ -146,6 +147,7 @@ $route['editBlog'] = ["blog/editBlog", [TUTOR, STUDENT] ];
 $route['deleteBlog'] = ["blog/deleteBlog", [TUTOR, STUDENT] ];
 $route['blogDetail/(:any)'] = ["blog/blogDetail/$1", [TUTOR, STUDENT] ];
 $route['submitComment'] = ["blog/submitComment", [TUTOR, STUDENT] ];
+$route['deleteComment'] = ["blog/deleteComment", [TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 /* End of file routes.php */

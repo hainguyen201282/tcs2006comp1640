@@ -41,18 +41,25 @@
                                         <td><?php echo $record->content ?></td>
                                         <td><?php echo $record->status ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-sm btn-primary" title="Blog Detail"
-                                               href="<?= base_url() . 'blogDetail/' . $record->id; ?>">
-                                                <i class="fa fa-eye"></i>
-                                            </a> |
-                                            <a class="btn btn-sm btn-info" title="Edit"
-                                               href="<?php echo base_url() . 'editViewBlog/' . $record->id; ?>">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-danger deleteBlog" href="#" title="Delete"
-                                               data-blogId="<?= $record->id; ?>">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                            <?php if (isset($vendorId) && $vendorId != $record->author && $record->status == PUBLISH) { ?>
+                                                <a class="btn btn-sm btn-primary" title="Blog Detail"
+                                                   href="<?php echo base_url() . 'blogDetail/' . $record->id; ?>">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            <?php } elseif($vendorId == $record->author) { ?>
+                                                <a class="btn btn-sm btn-primary" title="Blog Detail"
+                                                   href="<?php echo base_url() . 'blogDetail/' . $record->id; ?>">
+                                                    <i class="fa fa-eye"></i>
+                                                </a> |
+                                                <a class="btn btn-sm btn-info" title="Edit"
+                                                   href="<?php echo base_url() . 'editViewBlog/' . $record->id; ?>">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-danger deleteBlog" href="#" title="Delete"
+                                                   data-blogId="<?= $record->id; ?>">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            <?php } ?>
                                         </td>
                                     </tr>
                                     <?php

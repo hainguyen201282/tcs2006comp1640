@@ -49,8 +49,6 @@ class Blog_model extends CI_Model
             BlogTbl.createdDate'
         );
         $this->db->from('tbl_blog AS BlogTbl');
-//        $this->db->where('BlogTbl.status', 'PUBLISH');
-
         return $this->db->get()->result();
     }
 
@@ -68,7 +66,6 @@ class Blog_model extends CI_Model
             BlogTbl.createdDate'
         );
         $this->db->from('tbl_blog as BlogTbl');
-//        $this->db->where('BlogTbl.status', 'PUBLISH');
         $this->db->where('BlogTbl.id', $id);
 
         return $this->db->get()->row();
@@ -85,9 +82,13 @@ class Blog_model extends CI_Model
 
     function getAllCommentByBlogId($blogId)
     {
-        $this->db->select(
-            'CommentTbl.id, CommentTbl.content, CommentTbl.status, CommentTbl.userId, CommentTbl.userRole, 
-            CommentTbl.updatedDate, CommentTbl.createdDate'
+        $this->db->select('CommentTbl.id,
+            CommentTbl.content,
+            CommentTbl.status,
+            CommentTbl.userId,
+            CommentTbl.userRole, 
+            CommentTbl.updatedDate,
+            CommentTbl.createdDate'
         );
         $this->db->from('tbl_comment as CommentTbl');
         $this->db->where('CommentTbl.status', 'ACTIVATE');
@@ -117,5 +118,13 @@ class Blog_model extends CI_Model
         $this->db->trans_complete();
 
         return $insert_id;
+    }
+
+    function deleteComment($id, $commentInfo)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_comment', $commentInfo);
+
+        return $this->db->affected_rows();
     }
 }

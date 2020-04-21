@@ -246,6 +246,25 @@ class Blog extends BaseController
         }
         redirect(array('blogDetail', 'blogId' => $blogId));
     }
+
+    function deleteComment()
+    {
+        $id = $this->input->post('commentId');
+
+        $commentInfo = array(
+            'status' => DELETE,
+            'updatedDate' => date('Y-m-d H:i:s')
+        );
+
+        $this->load->model('blog_model');
+        $result = $this->blog_model->deleteComment($id, $commentInfo);
+
+        if ($result > 0) {
+            echo(json_encode(true));
+        } else {
+            echo(json_encode(false));
+        }
+    }
 }
 
 ?>

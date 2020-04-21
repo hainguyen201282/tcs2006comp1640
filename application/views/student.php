@@ -6,24 +6,35 @@
         </h1>
     </section>
     <section class="content">
-        <div <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
-                style="display:block !important;" class="row">
-            <!-- <div class="col-xs-6 text-left">
-                <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor">
-                    Allocate / Reallocate Tutor
-                </a>
-            </div> -->
-            <div class="col-xs-12 text-right">
+        <div class="row" <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>style="display:block !important;">
+            <div class="col-xs-6 text-left">
                 <div class="form-group">
-                    <form action="<?php echo base_url(); ?>importStudents" method="post" class=" text-right" enctype="multipart/form-data">
-                        <button class="btn btn-primary btn-block btn-flat" style="width: fit-content; float: right;border-radius: 3px;margin-left: 10px;margin-top: 3px;" onclick="checkSubmit(event, this);"><i class="fa fa-cloud-upload"></i> Import</button>
-                        <input type="file" id="uploadStudentExcelFile" style="display:none;" name="uploadStudentData" accept=".xls,.xlsx">
-                    </form>
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>exportStudents" style="float: right;margin-left: 10px;margin-top: 3px;"><i class="fa fa-cloud-download"></i> Export</a>
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor" style="margin-top: 3px;">
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor"
+                       style="margin-top: 3px;">
                         Allocate / Reallocate Tutor
                     </a>
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"  style="margin-left: 10px;margin-top: 3px;"><i class="fa fa-plus"></i>
+                </div>
+            </div>
+            <div class="col-xs-6 text-right">
+                <div class="form-group">
+                    <form action="<?php echo base_url(); ?>importStudents" method="post" class=" text-right"
+                          enctype="multipart/form-data">
+                        <button class="btn btn-primary btn-block btn-flat"
+                                style="width: fit-content; float: right;border-radius: 3px;margin-left: 10px;margin-top: 3px;"
+                                onclick="checkSubmit(event, this);">
+                            <i class="fa fa-cloud-upload"></i> Import
+                        </button>
+                        <input type="file" id="uploadStudentExcelFile" style="display:none;" name="uploadStudentData"
+                               accept=".xls,.xlsx">
+                    </form>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>exportStudents"
+                       style="float: right;margin-left: 10px;margin-top: 3px;">
+                        <i class="fa fa-cloud-download"></i>
+                        Export
+                    </a>
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"
+                       style="margin-left: 10px;margin-top: 3px;">
+                        <i class="fa fa-plus"></i>
                         Add New
                     </a>
                 </div>
@@ -40,7 +51,7 @@
                                 <th>Student Name</th>
                                 <th>Mobile Phone Number</th>
                                 <th>Gender</th>
-                                <th>TutorID</th>
+                                <th>Tutor Name</th>
                                 <th>Created On</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -51,40 +62,40 @@
                                 foreach ($studentRecords as $record) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $record->email ?></td>
-                                        <td><?php echo $record->name ?></td>
-                                        <td><?php echo $record->mobile ?></td>
-                                        <td><?php echo $record->gender ?></td>
-                                        <td><?php echo $record->tutorId ?></td>
+                                        <td><?= $record->email ?></td>
+                                        <td><?= $record->name ?></td>
+                                        <td><?= $record->mobile ?></td>
+                                        <td><?= $record->gender ?></td>
+                                        <td><?= $record->tutorName == '' ? 'N/A' : $record->tutorName ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
-                                        <td <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
-                                                style="display:block !important;" class="text-center">
-                                            <a class="btn btn-sm btn-primary"
-                                               href="<?= base_url() . 'studentDashboard/' . $record->studentId; ?>"
-                                               title="Login history"><i class="fa fa-dashboard"></i></a>
-                                            <a class="btn btn-sm btn-info"
-                                               href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
-                                               title="Edit">
-                                                <i class="fa fa-pencil"></i>
-                                            </a> |
-                                            <a class="btn btn-sm btn-danger deleteStudent" href="#"
-                                               data-studentId="<?php echo $record->studentId; ?>"
-                                               title="Delete">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                        <td class="text-center">
+                                            <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
+                                                <a class="btn btn-sm btn-primary"
+                                                   href="<?php echo base_url() . 'studentDashboard/' . $record->studentId; ?>"
+                                                   title="Dashboard"><i class="fa fa-dashboard"></i>
+                                                </a> |
+                                                <a class="btn btn-sm btn-info"
+                                                   href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
+                                                   title="Edit">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-danger deleteStudent" href="#"
+                                                   data-studentId="<?= $record->studentId; ?>"
+                                                   title="Delete">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            <?php elseif ($role == TUTOR): ?>
+                                                <a class="btn btn-sm btn-primary open-mes-modal" href="#mes-modal"
+                                                   data-toggle="modal"
+                                                   data-senderId="<?= $vendorId; ?>"
+                                                   data-senderRole="<?= $role; ?>"
+                                                   data-receiverId="<?= $record->studentId; ?>"
+                                                   data-receiverRole="<?= $record->roleId; ?>"
+                                                   data-email="<?= $record->email; ?>">
+                                                    <i class="fa fa-paper-plane-o"></i>
+                                                </a>
+                                            <?php endif; ?>
                                         </td>
-                                        <td <?php elseif ($role == TUTOR): ?> class="text-center">
-                                            <a class="btn btn-sm btn-primary open-mes-modal" href="#mes-modal"
-                                               data-toggle="modal"
-                                               data-senderId="<?php echo $vendorId; ?>"
-                                               data-senderRole="<?php echo $role; ?>"
-                                               data-receiverId="<?php echo $record->studentId; ?>"
-                                               data-receiverRole="<?php echo $record->roleId; ?>"
-                                               data-email="<?php echo $record->email; ?>">
-                                                <i class="fa fa-paper-plane-o"></i>
-                                            </a>
-                                        </td>
-                                        <?php endif; ?>
                                     </tr>
                                     <?php
                                 }
@@ -167,21 +178,20 @@
 
         CKEDITOR.replace('content', {
             filebrowserBrowseUrl: '<?php echo
-            site_url('assets/js/ckfinder/ckfinder.html')
-            ;?>',
+            site_url('assets/js/ckfinder/ckfinder.html');?>',
             filebrowserUploadUrl: '<?php echo
-            site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files')
-            ;?>',
+            site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files');?>',
         });
     });
-    function checkSubmit(event, thisElement){
+
+    function checkSubmit(event, thisElement) {
         event.preventDefault();
-        let nextSibling  = $(thisElement).next();
+        let nextSibling = $(thisElement).next();
         nextSibling.trigger('click');
     }
 
-    $("#uploadStudentExcelFile").change(function (){
-       let uploadForm = $(this).parent();
-       $(uploadForm).submit();
-     });
+    $("#uploadStudentExcelFile").change(function () {
+        let uploadForm = $(this).parent();
+        $(uploadForm).submit();
+    });
 </script>

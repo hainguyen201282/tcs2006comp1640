@@ -35,9 +35,8 @@ class User extends BaseController
      */
     public function index()
     {
-        $this->global['pageTitle'] = 'Dashboard';
-
         $viewData = [];
+
         if (isset($this->role)) {
             switch ($this->role) {
                 case AUTHORISED_STAFF:
@@ -51,12 +50,12 @@ class User extends BaseController
                     foreach ($averageMessagesSentByTutor as $key => &$tutorMessageInfo) {
                         $tutorMessageInfo->avg_message_count_sent_to_tutor = $averageMessagesSentToTutor[$key]->avg_message_count_sent_to_tutor;
                     }
-                    
+
                     $numberOfMessageIn7Days = $this->user_model->getLastMessagesIn7Days();
 
                     $studentWithoutInteractionIn7Days = $this->user_model->getStudentsWithoutInteraction(7);
                     $studentWithoutInteractionIn28Days = $this->user_model->getStudentsWithoutInteraction(28);
-                    
+
                     $this->load->model('student_model');
                     $numberOfStudentWithoutTutor = $this->student_model->getStudentWithoutTutor();
 
@@ -67,6 +66,7 @@ class User extends BaseController
                     $viewData['studentWithoutInteractionIn7Days'] = count($studentWithoutInteractionIn7Days);
                     $viewData['studentWithoutInteractionIn28Days'] = count($studentWithoutInteractionIn28Days);
 
+                    $this->global['pageTitle'] = 'Dashboard';
                     $this->loadViews("dashboardChiefStaff", $this->global, $viewData, NULL);
                     break;
 
@@ -82,7 +82,8 @@ class User extends BaseController
 
     }
 
-    function tutorDashboard($tutorId){
+    function tutorDashboard($tutorId)
+    {
         $this->roleText = "TUTOR";
         $numberMessageStudentSentToTutor = $this->user_model->getNumberMessageStudentSentToTutor($tutorId);
         $numberMessageStudentReceivedFromTutor = $this->user_model->getNumberMessageStudentReceivedFromTutor($tutorId);
@@ -96,8 +97,8 @@ class User extends BaseController
         $this->loadViews("dashboardTutor", $this->global, $viewData, NULL);
     }
 
-    function studentDashboard($studentId){
-        
+    function studentDashboard($studentId)
+    {
         $this->roleText = "STUDENT";
 
         $this->load->model('student_model');
@@ -105,7 +106,9 @@ class User extends BaseController
         $getMessagesYouSentToTutor = $this->student_model->getMessagesYouSentToTutor($studentId);
 
         $studentTutorMessages = array_merge($getMessagesYouReceivedFromTutor, $getMessagesYouSentToTutor);
-        usort($studentTutorMessages, function($a, $b) {return strcmp($a->createdDate, $b->createdDate);});
+        usort($studentTutorMessages, function ($a, $b) {
+            return strcmp($a->createdDate, $b->createdDate);
+        });
 
         $viewData['studentTutorMessages'] = $studentTutorMessages;
 
@@ -117,7 +120,6 @@ class User extends BaseController
      */
     function userListing()
     {
-
         $this->load->library('pagination');
 
         $data['userRecords'] = $this->user_model->getAllUsers();
@@ -159,13 +161,14 @@ class User extends BaseController
         }
     }
 
-    function importUsers(){
+    function importUsers()
+    {
         $this->load->helper('string');
         $excelConfig = [
             'upload_path' => 'uploads/tmp/excels/',
             'allowed_types' => 'xlsx|xls',
             'max_size' => 20480000,
-            'file_name' => random_string('alnum',15) . '_' . time(),
+            'file_name' => random_string('alnum', 15) . '_' . time(),
         ];
 
         $this->load->library('upload', $excelConfig);
@@ -219,36 +222,34 @@ class User extends BaseController
                         case 'Authorised Staff':
                             $roleId = 1;
                             break;
-                        
+
                         case 'Staff':
                             $roleId = 2;
                             break;
-                        
+
                         case 'Tutor':
                             $roleId = 3;
                             break;
-                        
+
                         case 'Student':
                             $roleId = 4;
                             break;
                     }
                     $recordArr[] = [
                         'email' => isset($data['B']) ? $data['B'] : '',
-                        'password' => getHashedPassword('12345'), 
-                        'name' => isset($data['C']) ? $data['C'] : '', 
-                        'mobile' => isset($data['D']) ? $data['D'] : '', 
-                        'address' => isset($data['E']) ? $data['E'] : '', 
-                        'roleId' => $roleId, 
-                        'createdBy' => $this->vendorId, 
+                        'password' => getHashedPassword('12345'),
+                        'name' => isset($data['C']) ? $data['C'] : '',
+                        'mobile' => isset($data['D']) ? $data['D'] : '',
+                        'address' => isset($data['E']) ? $data['E'] : '',
+                        'roleId' => $roleId,
+                        'createdBy' => $this->vendorId,
                         'createdDtm' => date('Y-m-d H:i:s')
                     ];
                 }
             }
-
             $this->user_model->addBatchUser($recordArr);
 
             redirect('userListing');
-
         }
     }
 
@@ -330,8 +331,15 @@ class User extends BaseController
             $mobile = $this->security->xss_clean($this->input->post('mobile'));
             $gender = $this->input->post('gender');
 
-            $userInfo = array('email' => $email, 'password' => getHashedPassword($password), 'roleId' => $roleId, 'name' => $name, 'gender' => $gender,
-                'mobile' => $mobile, 'createdBy' => $this->vendorId, 'createdDtm' => date('Y-m-d H:i:s'));
+            $userInfo = array(
+                'email' => $email,
+                'password' => getHashedPassword($password),
+                'roleId' => $roleId,
+                'name' => $name,
+                'gender' => $gender,
+                'mobile' => $mobile,
+                'createdBy' => $this->vendorId,
+                'createdDtm' => date('Y-m-d H:i:s'));
 
             $this->load->model('user_model');
             $result = $this->user_model->addNewUser($userInfo);
@@ -341,7 +349,6 @@ class User extends BaseController
             } else {
                 $this->session->set_flashdata('error', 'User creation failed');
             }
-
             redirect('userListing');
         }
     }
@@ -361,7 +368,6 @@ class User extends BaseController
         $data['userInfo'] = $this->user_model->getUserInfo($userId);
 
         $this->global['pageTitle'] = 'CodeInsect : Edit User';
-
         $this->loadViews("editOld", $this->global, $data, NULL);
     }
 
@@ -396,7 +402,14 @@ class User extends BaseController
             $userInfo = array();
 
             if (empty($password)) {
-                $userInfo = array('email' => $email, 'roleId' => $roleId, 'name' => $name, 'gender' => $gender, 'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
+                $userInfo = array(
+                    'email' => $email,
+                    'roleId' => $roleId,
+                    'name' => $name,
+                    'gender' => $gender,
+                    'mobile' => $mobile,
+                    'updatedBy' => $this->vendorId,
+                    'updatedDtm' => date('Y-m-d H:i:s'));
             } else {
                 $userInfo = array(
                     'email' => $email,
@@ -411,13 +424,11 @@ class User extends BaseController
             }
 
             $result = $this->user_model->editUser($userInfo, $userId);
-
             if ($result == true) {
                 $this->session->set_flashdata('success', 'User updated successfully');
             } else {
                 $this->session->set_flashdata('error', 'User updation failed');
             }
-
             redirect('userListing');
         }
     }
@@ -433,7 +444,6 @@ class User extends BaseController
         $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
 
         $result = $this->user_model->deleteUser($userId, $userInfo);
-
         if ($result > 0) {
             echo(json_encode(array('status' => TRUE)));
         } else {
@@ -447,7 +457,6 @@ class User extends BaseController
     function pageNotFound()
     {
         $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
-
         $this->loadViews("404", $this->global, NULL, NULL);
     }
 
@@ -478,7 +487,6 @@ class User extends BaseController
         $data['userRecords'] = $this->user_model->loginHistory($userId, $searchText, $fromDate, $toDate, $returns["page"], $returns["segment"]);
 
         $this->global['pageTitle'] = 'CodeInsect : User Login History';
-
         $this->loadViews("loginHistory", $this->global, $data, NULL);
     }
 
@@ -488,8 +496,11 @@ class User extends BaseController
      */
     function profile($active = "details")
     {
+        // get profile
         if ($this->session->userdata('role') == STUDENT) {
+
             $this->load->model('student_model');
+
             $data["userInfo"] = $this->student_model->getStudentProfile($this->vendorId);
             $data["userInfo"]->role = STUDENT;
         } else {
@@ -514,11 +525,22 @@ class User extends BaseController
                     break;
             }
         }
+
+        // get inbox
+        $this->load->library('pagination');
+
+        $messageInfo = array(
+            'id' => $this->vendorId,
+            'role' => $this->role,
+        );
+        $data["inboxRecords"] = $this->user_model->getInboxMessage($messageInfo);
+
+        $data["sentRecords"] = $this->user_model->getSendMessage($messageInfo);
+
         $data["active"] = $active;
 
         $this->global['pageTitle'] = $active == "details" ? 'CodeInsect : My Profile' : 'CodeInsect : Change Password';
         $this->loadViews("profile", $this->global, $data, NULL);
-
     }
 
     /**
@@ -540,7 +562,12 @@ class User extends BaseController
             $mobile = $this->security->xss_clean($this->input->post('mobile'));
             $email = strtolower($this->security->xss_clean($this->input->post('email')));
 
-            $userInfo = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
+            $userInfo = array(
+                'name' => $name,
+                'email' => $email,
+                'mobile' => $mobile,
+                'updatedBy' => $this->vendorId,
+                'updatedDtm' => date('Y-m-d H:i:s'));
 
             if ($this->session->userdata('role') == STUDENT) {
                 $this->load->model('student_model');
@@ -549,14 +576,12 @@ class User extends BaseController
                 $result = $this->user_model->editUser($userInfo, $this->vendorId);
             }
 
-
             if ($result == true) {
                 $this->session->set_userdata('name', $name);
                 $this->session->set_flashdata('success', 'Profile updated successfully');
             } else {
                 $this->session->set_flashdata('error', 'Profile updation failed');
             }
-
             redirect('profile/' . $active);
         }
     }
@@ -590,7 +615,9 @@ class User extends BaseController
                 $this->session->set_flashdata('nomatch', 'Your old password is not correct');
                 redirect('profile/' . $active);
             } else {
-                $usersData = array('password' => getHashedPassword($newPassword), 'updatedBy' => $this->vendorId,
+                $usersData = array(
+                    'password' => getHashedPassword($newPassword),
+                    'updatedBy' => $this->vendorId,
                     'updatedDtm' => date('Y-m-d H:i:s'));
 
                 if ($this->session->userdata('role') == STUDENT) {
@@ -604,7 +631,6 @@ class User extends BaseController
                 } else {
                     $this->session->set_flashdata('error', 'Password updation failed');
                 }
-
                 redirect('profile/' . $active);
             }
         }
@@ -618,7 +644,6 @@ class User extends BaseController
     function emailExists($email)
     {
         $userId = $this->vendorId;
-        $return = false;
 
         if (empty($userId)) {
             $result = $this->user_model->checkEmailExistsNew($email);

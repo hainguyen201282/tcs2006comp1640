@@ -272,7 +272,6 @@ class Student extends BaseController
 
     function studentListing()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Student Listing';
         $this->load->library('pagination');
 
         $data['studentRecords'] = array();
@@ -285,6 +284,7 @@ class Student extends BaseController
                 $this->student_model->getAllStudentsByTutorId($this->vendorId);
         }
 
+        $this->global['pageTitle'] = 'CodeInsect : Student Listing';
         $this->loadViews("student", $this->global, $data, NULL);
     }
 

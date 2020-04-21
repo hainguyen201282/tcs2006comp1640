@@ -249,35 +249,36 @@ class Student_model extends CI_Model
 
     function getAllStudents()
     {
-        $this->db->select(
-            'StudentTbl.*,
+        $this->db->select('StudentTbl.*,
             TutorTbl.name as tutorName, '
         );
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_users as TutorTbl', 'StudentTbl.tutorId = TutorTbl.userId', 'left');
         $this->db->where('StudentTbl.isDeleted', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');
-        $query = $this->db->get();
 
-        $result = $query->result();
-        return $result;
+        return $this->db->get()->result();
     }
 
     function getAllStudentsByTutorId($tutorId)
     {
-        $this->db->select(
-            'StudentTbl.studentId, StudentTbl.email, StudentTbl.name, StudentTbl.mobile, StudentTbl.gender, StudentTbl.createdDtm,
-            StudentTbl.tutorId, StudentTbl.roleId, TutorTbl.name as tutorName'
+        $this->db->select('StudentTbl.studentId,
+            StudentTbl.email,
+            StudentTbl.name,
+            StudentTbl.mobile,
+            StudentTbl.gender,
+            StudentTbl.createdDtm,
+            StudentTbl.tutorId,
+            StudentTbl.roleId,
+            TutorTbl.name as tutorName'
         );
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_users as TutorTbl', 'TutorTbl.userId = StudentTbl.tutorId', 'left');
         $this->db->where('TutorTbl.userId', $tutorId);
         $this->db->where('StudentTbl.isDeleted', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');
-        $query = $this->db->get();
 
-        $result = $query->result();
-        return $result;
+        return $this->db->get()->result();
     }
 
     function getAllStudentFree()
@@ -288,10 +289,8 @@ class Student_model extends CI_Model
         $this->db->from('tbl_student as StudentTbl');
         $this->db->where('StudentTbl.tutorId', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');
-        $query = $this->db->get();
 
-        $result = $query->result();
-        return $result;
+        return $this->db->get()->result();
     }
 
     function getAllStudentByTutorId($tutorId)

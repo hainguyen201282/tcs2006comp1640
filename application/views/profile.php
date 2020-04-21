@@ -12,6 +12,16 @@ $tutorEmail = isset($userInfo->tutorEmail) ? $userInfo->tutorEmail : 'N/A';
 $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
 ?>
 
+<style type="text/css">
+    tbody tr td p {
+        display: block;
+        width: 100px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+</style>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -56,7 +66,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                             </li><?php endif; ?>
                             <li class="list-group-item">
                                 <b>Upload Avatar</b>
-                                <form action="<?= base_url() . 'uploadAvatar/' . $userId; ?>" method="post" enctype="multipart/form-data">
+                                <form action="<?= base_url() . 'uploadAvatar/' . $userId; ?>" method="post"
+                                      enctype="multipart/form-data">
                                     <input type="file" name="userfile" style="margin-top: 5px"/>
                                     <br/>
                                     <input class="btn btn-primary" type="submit" value="Upload"/>
@@ -74,6 +85,14 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                         </li>
                         <li class="<?= ($active == "changepass") ? "active" : "" ?>">
                             <a href="#changepass" data-toggle="tab">Change Password</a>
+                        </li>
+                        <li class="<?= ($active == "inbox") ? "active" : "" ?>"
+                            style="display:<?= ($role == STUDENT || $role == TUTOR) ? "block" : "none" ?> !important;">
+                            <a href="#inbox" data-toggle="tab">Inbox</a>
+                        </li>
+                        <li class="<?= ($active == "sent") ? "active" : "" ?>"
+                            style="display:<?= ($role == STUDENT || $role == TUTOR) ? "block" : "none" ?> !important;">
+                            <a href="#sent" data-toggle="tab">Sent</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -173,6 +192,66 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                                     <input type="reset" class="btn btn-default" value="Reset"/>
                                 </div>
                             </form>
+                        </div>
+                        <div class="<?= ($active == "inbox") ? "active" : "" ?> tab-pane" id="inbox">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-body table-responsive">
+                                            <table id="tbl-inbox" class="table display" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Subject</th>
+                                                    <th>Content</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php if (isset($inboxRecords)) {
+                                                    foreach ($inboxRecords as $record) { ?>
+                                                        <tr>
+                                                            <td><?= $record->subject ?></td>
+                                                            <td><?= $record->content ?></td>
+                                                            <td><?php echo date("d-m-Y H:s", strtotime($record->createdDate)) ?></td>
+                                                        </tr>
+                                                    <?php }
+                                                } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="<?= ($active == "sent") ? "active" : "" ?> tab-pane" id="sent">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-body table-responsive">
+                                            <table id="tbl-sent" class="table display" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Subject</th>
+                                                    <th>Content</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php if (isset($sentRecords)) {
+                                                    foreach ($sentRecords as $record) { ?>
+                                                        <tr>
+                                                            <td><?= $record->subject ?></td>
+                                                            <td><?= $record->content ?></td>
+                                                            <td><?php echo date("d-m-Y H:s", strtotime($record->createdDate)) ?></td>
+                                                        </tr>
+                                                    <?php }
+                                                } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -279,5 +358,20 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
             filebrowserBrowseUrl: '<?php echo site_url('assets/js/ckfinder/ckfinder.html');?>',
             filebrowserUploadUrl: '<?php echo site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files');?>',
         });
+
+        $('#tbl-inbox').DataTable({
+            'info': true,
+            'searching': false,
+            'paging': true,
+            'lengthChange': false,
+        });
+
+        $('#tbl-sent').DataTable({
+            'info': true,
+            'searching': false,
+            'paging': true,
+            'lengthChange': false,
+        });
+
     });
 </script>

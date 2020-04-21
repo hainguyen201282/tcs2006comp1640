@@ -41,16 +41,16 @@
                                 foreach ($userRecords as $record)
                                 { ?>
                                     <tr>
-                                        <td><?php echo $record->name ?></td>
-                                        <td><?php echo $record->email ?></td>
-                                        <td><?php echo $record->mobile ?></td>
-                                        <td><?php echo $record->role ?></td>
+                                        <td><?= $record->name ?></td>
+                                        <td><?= $record->email ?></td>
+                                        <td><?= $record->mobile ?></td>
+                                        <td><?= $record->role ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
                                             <?php if ($record->role == 'Tutor') {?>
                                             <a class="btn btn-sm btn-primary"
                                                href="<?= base_url() . 'tutorDashboard/' . $record->userId; ?>"
-                                               title="Login history"><i class="fa fa-dashboard"></i></a>
+                                               title="Dashboard"><i class="fa fa-dashboard"></i></a>
                                             <?php } ?>
                                             <a class="btn btn-sm btn-primary"
                                                href="<?= base_url() . 'login-history/' . $record->userId; ?>"
@@ -88,7 +88,8 @@
             'paging': true,
             'lengthChange': true,
         });        
-    })
+    });
+
     function checkSubmit(event, thisElement){
     	event.preventDefault();
 	    let nextSibling  = $(thisElement).next();

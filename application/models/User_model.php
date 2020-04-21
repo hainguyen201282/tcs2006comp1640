@@ -87,7 +87,7 @@ EOT;
 
         $queryResult = $this->db
             ->query($query);
-            
+
         return $queryResult->result();
     }
 
@@ -419,8 +419,9 @@ EOT;
     }
 
 
-    function getNumberMessageStudentSentToTutor($tutorId = 1){
-                $query = <<<EOT
+    function getNumberMessageStudentSentToTutor($tutorId = 1)
+    {
+        $query = <<<EOT
 SELECT `student`.`studentId`, `student`.`name` as fullname, `student`.`imgAvatar`, IFNULL(COUNT(DISTINCT(msg.id)), 0) as sent_msg_count FROM 
 `tbl_student` as student
 LEFT JOIN `tbl_users` as user ON (`student`.`tutorId` = {$tutorId} AND `user`.`roleId` = 3)
@@ -438,8 +439,9 @@ EOT;
     }
 
 
-    function getNumberMessageStudentReceivedFromTutor($tutorId = 1){
-                $query = <<<EOT
+    function getNumberMessageStudentReceivedFromTutor($tutorId = 1)
+    {
+        $query = <<<EOT
 SELECT `student`.`studentId`, `student`.`name` as fullname , `student`.`imgAvatar`, IFNULL(COUNT(DISTINCT(`msg`.`id`)), 0) as received_msg_count 
 
 FROM `tbl_student` as student 
@@ -479,9 +481,30 @@ EOT;
         $this->db->join('tbl_roles as RoleTbl', 'UserTbl.roleId = RoleTbl.roleId', 'left');
         $this->db->where('UserTbl.isDeleted = 0 AND RoleTbl.roleId = ' . TUTOR);
         $this->db->order_by('UserTbl.fullname', 'ASC');
-        $query = $this->db->get();
 
-        $result = $query->result();
-        return $result;
+        return $this->db->get()->result();
+    }
+
+    function getInboxMessage($messageInfo)
+    {
+        $this->db->select('MessageTbl.*');
+        $this->db->from('tbl_message as MessageTbl');
+        $this->db->join('tbl_message_attr as MessageAttrTbl', 'MessageTbl.id = MessageAttrTbl.messageId', 'left');
+        $this->db->where('MessageAttrTbl.receiverId', $messageInfo['id']);
+        $this->db->where('MessageAttrTbl.receiverRole', $messageInfo['role']);
+        $this->db->order_by('MessageTbl.createdDate', 'DESC');
+
+        return $this->db->get()->result();
+    }
+
+    function getSendMessage($messageInfo)
+    {
+        $this->db->select('MessageTbl.*');
+        $this->db->from('tbl_message as MessageTbl');
+        $this->db->where('MessageTbl.senderId', $messageInfo['id']);
+        $this->db->where('MessageTbl.senderRole', $messageInfo['role']);
+        $this->db->order_by('MessageTbl.createdDate', 'DESC');
+
+        return $this->db->get()->result();
     }
 }
