@@ -1,11 +1,11 @@
 <?php
 $userId = isset($userInfo) ? $userInfo->userId : -1;
-$name = isset($userInfo) ? $userInfo->name : 'N/A';
-$email = isset($userInfo) ? $userInfo->email : 'N/A';
-$mobile = isset($userInfo) ? $userInfo->mobile : 'N/A';
-$roleId = isset($userInfo) ? $userInfo->roleId : 'N/A';
-$roleText = isset($userInfo) ? $userInfo->roleText : 'N/A';
-$address = isset($userInfo) ? $userInfo->address : 'N/A';
+$name = isset($userInfo->name) ? $userInfo->name : 'N/A';
+$email = isset($userInfo->email) ? $userInfo->email : 'N/A';
+$mobile = isset($userInfo->mobile) ? $userInfo->mobile : 'N/A';
+$roleId = isset($userInfo>roleId) ? $userInfo->roleId : 'N/A';
+$roleText = isset($userInfo->roleText) ? $userInfo->roleText : 'N/A';
+$address = isset($userInfo->address) ? $userInfo->address : 'N/A';
 $imgAvatar = isset($userInfo->imgAvatar) ? $userInfo->imgAvatar : 'avatar.png';
 $tutorId = isset($userInfo->tutorId) ? $userInfo->tutorId : -1;
 $tutorEmail = isset($userInfo->tutorEmail) ? $userInfo->tutorEmail : 'N/A';
