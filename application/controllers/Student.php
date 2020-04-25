@@ -251,7 +251,7 @@ class Student extends BaseController
                 'name' => $name,
                 'mobile' => $mobile,
                 'password' => getHashedPassword($password),
-                'roleId' => 4,
+                'roleId' => STUDENT,
                 'gender' => $gender,
                 'tutorId' => $tutorId,
                 'createdBy' => $this->vendorId,
@@ -325,7 +325,6 @@ class Student extends BaseController
             $name = ucwords(strtolower($this->security->xss_clean($this->input->post('name'))));
             $email = strtolower($this->security->xss_clean($this->input->post('email')));
             $password = $this->input->post('password');
-            $roleId = $this->input->post('role');
             $mobile = $this->security->xss_clean($this->input->post('mobile'));
             $gender = $this->input->post('gender');
             $tutorId = $this->input->post('tutor');
@@ -344,8 +343,7 @@ class Student extends BaseController
             } else {
                 $studentInfo = array(
                     'email' => $email,
-                    'password' => getHashedPassword($password),
-                    'roleId' => $roleId,
+                    'password' => getHashedPassword($password)
                     'name' => ucwords($name),
                     'mobile' => $mobile,
                     'gender' => $gender,
@@ -479,7 +477,6 @@ class Student extends BaseController
             $email = $this->input->post('email');
             $name = $this->input->post('name');
             $mobile = $this->input->post('mobile');
-            $roleId = $this->input->post('roleId');
             $gender = $this->input->post('gender');
             $tutorId = $this->input->post('tutorId');
 
@@ -487,7 +484,6 @@ class Student extends BaseController
                 'email' => $email,
                 'name' => $name,
                 'mobile' => $mobile,
-                'roleId' => $roleId,
                 'gender' => $gender,
                 'tutorId' => $tutorId,
                 'updatedBy' => $this->vendorId,
