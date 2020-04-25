@@ -147,6 +147,7 @@ $route['editBlog'] = ["blog/editBlog", [TUTOR, STUDENT] ];
 $route['deleteBlog'] = ["blog/deleteBlog", [TUTOR, STUDENT] ];
 $route['blogDetail/(:any)'] = ["blog/blogDetail/$1", [TUTOR, STUDENT] ];
 $route['submitComment'] = ["blog/submitComment", [TUTOR, STUDENT] ];
+$route['updateComment'] = ["blog/updateComment", [TUTOR, STUDENT] ];
 $route['deleteComment'] = ["blog/deleteComment", [TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 

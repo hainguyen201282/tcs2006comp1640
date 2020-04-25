@@ -64,11 +64,16 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                                             <div class="meta mb-3">
                                                 <?= date($record->createdDate); ?>
                                             </div>
-                                            <p><?= $record->content ?></p>
-                                            <p style="display:<?= (isset($vendorId) && $vendorId == $record->userId) ? "block" : "none" ?>">
+                                            <p <?php if (isset($vendorId) && $vendorId == $record->userId && $role == $record->userRole) { ?> onClick="showEditComment(this);" <?php }?>>
+                                                <?= $record->content ?>      
+                                            </p>
+                                            <?php if (isset($vendorId) && $vendorId == $record->userId && $role == $record->userRole) { ?>
+                                            <textarea name="my_comment" class="form-control" cols="10" rows="3" data-commentId="<?= $record->id; ?>" style="display: none; resize: none;" onblur="finishEditComment(this);" required><?= $record->content ?></textarea>
+                                            <p>
                                                 <a class="deleteComment" href="#"
                                                    data-commentId="<?= $record->id; ?>">Delete</a>
                                             </p>
+                                            <?php }?>
                                         </div>
                                     </li>
                                     <?php
@@ -188,4 +193,35 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
             }
         });
     });
+
+    function showEditComment(thisElement){
+        $(thisElement).next().show();
+        $(thisElement).next().focus();
+        $(thisElement).hide();
+    }
+
+    function finishEditComment(thisElement){
+        $(thisElement).prev().text($(thisElement).val());
+        $(thisElement).prev().show();
+        $(thisElement).hide();
+
+        const id = $(thisElement).attr("data-commentId");
+
+        $.ajax({
+            type: "POST",
+            url: baseURL + "updateComment",
+            data: {
+                commentId: id,
+                content: $(thisElement).val()
+            },
+            dataType: "json"
+        }).done(function (data) {
+            // console.log(data);
+            if (data) {
+                // alert("Comment successfully updated");
+            } else {
+                alert("Comment update failed");
+            }
+        });
+    }
 </script>
