@@ -29,7 +29,7 @@ $tutorName = $studentInfo->tutorName;
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" action="<?php echo base_url() ?>editStudent" method="post" id="editOldStudent">
+                    <form role="form" action="<?php echo base_url() ?>editStudent" method="post" id="editUser">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -40,7 +40,7 @@ $tutorName = $studentInfo->tutorName;
                                                id="email" name="email"
                                                placeholder="email" maxlength="128">
                                         <input type="hidden" value="<?php echo $studentId; ?>" name="studentId"
-                                               id="studentId"/>
+                                               id="userId"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -48,7 +48,7 @@ $tutorName = $studentInfo->tutorName;
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control required"
                                                value="<?php echo $name; ?>"
-                                               id="name" name="name" maxlength="200">
+                                               id="fname" name="name" maxlength="200">
                                     </div>
                                 </div>
                             </div>
@@ -162,5 +162,7 @@ $tutorName = $studentInfo->tutorName;
         </div>
     </section>
 </div>
+
+<script src="<?php echo base_url(); ?>assets/js/editUser.js" type="text/javascript"></script>
 
 

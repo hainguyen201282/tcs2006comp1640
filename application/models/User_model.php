@@ -73,21 +73,22 @@ class User_model extends CI_Model
      * @param {number} $userId : This is user id
      * @return {mixed} $result : This is searched result
      */
-    function checkEmailExistsNew($email, $userId = 0)
+    function checkEmailExistsNew($email, $userStudentId = 0)
     {
         $query = <<<EOT
 SELECT * FROM (
-SELECT `tbl_student`.`studentId` as studentId, NULL as userId, `tbl_student`.`email` AS email FROM `tbl_student` UNION SELECT NULL as studentId, `tbl_users`.`userId` as userId, `tbl_users`.`email` AS email FROM `tbl_users`
+SELECT `tbl_student`.`studentId` as studentId, NULL as userId, `tbl_student`.`email` AS email, `tbl_student`.`isDeleted` as isDeleted FROM `tbl_student` UNION SELECT NULL as studentId, `tbl_users`.`userId` as userId, `tbl_users`.`email` AS email, `tbl_users`.`isDeleted` as isDeleted FROM `tbl_users`
 ) as studentUserUnion
-WHERE `studentUserUnion`.`email` = '{$email}'
+WHERE `studentUserUnion`.`isDeleted` = 0 AND `studentUserUnion`.`email` = '{$email}'
 EOT;
-        if ($userId != 0) {
-            $query .= " AND `studentUserUnion`.`userId` != '{$userId}'";
+        if ($userStudentId != 0) {
+            $query .= " AND (`studentUserUnion`.`userId` IS NULL OR `studentUserUnion`.`userId` != {$userStudentId}) AND (`studentUserUnion`.`studentId` != {$userStudentId} OR `studentUserUnion`.`studentId` IS NULL)";
         }
 
         $queryResult = $this->db
             ->query($query);
-            
+// echo $this->db->last_query();
+// exit;
         return $queryResult->result();
     }
 
