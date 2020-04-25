@@ -82,12 +82,12 @@ SELECT `tbl_student`.`studentId` as studentId, NULL as userId, `tbl_student`.`em
 WHERE `studentUserUnion`.`email` = '{$email}'
 EOT;
         if ($userId != 0) {
-            $query .= " AND `studentUserUnion`.`userId` = '{$userId}'";
+            $query .= " AND `studentUserUnion`.`userId` != '{$userId}'";
         }
 
         $queryResult = $this->db
             ->query($query);
-
+            
         return $queryResult->result();
     }
 
