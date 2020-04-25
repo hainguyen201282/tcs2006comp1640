@@ -343,7 +343,7 @@ class Student extends BaseController
             } else {
                 $studentInfo = array(
                     'email' => $email,
-                    'password' => getHashedPassword($password)
+                    'password' => getHashedPassword($password),
                     'name' => ucwords($name),
                     'mobile' => $mobile,
                     'gender' => $gender,
