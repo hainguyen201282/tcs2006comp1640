@@ -299,12 +299,14 @@ class Student extends BaseController
         if ($studentId == null) {
             redirect('studentListing');
         }
-
+            
         $this->global['pageTitle'] = 'CodeInsect : Edit Student';
 
         $data['tutors'] = $this->student_model->getAllTutors();
         $data['studentInfo'] = $this->student_model->getStudentInfo($studentId);
-
+// echo $studentId;
+// echo "<PRE>" . print_r($data, true) . "</PRE>";
+//         exit;
         $this->loadViews("editOldStudent", $this->global, $data, NULL);
     }
 
@@ -424,8 +426,9 @@ class Student extends BaseController
             } else {
                 $this->session->set_flashdata('error', 'Student updated failed');
             }
+
+            redirect('studentListing');
         }
-        redirect('studentListing');
     }
 
     /**
