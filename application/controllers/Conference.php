@@ -113,7 +113,7 @@ class Conference extends BaseController
             $result = $this->conference_model->addConference($conferenceInfo);
 
             if ($result > 0) {
-                redirect('conference');
+                redirect('conferenceListing');
             } else {
                 $this->session->set_flashdata('error', 'Conference creation failed');
                 redirect('addNewConference');
