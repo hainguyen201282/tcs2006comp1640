@@ -114,7 +114,7 @@ class Conference extends BaseController
 
             $attenderInfo = array(
                 'userId' => $this->vendorId,
-                'userRole' => STUDENT,
+                'userRole' => $this->role,
                 'conferenceId' => $result
             );
             $result = $this->conference_model->addAttender($attenderInfo);
