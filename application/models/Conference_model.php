@@ -86,10 +86,7 @@ class Conference_model extends CI_Model
             StudentTbl.name'
         );
         $this->db->from('tbl_attend as AttendTbl');
-
-        $this->db->join('tbl_student as StudentTbl', 'AttendTbl.userId = StudentTbl.studentId');
         $this->db->where('AttendTbl.conferenceId', $conferenceId);
-        $this->db->where('StudentTbl.studentId', $currentVendorId);
 
         return $this->db->get()->result();
     }
