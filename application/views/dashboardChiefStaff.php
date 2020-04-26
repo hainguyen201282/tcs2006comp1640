@@ -40,7 +40,7 @@
           <div class="small-box bg-yellow">
             <div class="inner">
               <h3><?= $numberOfStudentWithoutTutor; ?></h3>
-              <p>Student without personal tutor</p>
+              <p>Students without personal tutor</p>
             </div>
             <div class="icon">
               <i class="ion ion-android-people"></i>
