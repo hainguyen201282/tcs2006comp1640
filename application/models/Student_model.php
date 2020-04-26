@@ -350,7 +350,7 @@ class Student_model extends CI_Model
            $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
         }   
         
-        $this->db->limit(5);
+        // $this->db->limit(5);
         $this->db->group_by('StudentTbl.studentId');
         $this->db->having('countConference = 0');
         $query = $this->db->get();
