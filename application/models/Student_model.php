@@ -339,18 +339,20 @@ class Student_model extends CI_Model
         $this->db->select('StudentTbl.studentId as userId, 
             StudentTbl.email, 
             StudentTbl.name, 
-            StudentTbl.roleId'
+            StudentTbl.roleId',
+            COUNT(`AttendTbl`.`userId`) countConference
         );
         $this->db->from('tbl_student as StudentTbl');
-        $this->db->join('tbl_attend as AttendTbl', 'AttendTbl.userId = StudentTbl.studentId', 'left');
-        $this->db->join('tbl_conference as ConfTbl', 'ConfTbl.id = AttendTbl.conferenceId AND ConfTbl.id != ' . $conferenceId, 'left');
+        $this->db->join('tbl_attend as AttendTbl', '(AttendTbl.userId = StudentTbl.studentId AND `AttendTbl`.`conferenceId` ='. $conferenceId .')', 'left');
         $this->db->where('StudentTbl.isDeleted', 0);    
         $this->db->where('ConfTbl.id IS NULL', null);    
         $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
         $this->db->limit(5);
-        $this->db->group_by('StudentTbl.name');
+        $this->db->group_by('StudentTbl.studentId');
+        $this->db->having('countConference = 0');
+        $query = $this->db->get();
 
-        return $this->db->get()->result();
+        return $query->result();
     }
 
     function getMessagesYouReceivedFromTutor($studentId = 1)
