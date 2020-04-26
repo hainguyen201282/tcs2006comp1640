@@ -112,6 +112,13 @@ class Conference extends BaseController
             $this->load->model('conference_model');
             $result = $this->conference_model->addConference($conferenceInfo);
 
+            $attenderInfo = array(
+                'userId' => $this->vendorId,
+                'userRole' => STUDENT,
+                'conferenceId' => $result
+            );
+            $result = $this->conference_model->addAttender($attenderInfo);
+
             if ($result > 0) {
                 redirect('conferenceListing');
             } else {
