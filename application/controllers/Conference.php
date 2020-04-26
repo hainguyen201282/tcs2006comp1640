@@ -205,10 +205,11 @@ class Conference extends BaseController
     function searchUser()
     {
         $searchText = $this->input->post('search');
+        $conferenceId = $this->input->post('conferenceId');
 
         // get student data
         $this->load->model('student_model');
-        $students = $this->student_model->getStudentUserByName($searchText, $this->vendorId);
+        $students = $this->student_model->getStudentAvailableForConference($searchText, $conferenceId);
         echo json_encode($students);
     }
 

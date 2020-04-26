@@ -257,6 +257,7 @@ $description = $conferenceInfo->description;
                     url: baseURL + "searchUser",
                     data: {
                         "search": search,
+                        "conferenceId": <?= $id; ?>,
                     },
                     dataType: "json"
                 }).done(function (response) {

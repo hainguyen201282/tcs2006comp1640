@@ -318,7 +318,7 @@ class Student_model extends CI_Model
         return $query->num_rows();
     }
 
-    function getStudentUserByName($name, $currentVendorId)
+    function getStudentUserByName($name)
     {
         $this->db->select('StudentTbl.studentId as userId, 
             StudentTbl.email, 
@@ -326,8 +326,26 @@ class Student_model extends CI_Model
             StudentTbl.roleId'
         );
         $this->db->from('tbl_student as StudentTbl');
-        $this->db->where('StudentTbl.isDeleted', 0);
-        $this->db->where('StudentTbl.studentId !=', $currentVendorId);
+        $this->db->where('StudentTbl.isDeleted', 0);    
+        $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
+        $this->db->limit(5);
+        $this->db->group_by('StudentTbl.name');
+
+        return $this->db->get()->result();
+    }
+
+    function getStudentAvailableForConference($name, $conferenceId)
+    {
+        $this->db->select('StudentTbl.studentId as userId, 
+            StudentTbl.email, 
+            StudentTbl.name, 
+            StudentTbl.roleId'
+        );
+        $this->db->from('tbl_student as StudentTbl');
+        $this->db->join('tbl_attend as AttendTbl', 'AttendTbl.userId = StudentTbl.studentId');
+        $this->db->join('tbl_conference as ConfTbl', 'ConfTbl.id = AttendTbl.conferenceId', 'left');
+        $this->db->where('StudentTbl.isDeleted', 0);    
+        $this->db->where('ConfTbl.id !=', $conferenceId);    
         $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
         $this->db->limit(5);
         $this->db->group_by('StudentTbl.name');
