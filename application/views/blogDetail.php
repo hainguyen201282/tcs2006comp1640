@@ -39,7 +39,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
 
                     <div class="about-author d-flex p-4 bg-light">
                         <div class="bio mr-5 col-lg-4">
-                            <img class="img-fluid mb-4 img-responsive img-circle" alt="Author picture" style="max-width: 100px; max-height: 114px;">
+                            <img class="img-fluid mb-4 img-responsive img-circle" alt="Author picture" style="max-width: 100px; max-height: 114px;"
                                  src="<?php echo base_url() . AVATAR_PATH . $imgAvatar; ?>">
                         </div>
                         <div class="desc">
@@ -56,7 +56,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                                 <?php foreach ($blogComments as $record) { ?>
                                     <li class="comment">
                                         <div class="vcard bio">
-                                            <img alt="Comment user image"  style="max-width: 100px; max-height: 114px;"
+                                            <img alt="Comment user image"  style="max-width: 100px; max-height: 114px;" 
                                                  src="<?php echo base_url() . AVATAR_PATH . $record->imgAvatar; ?>">
                                         </div>
                                         <div class="comment-body">
