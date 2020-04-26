@@ -318,7 +318,7 @@ class Student_model extends CI_Model
         return $query->num_rows();
     }
 
-    function getStudentUserByName($name)
+    function getStudentUserByName($name, $currentVendorId)
     {
         $this->db->select('StudentTbl.studentId as userId, 
             StudentTbl.email, 
@@ -327,6 +327,7 @@ class Student_model extends CI_Model
         );
         $this->db->from('tbl_student as StudentTbl');
         $this->db->where('StudentTbl.isDeleted', 0);
+        $this->db->where('StudentTbl.studentId !=', $currentVendorId);
         $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
         $this->db->limit(5);
         $this->db->group_by('StudentTbl.name');

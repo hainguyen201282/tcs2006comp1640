@@ -208,7 +208,7 @@ class Conference extends BaseController
 
         // get student data
         $this->load->model('student_model');
-        $students = $this->student_model->getStudentUserByName($searchText);
+        $students = $this->student_model->getStudentUserByName($searchText, $this->vendorId);
         echo json_encode($students);
     }
 
