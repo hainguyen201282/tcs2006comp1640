@@ -80,13 +80,22 @@ class Conference_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    function getAllAttenderByConferenceId($conferenceId, $currentVendorId)
+    function getAllAttenderByConferenceId($conferenceId, $currentVendorId, $currentRole)
     {
         $this->db->select('AttendTbl.id, AttendTbl.userId, AttendTbl.userRole, AttendTbl.conferenceId, StudentTbl.name'
         );
         $this->db->from('tbl_attend as AttendTbl');
 
-        $this->db->join('tbl_student as StudentTbl', 'AttendTbl.userId = StudentTbl.studentId', 'left');
+        if ($currentRole == STUDENT) {
+            $this->db->join('tbl_student as StudentTbl', 'AttendTbl.userId = StudentTbl.studentId', 'left');
+            $this->db->where('AttendTbl.userRole', STUDENT);
+        }
+
+        if ($currentRole == TUTOR) {
+            $this->db->join('tbl_users as StudentTbl', 'AttendTbl.userId = StudentTbl.studentId', 'left');
+            $this->db->where('AttendTbl.userRole', TUTOR);
+        }
+        
         $this->db->where('AttendTbl.conferenceId', $conferenceId);
 
         return $this->db->get()->result();

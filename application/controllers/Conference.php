@@ -140,7 +140,13 @@ class Conference extends BaseController
             $this->loadThis();
         }
 
-        $data['attenderRecords'] = $this->conference_model->getAllAttenderByConferenceId($id, $this->vendorId);
+        $attenderRecords = $this->conference_model->getAllAttenderByConferenceId($id, $this->vendorId, STUDENT);
+
+        $tutorRecords = $this->conference_model->getAllAttenderByConferenceId($id, $this->vendorId, TUTOR);
+
+        $attenderRecords = array_merge($tutorRecords, $attenderRecords);
+
+        $data['attenderRecords'] = $attenderRecords;
 
         $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
         $this->loadViews("editConferenceView", $this->global, $data, NULL);
