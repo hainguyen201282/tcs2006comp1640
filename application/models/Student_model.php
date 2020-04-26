@@ -334,7 +334,7 @@ class Student_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    function getStudentAvailableForConference($name, $conferenceId)
+    function getStudentAvailableForConference($name = null, $conferenceId)
     {
         $this->db->select('StudentTbl.studentId as userId, 
             StudentTbl.email, 
@@ -344,9 +344,12 @@ class Student_model extends CI_Model
         ');
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_attend as AttendTbl', '(AttendTbl.userId = StudentTbl.studentId AND `AttendTbl`.`conferenceId` ='. $conferenceId .')', 'left');
-        $this->db->where('StudentTbl.isDeleted', 0);    
-        $this->db->where('ConfTbl.id IS NULL', null);    
-        $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
+        $this->db->where('StudentTbl.isDeleted', 0);  
+        
+        if ($name) {
+           $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
+        }   
+        
         $this->db->limit(5);
         $this->db->group_by('StudentTbl.studentId');
         $this->db->having('countConference = 0');
