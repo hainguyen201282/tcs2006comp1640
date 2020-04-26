@@ -82,8 +82,7 @@ class Conference_model extends CI_Model
 
     function getAllAttenderByConferenceId($conferenceId, $currentVendorId)
     {
-        $this->db->select('AttendTbl.id,
-            StudentTbl.name'
+        $this->db->select('AttendTbl.id, AttendTbl.userId, AttendTbl.userRole, AttendTbl.conferenceId, StudentTbl.name'
         );
         $this->db->from('tbl_attend as AttendTbl');
 

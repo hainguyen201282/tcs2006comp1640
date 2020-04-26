@@ -181,9 +181,11 @@ $description = $conferenceInfo->description;
                                                         <tr>
                                                             <td><?php echo $record->name ?></td>
                                                             <td class="text-center">
+                                                                <?php if ($vendorId != $record->userId || $role != $record->userRole) { ?>
                                                                 <a class="btn btn-sm btn-danger deleteAttender" href="#"
                                                                    title="Delete"
                                                                    data-studentId="<?= $record->id; ?>">
+                                                               <?php } ?>
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                             </td>
