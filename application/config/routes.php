@@ -112,15 +112,15 @@ $route['sendMessage'] = ["message/sendMessage", [TUTOR, STUDENT] ];
 
 /* CONFERENCE MANAGEMENT */
 $route['conferenceListing'] = ["conference/conferenceListing", [TUTOR, STUDENT] ];
-$route['addNewConference'] = ["conference/addNewConference", [TUTOR] ];
-$route['getAvailableTime'] = ["conference/getAvailableTime", [TUTOR] ];
-$route['submitNewConference'] = ["conference/submitNewConference", [TUTOR] ];
-$route['editConferenceView/(:num)'] = ["conference/editConferenceView/$1", [TUTOR] ];
-$route['editConference'] = ["conference/editConference", [TUTOR] ];
-$route['searchUser'] = ["conference/searchUser", [TUTOR] ];
-$route['addAttender'] = ["conference/addAttender", [TUTOR] ];
-$route['deleteConference'] = ["conference/deleteConference", [TUTOR] ];
-$route['deleteAttender'] = ["conference/deleteAttender", [TUTOR] ];
+$route['addNewConference'] = ["conference/addNewConference", [TUTOR, STUDENT] ];
+$route['getAvailableTime'] = ["conference/getAvailableTime", [TUTOR, STUDENT] ];
+$route['submitNewConference'] = ["conference/submitNewConference", [TUTOR, STUDENT] ];
+$route['editConferenceView/(:num)'] = ["conference/editConferenceView/$1", [TUTOR, STUDENT] ];
+$route['editConference'] = ["conference/editConference", [TUTOR, STUDENT] ];
+$route['searchUser'] = ["conference/searchUser", [TUTOR, STUDENT] ];
+$route['addAttender'] = ["conference/addAttender", [TUTOR, STUDENT] ];
+$route['deleteConference'] = ["conference/deleteConference", [TUTOR, STUDENT] ];
+$route['deleteAttender'] = ["conference/deleteAttender", [TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 

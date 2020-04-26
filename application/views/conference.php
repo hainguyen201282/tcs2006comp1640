@@ -47,6 +47,7 @@
                                         <td><?php echo $record->description ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDate)) ?></td>
                                         <td class="text-center">
+                                        <?php if ($record->host == $vendorId && $record->role == $role) {?>
                                             <a class="btn btn-sm btn-info" title="Edit"
                                                href="<?php echo base_url() . 'editConferenceView/' . $record->id; ?>">
                                                 <i class="fa fa-pencil"></i>
@@ -55,6 +56,7 @@
                                                data-conferenceId="<?php echo $record->id; ?>" title="Delete">
                                                 <i class="fa fa-trash"></i>
                                             </a>
+                                        <?php } ?>
                                         </td>
                                     </tr>
                                     <?php

@@ -129,6 +129,10 @@ class Conference extends BaseController
 
         $data['conferenceInfo'] = $this->conference_model->getConferenceInfoById($id);
 
+        if ($this->vendorId != $data['conferenceInfo']->host || $this->role != $data['conferenceInfo']->role) {
+            $this->loadThis();
+        }
+
         $data['attenderRecords'] = $this->conference_model->getAllAttenderByConferenceId($id);
 
         $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
