@@ -342,10 +342,10 @@ class Student_model extends CI_Model
             StudentTbl.roleId'
         );
         $this->db->from('tbl_student as StudentTbl');
-        $this->db->join('tbl_attend as AttendTbl', 'AttendTbl.userId = StudentTbl.studentId');
-        $this->db->join('tbl_conference as ConfTbl', 'ConfTbl.id = AttendTbl.conferenceId', 'left');
+        $this->db->join('tbl_attend as AttendTbl', 'AttendTbl.userId = StudentTbl.studentId', 'left');
+        $this->db->join('tbl_conference as ConfTbl', 'ConfTbl.id = AttendTbl.conferenceId AND ConfTbl.id != ' . $conferenceId, 'left');
         $this->db->where('StudentTbl.isDeleted', 0);    
-        $this->db->where('ConfTbl.id !=', $conferenceId);    
+        $this->db->where('ConfTbl.id IS NULL', null);    
         $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
         $this->db->limit(5);
         $this->db->group_by('StudentTbl.name');
