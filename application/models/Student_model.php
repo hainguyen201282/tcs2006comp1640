@@ -339,9 +339,9 @@ class Student_model extends CI_Model
         $this->db->select('StudentTbl.studentId as userId, 
             StudentTbl.email, 
             StudentTbl.name, 
-            StudentTbl.roleId',
+            StudentTbl.roleId,
             COUNT(`AttendTbl`.`userId`) countConference
-        );
+        ');
         $this->db->from('tbl_student as StudentTbl');
         $this->db->join('tbl_attend as AttendTbl', '(AttendTbl.userId = StudentTbl.studentId AND `AttendTbl`.`conferenceId` ='. $conferenceId .')', 'left');
         $this->db->where('StudentTbl.isDeleted', 0);    
