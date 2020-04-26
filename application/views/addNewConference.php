@@ -151,6 +151,7 @@
             autoclose: true,
             todayBtn: true,
             minDate: new Date(),
+            startDate: new Date()
         }).on('change', function () {
             // event listen change on datepicker
             let selDate = $(this).val();
