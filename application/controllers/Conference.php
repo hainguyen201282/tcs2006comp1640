@@ -133,7 +133,7 @@ class Conference extends BaseController
             $this->loadThis();
         }
 
-        $data['attenderRecords'] = $this->conference_model->getAllAttenderByConferenceId($id);
+        $data['attenderRecords'] = $this->conference_model->getAllAttenderByConferenceId($id, $this->vendorId);
 
         $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
         $this->loadViews("editConferenceView", $this->global, $data, NULL);

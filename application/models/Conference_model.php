@@ -80,7 +80,7 @@ class Conference_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    function getAllAttenderByConferenceId($conferenceId)
+    function getAllAttenderByConferenceId($conferenceId, $currentVendorId)
     {
         $this->db->select('AttendTbl.id,
             StudentTbl.name'
@@ -89,6 +89,7 @@ class Conference_model extends CI_Model
 
         $this->db->join('tbl_student as StudentTbl', 'AttendTbl.userId = StudentTbl.studentId');
         $this->db->where('AttendTbl.conferenceId', $conferenceId);
+        $this->db->where('StudentTbl.studentId !=', $currentVendorId);
 
         return $this->db->get()->result();
     }
