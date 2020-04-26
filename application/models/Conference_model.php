@@ -92,7 +92,7 @@ class Conference_model extends CI_Model
         }
 
         if ($currentRole == TUTOR) {
-            $this->db->join('tbl_users as StudentTbl', 'AttendTbl.userId = StudentTbl.studentId', 'left');
+            $this->db->join('tbl_users as StudentTbl', 'AttendTbl.userId = StudentTbl.userId', 'left');
             $this->db->where('AttendTbl.userRole', TUTOR);
         }
         
