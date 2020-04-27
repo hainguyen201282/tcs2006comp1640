@@ -14,7 +14,7 @@ class Conference_model extends CI_Model
         return $insert_id;
     }
 
-    function conferenceListing()
+    function conferenceListing($currentVendorId, $currentRole)
     {
         $this->db->select('ConfTbl.id, 
             ConfTbl.appTime, 
@@ -29,6 +29,9 @@ class Conference_model extends CI_Model
             ConfTbl.updatedDate,
             ConfTbl.createdDate');
         $this->db->from('tbl_conference as ConfTbl');
+        $this->db->join('tbl_attend as AttendTbl', 'AttendTbl.conferenceId = ConfTbl.id', 'left');
+        $this->db->where('AttendTbl.userId', $currentVendorId);
+        $this->db->where('AttendTbl.userRole', $currentRole);
 
         return $this->db->get()->result();
     }

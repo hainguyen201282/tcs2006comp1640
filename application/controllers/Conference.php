@@ -42,7 +42,7 @@ class Conference extends BaseController
     {
         $this->load->library('pagination');
 
-        $data['conferenceRecords'] = $this->conference_model->conferenceListing();
+        $data['conferenceRecords'] = $this->conference_model->conferenceListing($this->vendorId, $this->role);
 
         $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
         $this->loadViews("conference", $this->global, $data, NULL);
