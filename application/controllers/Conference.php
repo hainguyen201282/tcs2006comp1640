@@ -234,7 +234,7 @@ class Conference extends BaseController
         $result = $this->conference_model->addAttender($attenderInfo);
 
         if ($result > 0) {
-            echo(json_encode(true));
+            echo(json_encode(['attendRecordId' => $result]));
         } else {
             echo(json_encode(false));
         }

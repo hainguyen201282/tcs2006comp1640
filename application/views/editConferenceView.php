@@ -185,9 +185,9 @@ $description = $conferenceInfo->description;
                                                                 <a class="btn btn-sm btn-danger deleteAttender" href="javascript:void(0)"
                                                                    title="Delete"
                                                                    data-studentId="<?= $record->id; ?>">
-                                                               <?php } ?>
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
+                                                               <?php } ?>
                                                             </td>
                                                         </tr>
                                                         <?php
