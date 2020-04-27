@@ -250,11 +250,7 @@ $description = $conferenceInfo->description;
             'lengthChange': false,
         });
 
-        $('input#search').on("click keyup blur", function (event) {
-            if (event.type == 'blur'){
-                $("#searchResult").empty();
-                return;
-            }
+        $('input#search').on("click keyup blur", function (event) {   
             const search = $(this).val();
 
             $.ajax({
@@ -276,9 +272,15 @@ $description = $conferenceInfo->description;
 
                 // binding click event to li
                 $('#searchResult li').bind("click", function () {
+                    console.log($(this));
                     const idTag = document.getElementById('id');
                     addAttender(idTag.value, this);
                 });
+
+                if (event.type == 'blur'){
+                    $("#searchResult").empty();
+                    return;
+                }
             });
         });
 
