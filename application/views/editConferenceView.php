@@ -42,7 +42,7 @@ $description = $conferenceInfo->description;
     #searchResult li {
         background: lavender;
         padding: 4px;
-        margin-bottom: 1px;
+        /*margin-bottom: 1px;*/
     }
 
     #searchResult li:nth-child(even) {
