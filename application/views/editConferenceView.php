@@ -155,7 +155,7 @@ $description = $conferenceInfo->description;
                                             <div class="form-group">
                                                 <input id="search" class="form-control" type="text" placeholder="Search"
                                                        autocomplete="off" name="search">
-                                                <div style="clear: left">
+                                                <div style="clear: left; position: absolute; z-index: 1000;">
                                                     <ul id="searchResult"></ul>
                                                 </div>
                                                 <div class="clear"></div>
