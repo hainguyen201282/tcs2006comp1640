@@ -331,6 +331,26 @@ $description = $conferenceInfo->description;
                     // append a text node to the cell
                     const newText = document.createTextNode(value);
                     newCell.appendChild(newText);
+
+                    $(newRow).appendChild('<td class="text-center"><a class="btn btn-sm btn-danger deleteAttender" href="javascript:void(0)" title="Delete" data-studentId="' + response['attendRecordId'] +'"><i class="fa fa-trash"></i></a></td>')
+
+                    $(this).on("click", ".deleteAttender", function () {
+                        const id = $(this).attr("data-studentId");
+
+                        let confirmation = confirm("Are you sure to delete this?");
+                        if (confirmation) {
+                            $.ajax({
+                                type: "POST",
+                                url: baseURL + "deleteAttender",
+                                data: {
+                                    attendId: id
+                                },
+                                dataType: "json"
+                            }).done(function (data) {
+                                location.reload();
+                            });
+                        }
+                    });
                 }
             }
         });
