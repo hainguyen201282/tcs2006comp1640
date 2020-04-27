@@ -346,7 +346,7 @@ class Student_model extends CI_Model
         $this->db->join('tbl_attend as AttendTbl', '(AttendTbl.userId = StudentTbl.studentId AND `AttendTbl`.`conferenceId` ='. $conferenceId .')', 'left');
         $this->db->where('StudentTbl.isDeleted', 0);  
         
-        if ($name) {
+        if ($name && $name != '') {
            $this->db->where("(StudentTbl.name LIKE '%" . $name . "%')");
         }   
         

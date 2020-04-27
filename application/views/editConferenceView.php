@@ -250,34 +250,36 @@ $description = $conferenceInfo->description;
             'lengthChange': false,
         });
 
-        $('#search').keyup(function () {
+        $('input#search').on("click keyup blur", function (event) {
+            if (event.type == 'blur'){
+                $("#searchResult").empty();
+                return;
+            }
             const search = $(this).val();
 
-            if (search !== "") {
-                $.ajax({
-                    type: 'POST',
-                    url: baseURL + "searchUser",
-                    data: {
-                        "search": search,
-                        "conferenceId": <?= $id; ?>,
-                    },
-                    dataType: "json"
-                }).done(function (response) {
-                    $("#searchResult").empty();
+            $.ajax({
+                type: 'POST',
+                url: baseURL + "searchUser",
+                data: {
+                    "search": search,
+                    "conferenceId": <?= $id; ?>,
+                },
+                dataType: "json"
+            }).done(function (response) {
+                $("#searchResult").empty();
 
-                    for (let i = 0; i < response.length; i++) {
-                        const id = response[i]['userId'];
-                        const name = response[i]['name'];
-                        $('#searchResult').append('<li value="' + id + '">' + name + '</li>');
-                    }
+                for (let i = 0; i < response.length; i++) {
+                    const id = response[i]['userId'];
+                    const name = response[i]['name'];
+                    $('#searchResult').append('<li value="' + id + '">' + name + '</li>');
+                }
 
-                    // binding click event to li
-                    $('#searchResult li').bind("click", function () {
-                        const idTag = document.getElementById('id');
-                        addAttender(idTag.value, this);
-                    });
+                // binding click event to li
+                $('#searchResult li').bind("click", function () {
+                    const idTag = document.getElementById('id');
+                    addAttender(idTag.value, this);
                 });
-            }
+            });
         });
 
         $(this).on("click", ".deleteAttender", function () {
