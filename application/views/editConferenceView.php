@@ -332,7 +332,7 @@ $description = $conferenceInfo->description;
                     const newText = document.createTextNode(value);
                     newCell.appendChild(newText);
 
-                    $(newRow).appendChild('<td class="text-center"><a class="btn btn-sm btn-danger deleteAttender" href="javascript:void(0)" title="Delete" data-studentId="' + response['attendRecordId'] +'"><i class="fa fa-trash"></i></a></td>')
+                    $(newRow).append('<td class="text-center"><a class="btn btn-sm btn-danger deleteAttender" href="javascript:void(0)" title="Delete" data-studentId="' + response['attendRecordId'] +'"><i class="fa fa-trash"></i></a></td>')
 
                     $(this).on("click", ".deleteAttender", function () {
                         const id = $(this).attr("data-studentId");
