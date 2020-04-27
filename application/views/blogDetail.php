@@ -33,7 +33,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
 
                     <div class="tag-widget post-tag-container mb-5 mt-5">
                         <div class="tagcloud">
-                            <a href="#" class="tag-cloud-link"><?= $topic ?></a>
+                            <a href="javascript:void(0)" class="tag-cloud-link"><?= $topic ?></a>
                         </div>
                     </div>
 
@@ -70,7 +70,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                                             <?php if (isset($vendorId) && $vendorId == $record->userId && $role == $record->userRole) { ?>
                                             <textarea name="my_comment" class="form-control" cols="10" rows="3" data-commentId="<?= $record->id; ?>" style="display: none; resize: none;" onblur="finishEditComment(this);" required><?= $record->content ?></textarea>
                                             <p>
-                                                <a class="deleteComment" href="#"
+                                                <a class="deleteComment" href="javascript:void(0)"
                                                    data-commentId="<?= $record->id; ?>">Delete</a>
                                             </p>
                                             <?php }?>
@@ -141,12 +141,12 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                             <a class="blog-img mr-4" style="background-image: url('<?php echo base_url(); ?>');"></a>
                             <div class="text">
                                 <h3 class="heading">
-                                    <a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
+                                    <a href="javascript:void(0)">Even the all-powerful Pointing has no control about the blind texts</a>
                                 </h3>
                                 <div class="meta">
-                                    <div><a href="#"><span class="icon-calendar"></span> Nov. 14, 2019</a></div>
-                                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                                    <div><a href="javascript:void(0)"><span class="icon-calendar"></span> Nov. 14, 2019</a></div>
+                                    <div><a href="javascript:void(0)"><span class="icon-person"></span> Admin</a></div>
+                                    <div><a href="javascript:void(0)"><span class="icon-chat"></span> 19</a></div>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                         <div class="tagcloud">
                             <?php if (!empty($blogTopics)) {
                                 foreach ($blogTopics as $record) { ?>
-                                    <a href="#" class="tag-cloud-link"><?= $record->topic ?></a>
+                                    <a href="javascript:void(0)" class="tag-cloud-link"><?= $record->topic ?></a>
                                 <?php }
                             } ?>
                         </div>

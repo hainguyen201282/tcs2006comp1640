@@ -52,7 +52,7 @@
                                                href="<?php echo base_url() . 'editConferenceView/' . $record->id; ?>">
                                                 <i class="fa fa-pencil"></i>
                                             </a> |
-                                            <a class="btn btn-sm btn-danger deleteConference" href="#"
+                                            <a class="btn btn-sm btn-danger deleteConference" href="javascript:void(0)"
                                                data-conferenceId="<?php echo $record->id; ?>" title="Delete">
                                                 <i class="fa fa-trash"></i>
                                             </a>
