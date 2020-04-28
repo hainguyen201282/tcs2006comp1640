@@ -2,6 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version2X;
+
 class Conference extends BaseController
 {
     /**
@@ -232,6 +235,33 @@ class Conference extends BaseController
 
         $this->load->model('conference_model');
         $result = $this->conference_model->addAttender($attenderInfo);
+
+        $this->load->model('student_model');
+        $logStudentInfo = array(
+            'studentId' => $userId,
+            'notification_text' => "You are just invited to a conference by " . $this->name,
+            'createdBy' => $this->vendorId,
+            'createdDtm' => date('Y-m-d H:i:s')
+        );
+
+        $result = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
+
+        require APPPATH . '../vendor/autoload.php';
+
+        $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));
+
+        $client->initialize();
+        // send message to connected clients
+        $messagePayload = [
+            'eventName' => 'invite_student_to_conference',
+            'student_ids' => $userId,
+            'sender_id' => $this->vendorId,
+            'sender_role' => $this->role,
+            'sender_name' => $this->name,
+        ];
+
+        $client->emit('send_notification', $messagePayload);
+        $client->close();
 
         if ($result > 0) {
             echo(json_encode(['attendRecordId' => $result]));

@@ -296,8 +296,6 @@
             const socket = io(socketIoAddress);
 
             socket.on('send_notification_callback', (response) => {
-                let audio = new Audio('assets/sounds/eventually.mp3');
-                audio.play();
                 const data = response.data;
                 const eventName = data['eventName'];
                 if (eventName === "assign_student_to_tutor") {
@@ -307,6 +305,8 @@
                     studentArr = studentIds.split(",");
 
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentArr.indexOf('<?= $vendorId; ?>') != -1) {
+                        let audio = new Audio('assets/sounds/eventually.mp3');
+                        audio.play();
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>You are just assigned to tutor ' + tutorName + '</a> </li>');
 
@@ -319,6 +319,8 @@
                     }
 
                     if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
+                        let audio = new Audio('assets/sounds/eventually.mp3');
+                        audio.play();
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>Students (' + studentIds + ') are assigned to you</a> </li>');
 
@@ -339,7 +341,8 @@
                     sentByStudent = data['sent_by_student'];
 
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
-
+                        let audio = new Audio('assets/sounds/eventually.mp3');
+                        audio.play();
                         notifyText = (sentByStudent) ? "You've just sent message to tutor " + tutorName : "You've just received message from tutor " + tutorName;
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
@@ -353,8 +356,27 @@
                     }
 
                     if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
-
+                        let audio = new Audio('assets/sounds/eventually.mp3');
+                        audio.play();
                         notifyText = (sentByStudent) ? "You've just received message from student " + studentName : "You've just sent message to student " + studentName;
+                        $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
+                            .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
+
+                        let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
+                        if (notiCountElement.text() == '') {
+                            notiCountElement.text('1');
+                        } else {
+                            notiCountElement.text(parseInt(notiCountElement.text()) + 1);
+                        }
+                    }
+                }
+
+                if (eventName === "invite_student_to_conference") {
+                    if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
+                        let audio = new Audio('assets/sounds/eventually.mp3');
+                        audio.play();
+                        notifyText = "You are just invited to a conference by " + data['sender_name'];
+
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
 
