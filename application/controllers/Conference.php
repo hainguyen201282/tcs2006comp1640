@@ -276,6 +276,34 @@ class Conference extends BaseController
 
         $this->load->model('conference_model');
         $this->conference_model->deleteAttender($attendId);
+
+        $this->load->model('student_model');
+        $logStudentInfo = array(
+            'studentId' => $userId,
+            'notification_text' => "Sorry, you've left a conference organized by " . $this->name,
+            'createdBy' => $this->vendorId,
+            'createdDtm' => date('Y-m-d H:i:s')
+        );
+
+        $result1 = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
+
+        require APPPATH . '../vendor/autoload.php';
+
+        $client = new Client(new Version2X(NOTIFICATION_ROOT_URL));
+
+        $client->initialize();
+        // send message to connected clients
+        $messagePayload = [
+            'eventName' => 'student_leave_conference',
+            'student_ids' => $userId,
+            'sender_id' => $this->vendorId,
+            'sender_role' => $this->role,
+            'sender_name' => $this->name,
+        ];
+
+        $client->emit('send_notification', $messagePayload);
+        $client->close();
+
         echo(json_encode(true));
     }
 }

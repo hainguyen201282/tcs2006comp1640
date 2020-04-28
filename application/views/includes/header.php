@@ -372,11 +372,14 @@
                     }
                 }
 
-                if (eventName === "invite_student_to_conference") {
+                if (eventName === "invite_student_to_conference" || eventName === "student_leave_conference") {
                     studentId = data['student_ids'];
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
                         myAudio.play();
                         notifyText = "You are just invited to a conference by " + data['sender_name'];
+                        if (eventName === "student_leave_conference") {
+                            notifyText = "Sorry, you've left a conference organized by " + data['sender_name'];
+                        }
 
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
