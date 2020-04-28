@@ -244,7 +244,7 @@ class Conference extends BaseController
             'createdDtm' => date('Y-m-d H:i:s')
         );
 
-        $result = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
+        $result1 = $this->student_model->submitAddStudentNotificationLog($logStudentInfo);
 
         require APPPATH . '../vendor/autoload.php';
 
