@@ -296,6 +296,8 @@
             const socket = io(socketIoAddress);
 
             socket.on('send_notification_callback', (response) => {
+                let audio = new Audio('assets/sounds/positive_bright_003_23999.mp3');
+                audio.play();
                 const data = response.data;
                 const eventName = data['eventName'];
                 if (eventName === "assign_student_to_tutor") {
