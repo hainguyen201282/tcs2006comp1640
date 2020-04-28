@@ -372,6 +372,7 @@
                 }
 
                 if (eventName === "invite_student_to_conference") {
+                    studentId = data['student_ids'];
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
                         let audio = new Audio('assets/sounds/eventually.mp3');
                         audio.play();
