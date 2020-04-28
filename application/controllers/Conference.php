@@ -297,7 +297,7 @@ class Conference extends BaseController
         // send message to connected clients
         $messagePayload = [
             'eventName' => 'student_leave_conference',
-            'student_ids' => $userId,
+            'student_ids' => $attenderInfo->userId,
             'sender_id' => $this->vendorId,
             'sender_role' => $this->role,
             'sender_name' => $this->name,
