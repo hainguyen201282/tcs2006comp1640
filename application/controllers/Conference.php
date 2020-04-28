@@ -274,12 +274,14 @@ class Conference extends BaseController
     {
         $attendId = $this->input->post('attendId');
 
+        $attenderInfo = $this->conference_model->getConferenceAttenderInfoById($attendId);
+
         $this->load->model('conference_model');
         $this->conference_model->deleteAttender($attendId);
 
         $this->load->model('student_model');
         $logStudentInfo = array(
-            'studentId' => $userId,
+            'studentId' => $attenderInfo->userId,
             'notification_text' => "Sorry, you've left a conference organized by " . $this->name,
             'createdBy' => $this->vendorId,
             'createdDtm' => date('Y-m-d H:i:s')
