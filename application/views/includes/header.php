@@ -294,7 +294,7 @@
             const port = "3000";
             const socketIoAddress = `http://` + `35.238.162.110` + `:` + port;
             const socket = io(socketIoAddress);
-
+            let audio = new Audio('assets/sounds/eventually.mp3');
             socket.on('send_notification_callback', (response) => {
                 const data = response.data;
                 const eventName = data['eventName'];
@@ -305,7 +305,6 @@
                     studentArr = studentIds.split(",");
 
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentArr.indexOf('<?= $vendorId; ?>') != -1) {
-                        let audio = new Audio('assets/sounds/eventually.mp3');
                         audio.play();
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>You are just assigned to tutor ' + tutorName + '</a> </li>');
@@ -319,7 +318,6 @@
                     }
 
                     if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
-                        let audio = new Audio('assets/sounds/eventually.mp3');
                         audio.play();
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>Students (' + studentIds + ') are assigned to you</a> </li>');
@@ -356,7 +354,6 @@
                     }
 
                     if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
-                        let audio = new Audio('assets/sounds/eventually.mp3');
                         audio.play();
                         notifyText = (sentByStudent) ? "You've just received message from student " + studentName : "You've just sent message to student " + studentName;
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
@@ -374,7 +371,6 @@
                 if (eventName === "invite_student_to_conference") {
                     studentId = data['student_ids'];
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
-                        let audio = new Audio('assets/sounds/eventually.mp3');
                         audio.play();
                         notifyText = "You are just invited to a conference by " + data['sender_name'];
 
