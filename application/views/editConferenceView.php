@@ -154,7 +154,7 @@ $description = $conferenceInfo->description;
                                         <form action="#" method="post">
                                             <div class="form-group">
                                                 <input id="search" class="form-control" type="text" placeholder="Search"
-                                                       autocomplete="off" name="search">
+                                                       autocomplete="off" name="search" />
                                                 <div style="clear: left; position: absolute; z-index: 1000;">
                                                     <ul id="searchResult"></ul>
                                                 </div>
@@ -250,7 +250,7 @@ $description = $conferenceInfo->description;
             'lengthChange': false,
         });
 
-        $('input#search').on("click keyup blur", function (event) {   
+        $('input#search').on("click keyup", function (event) {   
             const search = $(this).val();
 
             $.ajax({
@@ -271,18 +271,19 @@ $description = $conferenceInfo->description;
                 }
 
                 // binding click event to li
-                $('#searchResult li').bind("click", function () {
-                    console.log($(this));
+                $('#searchResult li').on("click", function () {
                     const idTag = document.getElementById('id');
                     addAttender(idTag.value, this);
                 });
-
-                if (event.type == 'blur'){
-                    $("#searchResult").empty();
-                    return;
-                }
             });
         });
+
+        $('input#search').on("blur", function (event) {
+            if ($("#searchResult").children('li').length > 0) {
+                setTimeout(function(){$("#searchResult").empty();}, 100);
+            }
+        })
+        
 
         $(this).on("click", ".deleteAttender", function () {
             const id = $(this).attr("data-studentId");
@@ -305,7 +306,6 @@ $description = $conferenceInfo->description;
 
     // add new attender
     function addAttender(conferenceId, element) {
-        console.log(conferenceId);
         let userId = $(element).val();
         let value = $(element).text();
 
@@ -319,7 +319,6 @@ $description = $conferenceInfo->description;
             },
             dataType: 'json',
             success: function (response) {
-                console.log(response);
                 if (response === false) {
                     alert("Attender already exist in your list. Please try again.");
                 } else {

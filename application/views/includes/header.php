@@ -273,8 +273,8 @@
                 ?>
             </ul>
         <audio id="myAudio">
-          <source src="/comp1640/assets/sounds/eventually.ogg" type="audio/ogg">
-          <source src="/comp1640/assets/sounds/eventually.mp3" type="audio/mpeg">
+          <source src="<?= base_url() ?>/assets/sounds/eventually.ogg" type="audio/ogg">
+          <source src="<?= base_url() ?>/assets/sounds/eventually.mp3" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
         </section>
@@ -289,6 +289,34 @@
         <script src="<?= base_url() ?>/assets/socket.io/dist/socket.io.js"></script>
         <!-- page script -->
         <script>
+
+            function webNotification(text){
+                if("Notification" in window){
+                  var _Notification = window['Notification'];
+                  if (_Notification.permission !== 'granted') {
+                    _Notification.requestPermission()
+                      .then(function(permission) {
+                        if (permission === 'granted') {
+                          var noti1 = new window['Notification']('Academy Notification', {
+                            icon: '<?= base_url() ?>/assets/images/icon-icons.ico',
+                            body: text
+                          });
+                          noti1.onclick = function (event) {
+                            window.focus();
+                          };
+                        }
+                      });
+                  } else {
+                    var noti1 = new window['Notification']('Academy Notification', {
+                        icon: '<?= base_url() ?>/assets/images/icon-icons.ico',
+                        body: text
+                      });
+                      noti1.onclick = function (event) {
+                        window.focus();
+                      };
+                  }
+                }
+            }
             // $(function () {
             let ipAddress = "<?= $_SERVER['HTTP_HOST']; ?>";
 
@@ -301,6 +329,7 @@
             const socket = io(socketIoAddress);
             var myAudio = document.getElementById("myAudio");
             socket.on('send_notification_callback', (response) => {
+                jQuery("#myAudio").prop('muted', false);
                 const data = response.data;
                 const eventName = data['eventName'];
                 if (eventName === "assign_student_to_tutor") {
@@ -310,9 +339,9 @@
                     studentArr = studentIds.split(",");
 
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentArr.indexOf('<?= $vendorId; ?>') != -1) {
-                        myAudio.play();
+                        notifyText = 'You are just assigned to tutor ' + tutorName;
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
-                            .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>You are just assigned to tutor ' + tutorName + '</a> </li>');
+                            .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+notifyText+'</a> </li>');
 
                         let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
                         if (notiCountElement.text() == '') {
@@ -320,12 +349,15 @@
                         } else {
                             notiCountElement.text(parseInt(notiCountElement.text()) + 1);
                         }
+
+                        myAudio.play();
+                        webNotification(notifyText);
                     }
 
                     if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
-                        myAudio.play();
+                        notifyText = 'Students with IDs (' + studentIds + ') are assigned to you';
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
-                            .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>Students (' + studentIds + ') are assigned to you</a> </li>');
+                            .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText+'</a> </li>');
 
                         let notiCountElement = $('ul.navbar-nav li.notifications-menu a.dropdown-toggle span.label-warning');
                         if (notiCountElement.text() == '') {
@@ -333,6 +365,9 @@
                         } else {
                             notiCountElement.text(parseInt(notiCountElement.text()) + 1);
                         }
+
+                        myAudio.play();
+                        webNotification(notifyText);
                     }
                 }
 
@@ -344,7 +379,7 @@
                     sentByStudent = data['sent_by_student'];
 
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
-                        myAudio.play();
+                       
                         notifyText = (sentByStudent) ? "You've just sent message to tutor " + tutorName : "You've just received message from tutor " + tutorName;
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
@@ -355,10 +390,13 @@
                         } else {
                             notiCountElement.text(parseInt(notiCountElement.text()) + 1);
                         }
+
+                         myAudio.play();
+                        webNotification(notifyText);
                     }
 
                     if ('<?= $role; ?>' == '<?= TUTOR; ?>' && tutorId == '<?= $vendorId; ?>') {
-                        myAudio.play();
+                        
                         notifyText = (sentByStudent) ? "You've just received message from student " + studentName : "You've just sent message to student " + studentName;
                         $('ul.navbar-nav li.notifications-menu ul.dropdown-menu li ul.menu')
                             .prepend('<li><a href="#"><i class="fa fa-users text-aqua"></i>'+ notifyText + '</a> </li>');
@@ -369,13 +407,16 @@
                         } else {
                             notiCountElement.text(parseInt(notiCountElement.text()) + 1);
                         }
+
+                        myAudio.play();
+                        webNotification(notifyText);
                     }
                 }
 
                 if (eventName === "invite_student_to_conference" || eventName === "student_leave_conference") {
                     studentId = data['student_ids'];
                     if ('<?= $role; ?>' == '<?= STUDENT; ?>' && studentId =='<?= $vendorId; ?>') {
-                        myAudio.play();
+                        
                         notifyText = "You are just invited to a conference by " + data['sender_name'];
                         if (eventName === "student_leave_conference") {
                             notifyText = "Sorry, you've left a conference organized by " + data['sender_name'];
@@ -390,9 +431,13 @@
                         } else {
                             notiCountElement.text(parseInt(notiCountElement.text()) + 1);
                         }
+
+                        myAudio.play();
+                        webNotification(notifyText);
                     }
                 }
             });
-            // })
+
+
         </script>
     </aside>

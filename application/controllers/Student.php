@@ -556,7 +556,7 @@ class Student extends BaseController
 
         $logTutorInfo = array(
             'tutorId' => $tutorId,
-            'notification_text' => 'Students (' . implode(",", $studentIds) . ') are assigned to you',
+            'notification_text' => 'Students with IDs (' . implode(",", $studentIds) . ') are assigned to you',
             'createdBy' => $this->vendorId,
             'createdDtm' => date('Y-m-d H:i:s')
         );
