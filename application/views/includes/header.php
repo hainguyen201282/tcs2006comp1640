@@ -273,8 +273,8 @@
                 ?>
             </ul>
         <audio id="myAudio">
-          <source src="/assets/sounds/eventually.ogg" type="audio/ogg">
-          <source src="/assets/sounds/eventually.mp3" type="audio/mpeg">
+          <source src="comp1640/assets/sounds/eventually.ogg" type="audio/ogg">
+          <source src="comp1640/assets/sounds/eventually.mp3" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
         </section>
