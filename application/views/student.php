@@ -166,8 +166,8 @@
     }
 </style>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js?<?php echo time(); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js?<?php echo time(); ?>"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#tbl-student').DataTable({

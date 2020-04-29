@@ -350,8 +350,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
     }
 </style>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editUser.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editUser.js?<?php echo time(); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js?<?php echo time(); ?>"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
