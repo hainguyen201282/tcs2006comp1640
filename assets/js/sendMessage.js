@@ -51,7 +51,6 @@ $(document).ready(function () {
                 messageAttr: messageAttr,
             },
         }).done(function (data) {
-            alert(data.result);
             if (data.result === true) {
                 alert("Send message successfully");
             } else {

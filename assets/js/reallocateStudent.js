@@ -85,7 +85,7 @@ $(document).ready(function () {
                 $row.removeClass('selected');
             }
 
-            console.log(rows_selected);
+            //console.log(rows_selected);
             // Update state of "Select all" control
             updateDataTableSelectAllCtrl(table);
 
