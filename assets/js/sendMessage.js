@@ -14,7 +14,7 @@ $(document).ready(function () {
     // display email
     $('#mes-modal').on('show.bs.modal', function () {
         $('#receiver').val(dataInfo.email);
-    }).submit(function () {
+    }).submit(function (event) {
         // get value from submit form
         const email = $('#receiver').val();
         const subject = $('#subject').val();
@@ -57,5 +57,8 @@ $(document).ready(function () {
                 alert("Send message failure");
             }
         });
+
+        $('#messageBoxReset').click();
+        $('#closeMessageBox').click();
     })
 });

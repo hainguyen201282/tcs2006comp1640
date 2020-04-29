@@ -308,7 +308,7 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form" id="send-message" action="#" method="post">
+                <form role="form" id="send-message" action="#" method="post" onsubmit="return false;">
                     <div class="box-body" style="margin-top: -20px">
                         <div class="row">
                             <div class="col-md-12">
@@ -329,7 +329,8 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                     </div>
                     <div class="box-footer">
                         <input type="submit" class="btn btn-primary" value="Send Message"/>
-                        <input type="reset" class="btn btn-default" value="Reset"/>
+                        <input type="reset" id="messageBoxReset" class="btn btn-default" value="Reset"/>
+                        <button type="submit" id="closeMessageBox" class="btn btn-danger btn-default pull-left" data-dismiss="modal" style="display: none;"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                     </div>
                 </form>
             </div>
