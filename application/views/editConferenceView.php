@@ -280,7 +280,7 @@ $description = $conferenceInfo->description;
 
         $('input#search').on("blur", function (event) {
             if ($("#searchResult").children('li').length > 0) {
-                setTimeout(function(){$("#searchResult").empty();}, 100);
+                setTimeout(function(){$("#searchResult").empty();}, 200);
             }
         })
         
