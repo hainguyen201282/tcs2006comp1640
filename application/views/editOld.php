@@ -149,4 +149,4 @@ $roleId = $userInfo->roleId;
     </section>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/editUser.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/editUser.js?<?php echo time(); ?>" type="text/javascript"></script>

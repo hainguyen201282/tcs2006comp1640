@@ -186,5 +186,5 @@
         }
     }
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/allocateStudent.js" charset="utf-8"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reallocateStudent.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/allocateStudent.js?<?php echo time(); ?>" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reallocateStudent.js?<?php echo time(); ?>" charset="utf-8"></script>

@@ -140,4 +140,4 @@
     </section>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/addUser.js?<?php echo time(); ?>" type="text/javascript"></script>
