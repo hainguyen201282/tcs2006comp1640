@@ -10,7 +10,7 @@ $coverImg = $blogInfo->coverImg;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-users"></i> Blog Management
+            <i class="fa fa-files-o"></i> Blog Management
             <small>Add / Edit Blog</small>
         </h1>
     </section>
