@@ -7,7 +7,7 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-xs-6 text-right" <?php if ($role == ADMIN): ?>style="display:block !important;">
+            <div class="col-xs-6 text-right" <?php if ($role == AUTHORISED_STAFF): ?>style="display:block !important;">
                 <div class="form-group" style="float: left">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor"
                        style="margin-top: 3px;">
@@ -15,6 +15,7 @@
                     </a>
                 </div>
             </div><?php endif; ?>
+            <?php if ($role == ADMIN): ?>
             <div class="col-xs-6 text-left" style="float: right; display: block">
                 <div class="form-group" style="float: right; display: inline-flex">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"
@@ -39,6 +40,7 @@
                     </a>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
         <div class="row">
             <div class="col-xs-12">
@@ -69,13 +71,13 @@
                                         <td><?= $record->tutorName == '' ? 'N/A' : $record->tutorName ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
-                                            <?php if ($role == AUTHORISED_STAFF || $role == ADMIN): ?>
-                                                <?php if ($role == AUTHORISED_STAFF) { ?>
-                                                    <a class="btn btn-sm btn-primary"
-                                                       href="<?php echo base_url() . 'studentDashboard/' . $record->studentId; ?>"
-                                                       title="Dashboard"><i class="fa fa-dashboard"></i>
-                                                    </a> |
-                                                <?php } ?>
+                                            <?php if ($role == AUTHORISED_STAFF) { ?>
+                                                <a class="btn btn-sm btn-primary"
+                                                   href="<?php echo base_url() . 'studentDashboard/' . $record->studentId; ?>"
+                                                   title="Dashboard"><i class="fa fa-dashboard"></i>
+                                                </a> |
+                                            <?php } ?>
+                                            <?php if ($role == ADMIN): ?>
                                                 <a class="btn btn-sm btn-info"
                                                    href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
                                                    title="Edit">

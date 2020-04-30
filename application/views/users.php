@@ -7,6 +7,7 @@
         </h1>
     </section>
     <section class="content">
+        <?php if ($role == ADMIN): ?>
         <div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
@@ -20,6 +21,7 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -52,6 +54,7 @@
                                                href="<?= base_url() . 'tutorDashboard/' . $record->userId; ?>"
                                                title="Dashboard"><i class="fa fa-dashboard"></i></a>
                                             <?php } ?>
+                                            <?php if ($role == ADMIN): ?>
                                             <a class="btn btn-sm btn-primary"
                                                href="<?= base_url() . 'login-history/' . $record->userId; ?>"
                                                title="Login history"><i class="fa fa-history"></i></a> |
@@ -61,6 +64,7 @@
                                             <a class="btn btn-sm btn-danger deleteUser" href="#"
                                                data-userid="<?php echo $record->userId; ?>" title="Delete"><i
                                                         class="fa fa-trash"></i></a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     <?php
