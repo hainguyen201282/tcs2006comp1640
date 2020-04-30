@@ -7,7 +7,7 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-xs-6 text-right" <?php if ($role == STAFF): ?>style="display:block !important;">
+            <div class="col-xs-6 text-right" <?php if ($role == ADMIN): ?>style="display:block !important;">
                 <div class="form-group" style="float: left">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor"
                        style="margin-top: 3px;">
@@ -69,7 +69,7 @@
                                         <td><?= $record->tutorName == '' ? 'N/A' : $record->tutorName ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
-                                            <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
+                                            <?php if ($role == AUTHORISED_STAFF || $role == ADMIN): ?>
                                                 <?php if ($role == AUTHORISED_STAFF) { ?>
                                                     <a class="btn btn-sm btn-primary"
                                                        href="<?php echo base_url() . 'studentDashboard/' . $record->studentId; ?>"

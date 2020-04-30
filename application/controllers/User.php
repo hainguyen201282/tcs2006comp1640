@@ -40,10 +40,10 @@ class User extends BaseController
         if (isset($this->role)) {
             switch ($this->role) {
                 case AUTHORISED_STAFF:
-                case STAFF:
+                case ADMIN:
                     $this->roleText = "AUTHORISED STAFF";
-                    if ($this->role == STAFF) {
-                        $this->roleText = "STAFF";
+                    if ($this->role == ADMIN) {
+                        $this->roleText = "ADMIN";
                     }
                     $averageMessagesSentByTutor = $this->user_model->getAverageNumberMessageSentByTutor(null, null);
                     $averageMessagesSentToTutor = $this->user_model->getAverageNumberMessageSentToTutor(null, null);
@@ -514,8 +514,8 @@ class User extends BaseController
                 case AUTHORISED_STAFF:
                     $data["userInfo"]->roleText = "AUTHORISED STAFF";
                     break;
-                case STAFF:
-                    $data["userInfo"]->roleText = "STAFF";
+                case ADMIN:
+                    $data["userInfo"]->roleText = "ADMIN";
                     break;
                 case TUTOR:
                     $data["userInfo"]->roleText = "TUTOR";

@@ -99,7 +99,7 @@ class BaseController extends CI_Controller
      */
     function isTicketter()
     {
-        if ($this->role != AUTHORISED_STAFF || $this->role != STAFF) {
+        if ($this->role != AUTHORISED_STAFF || $this->role != ADMIN) {
             return true;
         } else {
             return false;

@@ -196,7 +196,7 @@
                     <?php
                 }
 
-                if ($role == STAFF) {
+                if ($role == ADMIN) {
                     ?>
                     <li>
                         <a href="<?php echo base_url(); ?>dashboard">

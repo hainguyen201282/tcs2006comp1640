@@ -276,7 +276,7 @@ class Student extends BaseController
 
         $data['studentRecords'] = array();
 
-        if (AUTHORISED_STAFF == $this->role || STAFF == $this->role) {
+        if (AUTHORISED_STAFF == $this->role || ADMIN == $this->role) {
             $data['studentRecords'] =
                 $this->student_model->getAllStudents();
         } else if (TUTOR == $this->role) {
