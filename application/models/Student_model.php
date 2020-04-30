@@ -301,7 +301,7 @@ class Student_model extends CI_Model
         );
         $this->db->from('tbl_student as StudentTbl');
         $this->db->where('StudentTbl.tutorId', $tutorId);
-        $this->db->where('StudentTbl.idDeleted', 0);
+        $this->db->where('StudentTbl.isDeleted', 0);
         $this->db->order_by('StudentTbl.studentId', 'ASC');
         $query = $this->db->get();
 
