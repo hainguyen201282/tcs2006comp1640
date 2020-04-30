@@ -217,7 +217,6 @@ class Blog extends BaseController
     function submitComment()
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('name', 'Name', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('message', 'Message', 'trim|required|max_length[650000]');
 
         $blogId = $this->input->post('blogId');
