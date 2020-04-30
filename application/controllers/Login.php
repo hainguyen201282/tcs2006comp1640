@@ -156,6 +156,8 @@ class Login extends CI_Controller
                 $data['data'] = array(
                     'reset_link' => $this->config->item('base_url') . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email . "/" . $role,
                 );
+
+                $CI = &get_instance();
                 $emailParams = [
                     "email" => $email,
                     "content" => $CI->load->view('email/resetPassword1', $data, TRUE),
