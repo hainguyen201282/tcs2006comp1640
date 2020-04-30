@@ -154,7 +154,7 @@ class Login extends CI_Controller
 
                 $encoded_email = urlencode($email);
                 $data['data'] = array(
-                    'reset_link' => $this->config->item('base_url') . "resetPasswordConfirmUser/" . $mailInfo->activation_id . "/" . $encoded_email . "/" . $mailInfo->role,
+                    'reset_link' => $this->config->item('base_url') . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email . "/" . $role,
                 );
                 $emailParams = [
                     "email" => $email,
