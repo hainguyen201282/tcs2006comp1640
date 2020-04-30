@@ -352,9 +352,10 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/editUser.js?<?php echo time(); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js?<?php echo time(); ?>"></script>
 <script type="text/javascript">
+	var msgContentCkeditor;
     $(document).ready(function () {
 
-        CKEDITOR.replace('content', {
+        msgContentCkeditor = CKEDITOR.replace('content', {
             filebrowserBrowseUrl: '<?php echo site_url('assets/js/ckfinder/ckfinder.html');?>',
             filebrowserUploadUrl: '<?php echo site_url('assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files');?>',
         });

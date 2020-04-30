@@ -59,6 +59,7 @@ $(document).ready(function () {
         });
 
         $('#messageBoxReset').click();
+        msgContentCkeditor.setData("");
         $('#closeMessageBox').click();
     })
 });

@@ -171,6 +171,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js?<?php echo time(); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js?<?php echo time(); ?>"></script>
 <script type="text/javascript">
+	var msgContentCkeditor;
     $(document).ready(function () {
         $('#tbl-student').DataTable({
             'info': true,
@@ -179,7 +180,7 @@
             'lengthChange': true,
         });
 
-        CKEDITOR.replace('content', {
+        msgContentCkeditor = CKEDITOR.replace('content', {
             filebrowserBrowseUrl: '<?php echo
             site_url('assets/js/ckfinder/ckfinder.html');?>',
             filebrowserUploadUrl: '<?php echo
