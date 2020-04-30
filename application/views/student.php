@@ -6,7 +6,7 @@
         </h1>
     </section>
     <section class="content">
-        <div class="row" <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>style="display:block !important;">
+        <div class="row" <?php if ($role == STAFF): ?>style="display:block !important;">
             <div class="col-xs-6 text-left">
                 <div class="form-group">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor"
