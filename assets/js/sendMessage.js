@@ -14,6 +14,7 @@ $(document).ready(function () {
     // display email
     $('#mes-modal').on('show.bs.modal', function () {
         $('#receiver').val(dataInfo.email);
+        $('#content').attr('required', true);
     }).submit(function (event) {
         // get value from submit form
         const email = $('#receiver').val();
