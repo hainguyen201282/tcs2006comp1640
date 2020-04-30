@@ -9,7 +9,6 @@ $(document).ready(function () {
             receiverId: $(this).attr('data-receiverId'),
             receiverRole: $(this).attr('data-receiverRole'),
         };
-        // $('#content').attr('required', true);
     });
 
     // display email

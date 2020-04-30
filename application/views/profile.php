@@ -314,7 +314,7 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input id="receiver" name="receiver" class="form-control required text-line"
-                                           type="text" placeholder="To" maxlength="20" value="">
+                                           type="text" placeholder="To" maxlength="256" value="" disabled>
                                 </div>
                                 <div class="form-group">
                                     <input id="subject" name="subject" class="form-control required text-line"
@@ -323,7 +323,7 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                             </div>
                         </div>
                         <div>
-                            <textarea id="content" name="messageContent" class="form-control required" aria-label="With textarea" maxlength="200" required></textarea>
+                            <textarea id="content" name="messageContent" class="form-control required" aria-label="With textarea" maxlength="200"></textarea>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -372,6 +372,5 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
             'paging': true,
             'lengthChange': false,
         });
-
     });
 </script>

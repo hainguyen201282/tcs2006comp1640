@@ -132,7 +132,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input id="receiver" name="receiver" class="form-control required text-line"
-                                           type="text" placeholder="To" maxlength="20" value="" disabled>
+                                           type="text" placeholder="To" maxlength="256" value="" disabled>
                                 </div>
                                 <div class="form-group">
                                     <input id="subject" name="subject" class="form-control required text-line"
