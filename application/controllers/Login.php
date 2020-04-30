@@ -153,14 +153,11 @@ class Login extends CI_Controller
                 setFlashData('send', "Reset password link sent successfully, please check mails.");
 
                 $encoded_email = urlencode($email);
-                $data['data'] = array(
-                    'reset_link' => $this->config->item('base_url') . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email . "/" . $role,
-                );
 
                 $CI = &get_instance();
                 $emailParams = [
                     "email" => $email,
-                    "content" => $CI->load->view('email/resetPassword1', $data, TRUE),
+                    "content" => $this->config->item('base_url') . "resetPasswordConfirmUser/" . $data['activation_id'] . "/" . $encoded_email . "/" . $role,
                 ];
 
                 // $emailFullURL = FIREBASE_EMAIL_HTTPS_URL . implode("&", $emailParams);
