@@ -48,7 +48,7 @@ $coverImg = $blogInfo->coverImg;
                                     <div class="form-group">
                                         <label for="title">Title</label>
                                         <input id="title" type="text" class="form-control required"
-                                               value="<?= $title ?>" name="title" maxlength="128">
+                                               value="<?= $title ?>" name="title" maxlength="128" required>
                                         <input type="hidden" value="<?= $id ?>" name="blogId" id="blogId"/>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@ $coverImg = $blogInfo->coverImg;
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="content">Content</label>
-                                        <textarea id="content" name="content" maxlength="65000" class="required">
+                                        <textarea id="content" name="content" maxlength="65000" required>
                                             <?= $content; ?>
                                         </textarea>
                                     </div>

@@ -136,7 +136,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input id="subject" name="subject" class="form-control required text-line"
-                                           type="text" placeholder="Subject" maxlength="128" value="">
+                                           type="text" placeholder="Subject" maxlength="128" value="" required>
                                 </div>
                             </div>
                         </div>
