@@ -9,12 +9,12 @@ $(document).ready(function () {
             receiverId: $(this).attr('data-receiverId'),
             receiverRole: $(this).attr('data-receiverRole'),
         };
+        $('#content').attr('required', true);
     });
 
     // display email
     $('#mes-modal').on('show.bs.modal', function () {
         $('#receiver').val(dataInfo.email);
-        $('#content').attr('required', true);
     }).submit(function (event) {
         // get value from submit form
         const email = $('#receiver').val();
