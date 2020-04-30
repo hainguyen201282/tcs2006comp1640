@@ -64,7 +64,7 @@ $coverImg = $blogInfo->coverImg;
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="content">Content</label>
-                                        <textarea id="content" name="content" maxlength="65000" required>
+                                        <textarea id="content" name="content" maxlength="65000" class="required">
                                             <?= $content; ?>
                                         </textarea>
                                     </div>

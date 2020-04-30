@@ -141,7 +141,7 @@
                             </div>
                         </div>
                         <div>
-                            <textarea id="content" name="messageContent" class="form-control"
+                            <textarea id="content" name="messageContent" class="form-control required"
                                       aria-label="With textarea" maxlength="200"></textarea>
                         </div>
                     </div>
