@@ -324,7 +324,7 @@ $tutorRoleId = isset($userInfo->tutorRoleId) ? $userInfo->tutorRoleId : '3';
                         </div>
                         <div>
                             <textarea id="content" name="messageContent" class="form-control required"
-                                      aria-label="With textarea" maxlength="200"></textarea>
+                                      aria-label="With textarea" maxlength="200" required></textarea>
                         </div>
                     </div>
                     <div class="box-footer">
