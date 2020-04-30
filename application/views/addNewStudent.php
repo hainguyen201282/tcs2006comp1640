@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="tutor">Assign New Tutor</label>
@@ -82,7 +82,7 @@
                                                 foreach ($tutors as $rl)
                                                 {
                                                     ?>
-                                                    <option value="<?php echo $rl->userId ?>"><?php echo $rl->name ?></option>
+                                                    <option value="<?php //echo $rl->userId ?>"><?php //echo $rl->name ?></option>
                                                     <?php
                                                 }
                                             }
@@ -90,7 +90,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit"/>

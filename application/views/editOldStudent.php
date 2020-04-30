@@ -102,7 +102,7 @@ $tutorName = $studentInfo->tutorName;
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="tutor">Assign New Tutor</label>
                                         <select class="form-control required" id="tutor" name="tutor">
@@ -110,11 +110,11 @@ $tutorName = $studentInfo->tutorName;
                                             if (!empty($tutors)) {
                                                 foreach ($tutors as $rl) {
                                                     ?>
-                                                    <option value="<?php echo $rl->userId ?>"
+                                                    <option value="<?php //echo $rl->userId ?>"
                                                         <?php if ($rl->name == $tutorName) {
-                                                            echo "selected=selected";
+                                                            //echo "selected=selected";
                                                         } ?>>
-                                                        <?php echo $rl->name ?>
+                                                        <?php //echo $rl->name ?>
                                                     </option>
                                                     <?php
                                                 }
@@ -122,7 +122,7 @@ $tutorName = $studentInfo->tutorName;
                                             ?>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div><!-- /.box-body -->
                         <div class="box-footer">
