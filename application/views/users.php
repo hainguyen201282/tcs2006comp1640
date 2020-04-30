@@ -47,7 +47,7 @@
                                         <td><?= $record->role ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
-                                            <?php if ($record->role == 'Tutor') {?>
+                                            <?php if ($record->role == 'Tutor' && $role == AUTHORISED_STAFF) {?>
                                             <a class="btn btn-sm btn-primary"
                                                href="<?= base_url() . 'tutorDashboard/' . $record->userId; ?>"
                                                title="Dashboard"><i class="fa fa-dashboard"></i></a>

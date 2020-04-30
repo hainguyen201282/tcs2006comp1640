@@ -70,10 +70,12 @@
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
                                             <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
+                                            	<?php if ($role == AUTHORISED_STAFF) { ?>
                                                 <a class="btn btn-sm btn-primary"
                                                    href="<?php echo base_url() . 'studentDashboard/' . $record->studentId; ?>"
                                                    title="Dashboard"><i class="fa fa-dashboard"></i>
                                                 </a> |
+                                            	<?php } ?>
                                                 <a class="btn btn-sm btn-info"
                                                    href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
                                                    title="Edit">
