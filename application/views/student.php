@@ -6,17 +6,22 @@
         </h1>
     </section>
     <section class="content">
-        <div class="row" <?php if ($role == STAFF): ?>style="display:block !important;">
-            <div class="col-xs-6 text-left">
-                <div class="form-group">
+        <div class="row">
+            <div class="col-xs-6 text-right" <?php if ($role == STAFF): ?>style="display:block !important;">
+                <div class="form-group" style="float: left">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor"
                        style="margin-top: 3px;">
                         Allocate / Reallocate Tutor
                     </a>
                 </div>
-            </div>
-            <div class="col-xs-6 text-right">
-                <div class="form-group">
+            </div><?php endif; ?>
+            <div class="col-xs-6 text-left" style="float: right; display: block">
+                <div class="form-group" style="float: right; display: inline-flex">
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"
+                       style="margin-left: 10px;margin-top: 3px;">
+                        <i class="fa fa-plus"></i>
+                        Add New
+                    </a>
                     <form action="<?php echo base_url(); ?>importStudents" method="post" class=" text-right"
                           enctype="multipart/form-data">
                         <button class="btn btn-primary btn-block btn-flat"
@@ -28,18 +33,13 @@
                                accept=".xls,.xlsx">
                     </form>
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>exportStudents"
-                       style="float: right;margin-left: 10px;margin-top: 3px;">
+                       style="margin-left: 10px;margin-top: 3px;">
                         <i class="fa fa-cloud-download"></i>
                         Export
                     </a>
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewStudent"
-                       style="margin-left: 10px;margin-top: 3px;">
-                        <i class="fa fa-plus"></i>
-                        Add New
-                    </a>
                 </div>
             </div>
-        </div><?php endif; ?>
+        </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -70,12 +70,12 @@
                                         <td><?php echo date("d-m-Y", strtotime($record->createdDtm)) ?></td>
                                         <td class="text-center">
                                             <?php if ($role == AUTHORISED_STAFF || $role == STAFF): ?>
-                                            	<?php if ($role == AUTHORISED_STAFF) { ?>
-                                                <a class="btn btn-sm btn-primary"
-                                                   href="<?php echo base_url() . 'studentDashboard/' . $record->studentId; ?>"
-                                                   title="Dashboard"><i class="fa fa-dashboard"></i>
-                                                </a> |
-                                            	<?php } ?>
+                                                <?php if ($role == AUTHORISED_STAFF) { ?>
+                                                    <a class="btn btn-sm btn-primary"
+                                                       href="<?php echo base_url() . 'studentDashboard/' . $record->studentId; ?>"
+                                                       title="Dashboard"><i class="fa fa-dashboard"></i>
+                                                    </a> |
+                                                <?php } ?>
                                                 <a class="btn btn-sm btn-info"
                                                    href="<?php echo base_url() . 'editOldStudent/' . $record->studentId; ?>"
                                                    title="Edit">
@@ -148,7 +148,10 @@
                     <div class="box-footer">
                         <input type="submit" class="btn btn-primary" value="Send Message"/>
                         <input type="reset" id="messageBoxReset" class="btn btn-default" value="Reset"/>
-                        <button type="submit" id="closeMessageBox" class="btn btn-danger btn-default pull-left" data-dismiss="modal" style="display: none;"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                        <button type="submit" id="closeMessageBox" class="btn btn-danger btn-default pull-left"
+                                data-dismiss="modal" style="display: none;"><span
+                                    class="glyphicon glyphicon-remove"></span> Cancel
+                        </button>
                     </div>
                 </form>
             </div>
@@ -171,7 +174,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js?<?php echo time(); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sendMessage.js?<?php echo time(); ?>"></script>
 <script type="text/javascript">
-	var msgContentCkeditor;
+    var msgContentCkeditor;
     $(document).ready(function () {
         $('#tbl-student').DataTable({
             'info': true,
