@@ -94,7 +94,7 @@ $imgAvatar = isset($authorInfo->imgAvatar) ? $authorInfo->imgAvatar : 'avatar.pn
                                 <input id="blogId" class="form-control" type="hidden"
                                        name="blogId" value="<?= $blogId ?>">
                                 <input id="name" class="form-control" type="text"
-                                       name="name" value="<?= empty($name) ? '' : $name ?>" required>
+                                       name="name" value="<?= empty($name) ? '' : $name ?>" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="message">Message *</label>

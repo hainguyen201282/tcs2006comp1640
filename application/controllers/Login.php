@@ -198,7 +198,34 @@ class Login extends CI_Controller
             $data['data'] = array(
                 'reset_link' => $this->config->item('base_url') . "resetPasswordConfirmUser/" . $mailInfo->activation_id . "/" . $encoded_email . "/" . $mailInfo->role,
             );
-            $result = mail($mailInfo->email, "Reset Password", $CI->load->view('email/resetPassword1', $data, TRUE));
+            // $result = mail($mailInfo->email, "Reset Password", $CI->load->view('email/resetPassword1', $data, TRUE));
+            $emailParams = [
+                "email" => $mailInfo->email,
+                "content" => $CI->load->view('email/resetPassword1', $data, TRUE),
+            ];
+
+            // $emailFullURL = FIREBASE_EMAIL_HTTPS_URL . implode("&", $emailParams);
+            $emailFullURL = FIREBASE_RESET_PASSWORD_EMAIL_URL;
+
+            $queryEmail = http_build_query($emailParams);
+
+            $ch = curl_init();
+            // set url
+            curl_setopt($ch, CURLOPT_URL, $emailFullURL);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // ignore HTTPS
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $queryEmail);
+            //return the transfer as a string
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    // 'Content-Type: application/json',
+                    // 'Content-Length: ' . strlen($queryEmail),
+                    'Content-Type: application/x-www-form-urlencoded',
+            ));
+            // $output contains the output string
+            $response = curl_exec($ch);
+            // close curl resource to free up system resources
+            curl_close($ch);
             echo "mail sent at " . time();
 
             $this->login_model->updateResetPasswordUserSentStatus($mailInfo->id, ['isMailSent' => 1]);
