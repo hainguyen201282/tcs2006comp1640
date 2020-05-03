@@ -7,7 +7,7 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-xs-6 text-right" <?php if ($role == AUTHORISED_STAFF): ?>style="display:block !important;">
+            <div class="col-xs-12 text-right" <?php if ($role == AUTHORISED_STAFF): ?>style="display:block !important;">
                 <div class="form-group" style="float: left">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>viewAssignTutor"
                        style="margin-top: 3px;">
