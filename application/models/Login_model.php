@@ -75,7 +75,7 @@ NULL as studentId,
 `tbl_users`.`email` AS email FROM `tbl_users`
 LEFT JOIN `tbl_roles` as `roles` ON (`roles`.`roleId`= `tbl_users`.`roleId`)
 ) as studentUserUnion
-WHERE `studentUserUnion`.`email` = '{$email}'
+WHERE `studentUserUnion`.`email` = '{$email}' AND 
 WHERE `studentUserUnion`.`isDeleted` = 0
 EOT;
 
