@@ -32,7 +32,7 @@ class Student extends BaseController
 
     public function index()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Dashboard';
+        $this->global['pageTitle'] = ' Dashboard';
         $this->loadViews("dashboard", $this->global, NULL, NULL);
     }
 
@@ -213,7 +213,7 @@ class Student extends BaseController
 
     function addNewStudent()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Add New Student';
+        $this->global['pageTitle'] = ' Add New Student';
 
         $this->load->model('student_model');
         $data['tutors'] = $this->student_model->getAllTutors();
@@ -284,13 +284,13 @@ class Student extends BaseController
                 $this->student_model->getAllStudentsByTutorId($this->vendorId);
         }
 
-        $this->global['pageTitle'] = 'CodeInsect : Student Listing';
+        $this->global['pageTitle'] = ' Student Listing';
         $this->loadViews("student", $this->global, $data, NULL);
     }
 
     function pageNotFound()
     {
-        $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
+        $this->global['pageTitle'] = ' 404 - Page Not Found';
         $this->loadViews("404", $this->global, NULL, NULL);
     }
 
@@ -300,7 +300,7 @@ class Student extends BaseController
             redirect('studentListing');
         }
             
-        $this->global['pageTitle'] = 'CodeInsect : Edit Student';
+        $this->global['pageTitle'] = ' Edit Student';
 
         $data['tutors'] = $this->student_model->getAllTutors();
         $data['studentInfo'] = $this->student_model->getStudentInfo($studentId);
@@ -457,7 +457,7 @@ class Student extends BaseController
             redirect('studentListing');
         }
 
-        $this->global['pageTitle'] = 'CodeInsect : Edit Student';
+        $this->global['pageTitle'] = ' Edit Student';
 
         $data['studentInfo'] = $this->student_model->getStudentInfo($studentId);
 
@@ -503,7 +503,7 @@ class Student extends BaseController
 
     function viewAssignTutor($active = "details")
     {
-        $this->global['pageTitle'] = $active == "details" ? 'CodeInsect : Allocate' : 'CodeInsect : Reallocate';
+        $this->global['pageTitle'] = $active == "details" ? ' Allocate' : ' Reallocate';
 
         $data["active"] = $active;
         $data["tutors"] = $this->student_model->getAllTutors();

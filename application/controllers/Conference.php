@@ -31,13 +31,13 @@ class Conference extends BaseController
 
     function pageNotFound()
     {
-        $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
+        $this->global['pageTitle'] = ' 404 - Page Not Found';
         $this->loadViews("404", $this->global, NULL, NULL);
     }
 
     public function index()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Dashboard';
+        $this->global['pageTitle'] = ' Dashboard';
         $this->loadViews("dashboard", $this->global, NULL, NULL);
     }
 
@@ -47,13 +47,13 @@ class Conference extends BaseController
 
         $data['conferenceRecords'] = $this->conference_model->conferenceListing($this->vendorId, $this->role);
 
-        $this->global['pageTitle'] = 'CodeInsect : Conference Listing';
+        $this->global['pageTitle'] = ' Conference Listing';
         $this->loadViews("conference", $this->global, $data, NULL);
     }
 
     function addNewConference()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Add New Conference';
+        $this->global['pageTitle'] = ' Add New Conference';
         $this->loadViews("addNewConference", $this->global, NULL);
     }
 
@@ -151,7 +151,7 @@ class Conference extends BaseController
 
         $data['attenderRecords'] = $attenderRecords;
 
-        $this->global['pageTitle'] = 'CodeInsect : Edit Conference';
+        $this->global['pageTitle'] = ' Edit Conference';
         $this->loadViews("editConferenceView", $this->global, $data, NULL);
     }
 

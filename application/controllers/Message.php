@@ -20,14 +20,14 @@ class Message extends BaseController
 
     public function index()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Dashboard';
+        $this->global['pageTitle'] = ' Dashboard';
 
         $this->loadViews("dashboard", $this->global, NULL, NULL);
     }
 
     function pageNotFound()
     {
-        $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
+        $this->global['pageTitle'] = ' 404 - Page Not Found';
 
         $this->loadViews("404", $this->global, NULL, NULL);
     }

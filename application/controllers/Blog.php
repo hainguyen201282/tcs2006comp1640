@@ -31,7 +31,7 @@ class Blog extends BaseController
      */
     public function index()
     {
-        $this->global['pageTitle'] = 'CodeInsect : Dashboard';
+        $this->global['pageTitle'] = ' Dashboard';
         $this->loadViews("dashboard", $this->global, NULL, NULL);
     }
 
@@ -44,14 +44,14 @@ class Blog extends BaseController
 
         $data['blogRecords'] = $this->blog_model->getAllBlog();
 
-        $this->global['pageTitle'] = 'CodeInsect : Blog Listing';
+        $this->global['pageTitle'] = ' Blog Listing';
         $this->loadViews("blog", $this->global, $data, NULL);
     }
 
     function addNewBlog()
     {
         $this->load->model('blog_model');
-        $this->global['pageTitle'] = 'CodeInsect : Add New Blog';
+        $this->global['pageTitle'] = ' Add New Blog';
         $this->loadViews("addNewBlog", $this->global, array('error' => ' '), NULL);
     }
 
@@ -107,7 +107,7 @@ class Blog extends BaseController
 
         $data['blogInfo'] = $this->blog_model->getBlogInfoById($id);
 
-        $this->global['pageTitle'] = 'CodeInsect : Edit Blog';
+        $this->global['pageTitle'] = ' Edit Blog';
         $this->loadViews("editBlog", $this->global, $data, NULL);
     }
 
@@ -188,7 +188,7 @@ class Blog extends BaseController
         }
         $data['blogComments'] = $comments;
 
-        $this->global['pageTitle'] = 'CodeInsect : Blog Detail';
+        $this->global['pageTitle'] = ' Blog Detail';
         $this->loadViews("blogDetail", $this->global, $data, NULL);
     }
 
