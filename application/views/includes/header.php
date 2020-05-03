@@ -236,7 +236,7 @@
                     <li>
                         <a href="<?php echo base_url(); ?>conferenceListing">
                             <i class="fa fa-handshake-o"></i>
-                            <span>Conference</span>
+                            <span>Meeting</span>
                         </a>
                     </li>
                     <li>
@@ -265,7 +265,7 @@
                     <li>
                         <a href="<?php echo base_url(); ?>conferenceListing">
                             <i class="fa fa-handshake-o"></i>
-                            <span>Conference</span>
+                            <span>Meeting</span>
                         </a>
                     </li>
                     <li>

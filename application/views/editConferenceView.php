@@ -59,8 +59,8 @@ $description = $conferenceInfo->description;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-handshake-o"></i> Conference Management
-            <small>Add / Edit Conference</small>
+            <i class="fa fa-handshake-o"></i> Meeting Management
+            <small>Add / Edit Meeting</small>
         </h1>
     </section>
     <section class="content">
@@ -75,13 +75,13 @@ $description = $conferenceInfo->description;
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Enter Conference Details</h3>
+                        <h3 class="box-title">Enter Meeting Details</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div class="col-md-7">
                             <!-- form start -->
                             <fieldset class="conference-information">
-                                <legend>Conference Information</legend>
+                                <legend>Meeting Information</legend>
                                 <?php $this->load->helper("form"); ?>
                                 <form role="form" id="editConference"
                                       action="<?php echo base_url() ?>editConference" method="post">

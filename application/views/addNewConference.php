@@ -2,8 +2,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-handshake-o"></i> Conference Management
-            <small>Add / Edit Conference</small>
+            <i class="fa fa-handshake-o"></i> Meeting Management
+            <small>Add / Edit Meeting</small>
         </h1>
     </section>
     <section class="content">
@@ -18,7 +18,7 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Enter Conference Details</h3>
+                        <h3 class="box-title">Enter Meeting Details</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>

@@ -47,13 +47,13 @@ class Conference extends BaseController
 
         $data['conferenceRecords'] = $this->conference_model->conferenceListing($this->vendorId, $this->role);
 
-        $this->global['pageTitle'] = ' Conference Listing';
+        $this->global['pageTitle'] = ' Meeting Listing';
         $this->loadViews("conference", $this->global, $data, NULL);
     }
 
     function addNewConference()
     {
-        $this->global['pageTitle'] = ' Add New Conference';
+        $this->global['pageTitle'] = ' Add New Meeting';
         $this->loadViews("addNewConference", $this->global, NULL);
     }
 
@@ -125,7 +125,7 @@ class Conference extends BaseController
             if ($result > 0) {
                 redirect('conferenceListing');
             } else {
-                $this->session->set_flashdata('error', 'Conference creation failed');
+                $this->session->set_flashdata('error', 'Meeting creation failed');
                 redirect('addNewConference');
             }
         }
@@ -151,7 +151,7 @@ class Conference extends BaseController
 
         $data['attenderRecords'] = $attenderRecords;
 
-        $this->global['pageTitle'] = ' Edit Conference';
+        $this->global['pageTitle'] = ' Edit Meeting';
         $this->loadViews("editConferenceView", $this->global, $data, NULL);
     }
 
@@ -186,7 +186,7 @@ class Conference extends BaseController
             if ($result == true) {
                 redirect('conferenceListing');
             } else {
-                $this->session->set_flashdata('error', 'Conference updated failed');
+                $this->session->set_flashdata('error', 'Meeting updated failed');
                 $this->editConferenceView($id);
             }
         }
