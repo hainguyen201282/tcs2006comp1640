@@ -17,16 +17,16 @@ ALTER TABLE `tbl_reset_password` ADD `role` ENUM('staff_tutor','student') NOT NU
 
 ALTER TABLE `tbl_users` ADD `gender` VARCHAR(20) NOT NULL DEFAULT 'Male' AFTER `name`;
 
-CREATE TABLE `document_file_info` 
+CREATE TABLE `tbl_document_file_info` 
   ( 
-     `fileid`      INT NOT NULL auto_increment, 
+     `fileId`      INT NOT NULL auto_increment, 
      `caption`     TEXT NOT NULL, 
      `size`        BIGINT(13) NOT NULL, 
      `filekey`     TEXT NOT NULL, 
      `filetype`    VARCHAR(128) NOT NULL, 
-     `downloadurl` TEXT NOT NULL, 
+     `downloadUrl` TEXT NOT NULL, 
      `createdDtm`  INT NOT NULL, 
-     PRIMARY KEY (`fileid`) 
+     PRIMARY KEY (`fileId`) 
   ) 
 engine = innodb; 
 
@@ -35,12 +35,12 @@ ALTER TABLE `tbl_document_file_info` ADD `realFilename` TEXT NOT NULL AFTER `cap
 
 CREATE TABLE `tbl_document` 
   ( 
-     `documentid`  INT NOT NULL auto_increment, 
+     `documentId`  INT NOT NULL auto_increment, 
      `topic`       TEXT NOT NULL, 
-     `vendorid`    INT NOT NULL, 
-     `vendorrole`  INT NOT NULL, 
-     `updateddate` DATETIME NOT NULL, 
-     `createddate` DATETIME NOT NULL, 
+     `vendorId`    INT NOT NULL, 
+     `vendorRole`  INT NOT NULL, 
+     `updatedDate` DATETIME NOT NULL, 
+     `createdDate` DATETIME NOT NULL, 
      PRIMARY KEY (`documentid`) 
   ) 
 engine = innodb; 

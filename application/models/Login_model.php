@@ -59,6 +59,7 @@ NULL as userId,
 `tbl_student`.`name` as name,
 `tbl_student`.`imgAvatar` as imgAvatar,
 `tbl_student`.`roleId` as roleId,
+`tbl_student`.`isDeleted` as isDeleted,
 'Student' as role, 
 `tbl_student`.`email` AS email FROM `tbl_student` 
 UNION 
@@ -69,11 +70,13 @@ NULL as studentId,
 `tbl_users`.`name` as name,
 `tbl_users`.`imgAvatar` as imgAvatar,
 `tbl_users`.`roleId` as roleId,
+`tbl_users`.`isDeleted` as isDeleted,
 `roles`.`role` as role, 
 `tbl_users`.`email` AS email FROM `tbl_users`
 LEFT JOIN `tbl_roles` as `roles` ON (`roles`.`roleId`= `tbl_users`.`roleId`)
 ) as studentUserUnion
 WHERE `studentUserUnion`.`email` = '{$email}'
+WHERE `studentUserUnion`.`isDeleted` = 0
 EOT;
 
         $queryResult = $this->db
