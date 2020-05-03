@@ -149,6 +149,19 @@ $route['blogDetail/(:any)'] = ["blog/blogDetail/$1", [TUTOR, STUDENT] ];
 $route['submitComment'] = ["blog/submitComment", [TUTOR, STUDENT] ];
 $route['updateComment'] = ["blog/updateComment", [TUTOR, STUDENT] ];
 $route['deleteComment'] = ["blog/deleteComment", [TUTOR, STUDENT] ];
+
+$route['documentListing'] = ["document/documentListing", [TUTOR, STUDENT] ];
+$route['addNewDocument'] = ["document/addNewDocument", [TUTOR, STUDENT] ];
+$route['submitNewDocument'] = ["document/submitNewDocument", [TUTOR, STUDENT] ];
+$route['editViewDocument/(:any)'] = ["document/editViewDocument/$1", [TUTOR, STUDENT] ];
+$route['editDocument'] = ["document/editDocument", [TUTOR, STUDENT] ];
+$route['deleteDocument'] = ["document/deleteDocument", [TUTOR, STUDENT] ];
+$route['deleteDocumentFile/(:any)'] = ["document/deleteDocumentFile/$1", [TUTOR, STUDENT] ];
+$route['documentDetail/(:any)'] = ["document/documentDetail/$1", [TUTOR, STUDENT] ];
+$route['submitDocumentComment'] = ["document/submitComment", [TUTOR, STUDENT] ];
+$route['updateDocumentComment'] = ["document/updateComment", [TUTOR, STUDENT] ];
+$route['deleteDocumentComment'] = ["document/deleteComment", [TUTOR, STUDENT] ];
+$route['uploadDocument'] = ["document/uploadDocument", [TUTOR, STUDENT] ];
 /* -------------------------------------------------------------------- */
 
 /* End of file routes.php */

@@ -86,7 +86,7 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                            <i class="fa fa-bell-o"></i>
+                            <i class="fa fa-bell-o fas fa-bell"></i>
                             <?php if (isset($notifficationLogs) && $notifficationLogs &&count($notifficationLogs) > 0) {?>
                             <span class="label label-warning">
                                 <?= (isset($notifficationLogs) && $notifficationLogs && count($notifficationLogs) > 0) ? count($notifficationLogs) : "" ?>
@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="pull-right">
                                     <a href="<?php echo base_url(); ?>logout" class="btn btn-default btn-flat">
-                                        <i class="fa fa-sign-out"></i>
+                                        <i class="fa fa-sign-out fas fa-sign-out-alt"></i>
                                         Sign out
                                     </a>
                                 </div>
@@ -177,7 +177,7 @@
                     ?>
                     <li>
                         <a href="<?php echo base_url(); ?>dashboard">
-                            <i class="fa fa-dashboard"></i>
+                            <i class="fa fa-dashboard fas fa-tachometer-alt"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -200,7 +200,7 @@
                     ?>
                     <li>
                         <a href="<?php echo base_url(); ?>dashboard">
-                            <i class="fa fa-dashboard"></i>
+                            <i class="fa fa-dashboard fas fa-tachometer-alt"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -223,7 +223,7 @@
                     ?>
                     <li>
                         <a href="<?php echo base_url(); ?>dashboard">
-                            <i class="fa fa-dashboard"></i>
+                            <i class="fa fa-dashboard fas fa-tachometer-alt"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -240,6 +240,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?php echo base_url(); ?>documentListing">
+                            <i class="fa fa-book"></i>
+                            <span>Document</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?php echo base_url(); ?>blogListing">
                             <i class="fa fa-files-o"></i>
                             <span>Blog</span>
@@ -252,7 +258,7 @@
                     ?>
                     <li>
                         <a href="<?php echo base_url(); ?>dashboard">
-                            <i class="fa fa-dashboard"></i>
+                            <i class="fa fa-dashboard fas fa-tachometer-alt"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -260,6 +266,12 @@
                         <a href="<?php echo base_url(); ?>conferenceListing">
                             <i class="fa fa-handshake-o"></i>
                             <span>Conference</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>documentListing">
+                            <i class="fa fa-book"></i>
+                            <span>Document</span>
                         </a>
                     </li>
                     <li>
