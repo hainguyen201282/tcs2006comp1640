@@ -87,7 +87,7 @@
         $(this).on("click", ".deleteConference", function () {
             const id = $(this).attr("data-conferenceId");
 
-            let confirmation = confirm("Are you sure to delete this Conference?");
+            let confirmation = confirm("Are you sure to delete this Meeting?");
             if (confirmation) {
                 $.ajax({
                     type: "POST",
@@ -99,9 +99,9 @@
                 }).done(function (data) {
                     console.log(data);
                     if (data.status) {
-                        alertMessage("Conference successfully deleted");
+                        alertMessage("Meeting successfully deleted");
                     } else {
-                        alertMessage("Conference delete failed");
+                        alertMessage("Meeting delete failed");
                     }
                 });
             }
