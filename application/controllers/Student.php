@@ -359,7 +359,7 @@ class Student extends BaseController
             $this->load->model('user_model');
             $tutorInfo = $this->user_model->getUserInfoWithRole($tutorId);
 
-            if ($oldStudentInfo->tutorId != $tutorId) {
+            if ($oldStudentInfo->tutorId != $tutorId && isset($tutorId) && $tutorId ) {
                 $logStudentInfo = array(
                     'studentId' => $studentId,
                     'notification_text' => "You are just assigned to tutor " . $tutorInfo->name,
