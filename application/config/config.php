@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$base = '';	$base  = "http://".$_SERVER['HTTP_HOST'];
+$base = '';
 if (!isset($_SERVER) || !$_SERVER || !isset($_SERVER['HTTP_HOST'])) {	
 	$base = 'http://35.238.162.110/comp1640/';	
 } else {	
