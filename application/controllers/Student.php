@@ -245,7 +245,7 @@ class Student extends BaseController
             $mobile = $this->input->post('mobile');
             $password = $this->input->post('password');
             $gender = $this->input->post('gender');
-            // $tutorId = $this->input->post('tutor');
+            $tutorId = $this->input->post('tutor');
 
             $studentInfo = array('email' => $email,
                 'name' => $name,
@@ -327,7 +327,7 @@ class Student extends BaseController
             $password = $this->input->post('password');
             $mobile = $this->security->xss_clean($this->input->post('mobile'));
             $gender = $this->input->post('gender');
-            // $tutorId = $this->input->post('tutor');
+            $tutorId = $this->input->post('tutor');
 
             $studentInfo = array();
 

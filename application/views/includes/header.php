@@ -332,12 +332,12 @@
             // $(function () {
             let ipAddress = "<?= $_SERVER['HTTP_HOST']; ?>";
 
-            // if (ipAddress == "::1") {
-            //     ipAddress = "localhost"
-            // }
+            if (ipAddress == "::1") {
+                ipAddress = "localhost"
+            }
 
             const port = "3000";
-            const socketIoAddress = `http://` + `35.238.162.110` + `:` + port;
+            const socketIoAddress = `http://` + ipAddress + `:` + port;
             const socket = io(socketIoAddress);
             var myAudio = document.getElementById("myAudio");
             socket.on('send_notification_callback', (response) => {
